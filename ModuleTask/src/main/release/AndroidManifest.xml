@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:supportsRtl="true">
         <activity
-            android:name=".TaskActivity"
+            android:name=".TaskWelcomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -14,6 +14,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TaskLoginActivity" />
+        <activity android:name=".TaskActivity" />
     </application>
 
 </manifest>
