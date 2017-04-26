@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FDEEDE"
+        android:padding="10dp"
+        android:text="当前网络不可用!"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="任务" />
+
+    <Button
+        android:id="@+id/notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="通知" />
+
+    <Button
+        android:id="@+id/problem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="问题" />
+    <Button
+        android:id="@+id/watchman"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="巡更" />
+    <Button
+        android:id="@+id/monitor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="视频监控" />
+</LinearLayout>
