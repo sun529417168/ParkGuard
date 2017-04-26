@@ -1,3 +1,241 @@
 <resources>
-    <string name="app_name">园区卫士</string>
+    <string name="app_name">"移动园区卫士"</string>
+    <string name="back">"返回"</string>
+    <string name="men">"男"</string>
+    <string name="woman">"女"</string>
+    <string name="cancel">"取消"</string>
+    <string name="photo_album">"从相册获取图片"</string>
+    <string name="photo_camera">"从相机获取图片"</string>
+    <string name="photo_file">"从文件获取图片"</string>
+    <string name="pull_quit_close">"确定"</string>
+    <string name="close">"关闭"</string>
+    <string name="title_net">"网络不给力，请检查网络设置。"</string>
+
+    <!--登陆界面start-->
+    <string name="username">"请输入帐号"</string>
+    <string name="password">"请输入密码"</string>
+    <string name="login">"登录"</string>
+    <string name="cancellation">"注销"</string>
+    <string name="forget_password">"忘记密码？"</string>
+    <!--登陆界面end-->
+
+    <!--完善个人信息start-->
+    <string name="editor_phone">"手机号"</string>
+    <string name="editor_phone_hint">"请输入手机号"</string>
+    <string name="editor_oldPassword">"旧密码"</string>
+    <string name="editor_oldPassword_hint">"请输入旧密码"</string>
+    <string name="editor_newPassword">"新密码"</string>
+    <string name="editor_again_newPassword">"确认密码"</string>
+    <string name="editor_newPassword_hint">"请输入新密码"</string>
+    <string name="editor_again_newPassword_hint">"再次输入新密码"</string>
+    <string name="editor_name">"姓名"</string>
+    <string name="editor_username">"帐号"</string>
+    <string name="editor_workNum">"工号"</string>
+    <string name="editor_name_hint">"请输入姓名"</string>
+    <string name="editor_userID">"身份证号"</string>
+    <string name="editor_sex">"性别"</string>
+    <string name="editor_userID_hint">"请输入身份证号"</string>
+    <string name="editor_sex_hint">"请选择"</string>
+    <string name="editor_sure">"完成"</string>
+    <string name="editor_right_must">"必填"</string>
+    <string name="editor_right_unMust">"非必填"</string>
+    <!--完善个人信息end-->
+
+    <!--主界面start-->
+    <string name="main_task">"任务"</string>
+    <string name="main_problem">"问题上报"</string>
+    <string name="main_notice">"通知公告"</string>
+    <string name="main_statistical">"统计查询"</string>
+    <string name="main_mine">"我的"</string>
+    <!--主界面end-->
+
+    <!--任务界面start-->
+    <string name="task_all">"全部"</string>
+    <string name="task_deal">"已处理"</string>
+    <string name="task_undeal">"未处理"</string>
+    <!--任务界面end-->
+
+    <!--任务item界面start-->
+    <string name="task_serial_number">"编号:"</string>
+    <string name="task_date">"时间:"</string>
+    <string name="task_name">"名称:"</string>
+    <string name="task_sender">"发送人:"</string>
+    <!--任务item界面end-->
+
+    <!--通知公告界面start-->
+    <string name="notice_all">"全部"</string>
+    <string name="notice_threeDay">"三天"</string>
+    <string name="notice_oneWeek">"一周"</string>
+    <string name="notice_oneMonth">"一个月"</string>
+    <!--通知公告界面end-->
+
+
+    <!--问题界面start-->
+    <string name="problem_title_left">"部件问题"</string>
+    <string name="problem_title_right">"事件问题"</string>
+    <string name="problem_title_add">"添加"</string>
+    <string name="problem_title_type">"类型"</string>
+    <string name="problem_title_time">"时间"</string>
+    <string name="problem_title_state">"状态"</string>
+    <!--问题界面end-->
+
+    <!--任务详情start-->
+    <string name="task_detail_number">"编号"</string>
+    <string name="task_detail_name">"名称"</string>
+    <string name="task_detail_type">"类型"</string>
+    <string name="task_detail_state">"状态"</string>
+    <string name="task_detail_state_task">"文件"</string>
+    <string name="task_detail_state_download">"下载"</string>
+    <string name="task_detail_state_reply">"反馈状态"</string>
+    <string name="task_detail_address">"所在位置"</string>
+    <string name="task_detail_founder">"创建人"</string>
+    <string name="task_detail_priority">"任务优先级"</string>
+    <string name="task_detail_sendTime">"下发时间"</string>
+    <string name="task_detail_image">"图片"</string>
+    <string name="task_detail_button">"提交"</string>
+    <string name="task_detail_titleName">"任务信息"</string>
+    <string name="task_detail_bottomName">"反馈信息"</string>
+    <string name="task_detail_feedbackTime">"反馈时间"</string>
+    <string name="task_detail_inputFeedbackInfo">"请输入反馈内容"</string>
+    <string name="task_detail_over">"完成"</string>
+    <string name="task_detail_noOver">"未完成"</string>
+    <string name="task_detail_dialog_name">"任务名称"</string>
+    <!--任务详情end-->
+
+    <!--个人信息start-->
+    <string name="mine_name">"姓名"</string>
+    <string name="mine_phone">"手机号"</string>
+    <string name="mine_userID">"身份证号"</string>
+    <string name="mine_updatePassword">"修改密码"</string>
+    <string name="mine_clear">"清除缓存"</string>
+    <!--个人信息end-->
+
+    <!--通告详情start-->
+    <string name="notice_detail_number">"编号"</string>
+    <string name="notice_detail_name">"名称"</string>
+    <string name="notice_detail_type">"类型"</string>
+    <string name="notice_detail_state">"状态"</string>
+    <string name="notice_detail_sender">"发送人"</string>
+    <string name="notice_detail_sendTime">"发送时间"</string>
+    <string name="notice_detail_attachment">"附件"</string>
+    <string name="notice_detail_attachmentName">"(安全管理.doc)"</string>
+    <string name="notice_detail_download">"下载"</string>
+    <!--通告详情end-->
+
+    <!--问题详情start-->
+    <string name="problem_detail_number">"编号"</string>
+    <string name="problem_detail_name">"名称"</string>
+    <string name="problem_detail_state">"状态"</string>
+    <string name="problem_detail_type">"类型"</string>
+    <string name="problem_detail_area">"区域"</string>
+    <string name="problem_detail_sender">"上报人"</string>
+    <string name="problem_detail_sendTime">"上报时间"</string>
+    <string name="problem_detail_replyTime">"回复时间"</string>
+    <string name="problem_detail_executor">"回复人"</string>
+    <string name="problem_detail_executorTime">"回复时间"</string>
+    <string name="problem_detail_image">"图片"</string>
+    <string name="problem_detail_button">"提交"</string>
+    <string name="problem_detail_titleName">"问题信息"</string>
+    <string name="problem_detail_bottomName">"回复信息"</string>
+    <!--问题详情end-->
+
+    <!--问题界面start-->
+    <string name="problem_all">"全部"</string>
+    <string name="problem_oneDay">"一天"</string>
+    <string name="problem_oneWeek">"一周"</string>
+    <string name="problem_oneMonth">"一个月"</string>
+    <!--问题界面end-->
+
+    <!--上报问题start-->
+    <string name="add_problem_name">"问题名称"</string>
+    <string name="add_problem_type">"问题类型"</string>
+    <string name="add_problem_address">"所在区域"</string>
+    <string name="add_problem_sender">"上报人"</string>
+    <string name="add_problem_sendTime">"上报时间"</string>
+    <string name="add_problem_findTime">"发现时间"</string>
+    <string name="add_problem_image">"图片"</string>
+    <string name="add_problem_choose">"请选择"</string>
+    <string name="add_problem_fill">"请填写"</string>
+    <string name="add_problem_button">"上报"</string>
+    <string name="add_problem_inputPlease">"请输入"</string>
+    <string name="add_problem_inputProblemInfo">"请输入问题描述"</string>
+    <!--上报问题end-->
+
+    <!--任务搜索start-->
+    <string name="task_search_all">"全部"</string>
+    <string name="task_search_btn">"搜索"</string>
+    <string name="task_search_info">"搜索关键字如：任务名称、发送人"</string>
+    <!--任务搜索end-->
+
+
+    <!--修改密码start-->
+    <string name="update_password_oldPassword_hint">"请输入旧密码"</string>
+    <string name="update_password_newPassword">"请输入新密码"</string>
+    <string name="update_password_again_newPassword">"再次输入新密码"</string>
+    <!--修改密码end-->
+
+
+    <!--忘记密码start-->
+    <string name="forget_password_1">"温馨提示：该页面不支持自己找回密码"</string>
+    <string name="forget_password_2">"找回密码请找管理员"</string>
+    <string name="forget_password_3">"电话：6566988"</string>
+    <!--忘记密码end-->
+
+
+    <!--搜索类型start-->
+    <string name="pop_task_name">"任务名称"</string>
+    <string name="pop_task_sender">"发送人"</string>
+    <string name="pop_task_all">"全部"</string>
+    <!--搜索类型end-->
+
+
+    <!--回复状态start-->
+    <string name="pop_task_reply_finish">"完成"</string>
+    <string name="pop_task_reply_unFinish">"未完成"</string>
+    <!--回复状态end-->
+
+
+    <!--添加问题类型start-->
+    <string name="pop_addProblem_type_event">"事件类型"</string>
+    <string name="pop_addProblem_type_parts">"部件类型"</string>
+    <!--添加问题类型end-->
+
+
+    <!--统计查询start-->
+    <string name="statistical_task">"任务下发"</string>
+    <string name="statistical_notice">"通知公告"</string>
+    <string name="statistical_problem">"问题上报"</string>
+    <string name="statistical_week">"本周"</string>
+    <string name="statistical_month">"本月"</string>
+    <string name="statistical_quarter">"季度"</string>
+    <string name="statistical_halfYear">"半年"</string>
+    <string name="statistical_detail_screen">"详细筛选"</string>
+    <string name="statistical_state_title">"状态统计（个）"</string>
+    <string name="statistical_type_title">"类型统计（%）"</string>
+    <string name="statistical_problem_count">"数量统计（个）"</string>
+    <string name="statistical_problem_buJian">"部件类型统计（%）"</string>
+    <string name="statistical_problem_shiJian">"事件类型统计（%）"</string>
+    <!--统计查询end-->
+
+
+    <!--添加任务start-->
+    <string name="add_task_name">"任务名称"</string>
+    <string name="add_task_type">"任务类型"</string>
+    <string name="add_task_address">"任务地点"</string>
+    <string name="add_task_priority">"优先级"</string>
+    <string name="add_task_startTime">"开始时间"</string>
+    <string name="add_task_endTime">"结束时间"</string>
+    <string name="add_task_person">"下发人员"</string>
+    <string name="add_task_image">"图片上传"</string>
+    <string name="add_task_describe">"任务描述"</string>
+    <string name="add_task_inputDescribe">"请输入任务描述"</string>
+    <string name="add_task_choose">"请选择"</string>
+    <string name="add_task_inputPlease">"请输入"</string>
+    <string name="add_task_send">"提交"</string>
+    <!--添加任务end-->
+
+    <!--推送任务start-->
+    <string name="pull_task_close">"关闭"</string>
+    <string name="pull_task_sure">"查看"</string>
+    <!--推送任务end-->
 </resources>

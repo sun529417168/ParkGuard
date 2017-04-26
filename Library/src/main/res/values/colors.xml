@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="translucent_background">#60000000</color>
+    <color name="translucence">#80000000</color>
+
     <color name="primary">#009688</color>
     <color name="primary_dark">#00897b</color>
     <color name="primary_light">#B2DFDB</color>
@@ -9,7 +15,6 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
     <color name="light_grey">#E8E8E8</color>
-    <color name="white">#ffffff</color>
 
     <color name="window_background">#FFF5F5F5</color>
     <color name="tab_bgcolor">#eeeeee</color>
@@ -18,4 +23,30 @@
     <color name="google_blue">#0057e7</color>
     <color name="google_green">#008744</color>
     <color name="google_yellow">#ffa700</color>
+    <color name="pale_pink">#FDEEDE</color>
+
+    <!--蓝色-->
+    <color name="blue">#079EFE</color>
+    <color name="blue2">#5FBFFC</color>
+    <!--蓝深色-->
+    <color name="blue3">#1B6DA1</color>
+    <!--灰色-->
+    <color name="gray">#A9A9A9</color>
+    <color name="gray_s">#EEEEEE</color>
+    <color name="gray_3">#F7F7F7</color>
+    <color name="gray_4">#E9E9E9</color>
+    <!--红色-->
+    <color name="red">#AE0101</color>
+    <!--白色-->
+    <color name="white">#FFFFFF</color>
+    <color name="white_s">#00000000</color>
+    <color name="white_2">#FCFBFB</color>
+    <!--黑色-->
+    <color name="black">#232A32</color>
+    <!--粉色-->
+    <color name="fenSe">#FC7979</color>
+    <!--浅黄色-->
+    <color name="yellow">#C0B619</color>
+    <!--绿色-->
+    <color name="green">#1E7101</color>
 </resources>

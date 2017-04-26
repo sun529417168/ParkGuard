@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="searchInfo">
+        <item>任务名称</item>
+        <item>发送人</item>
+    </string-array>
+</resources>
