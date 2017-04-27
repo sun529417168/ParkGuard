@@ -16,5 +16,8 @@
         <item name="colorAccent">@color/blue</item>
     </style>
 
+    <style name="TaskWelcomeThem" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">@drawable/welcome</item>
+    </style>
 
 </resources>
