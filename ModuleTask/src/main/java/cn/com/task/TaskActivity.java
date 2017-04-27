@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 
 import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.base.BaseFragmentActivity;
+import com.linked.erfli.library.utils.StatusBarUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class TaskActivity extends BaseFragmentActivity {
     public void setView() {
         setContentView(R.layout.activity_task);
         mContext = this;
-//        StatusBarUtil.setColor(TaskActivity.this, ContextCompat.getColor(mContext, R.color.blue));
+        StatusBarUtils.ff(mContext, R.color.task_blue);
     }
 
     @Override

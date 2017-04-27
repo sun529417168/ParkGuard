@@ -87,14 +87,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/login_button"
+        android:layout_below="@+id/task_login_button"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
         android:text="@string/forget_password" />
 
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/task_login_button"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignEnd="@+id/login_forget_password"

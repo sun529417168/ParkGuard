@@ -1,4 +1,4 @@
-package cn.com.task.utils;
+package com.linked.erfli.library.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -14,7 +14,7 @@ public class StatusBarUtils {
 
     public static Context mContext;
 
-    public static void ff(final Context context, int color) {
+    public static void ff(final Context context, final int color) {
         mContext = context;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);

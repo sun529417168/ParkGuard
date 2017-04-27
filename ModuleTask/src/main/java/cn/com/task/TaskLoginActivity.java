@@ -58,7 +58,7 @@ public class TaskLoginActivity extends BaseActivity implements View.OnClickListe
         title_name.setText("登录");
         login_username = (EditText) findViewById(R.id.login_username);
         login_password = (EditText) findViewById(R.id.login_password);
-        login_button = (Button) findViewById(R.id.login_button);
+        login_button = (Button) findViewById(R.id.task_login_button);
         login_button.setOnClickListener(this);
         login_forget_password = (TextView) findViewById(R.id.login_forget_password);
         login_forget_password.setOnClickListener(this);
@@ -68,16 +68,15 @@ public class TaskLoginActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.login_button:
-                userName = login_username.getText().toString().trim();
-                passWord = login_password.getText().toString().trim();
-                if (isEmpt()) {
-                    TaskReuest.loginRequest(mContext, userName, passWord);
-                }
-                break;
-            case R.id.login_forget_password:
-                break;
+        int i = v.getId();
+        if (i == R.id.task_login_button) {
+            userName = login_username.getText().toString().trim();
+            passWord = login_password.getText().toString().trim();
+            if (isEmpt()) {
+                TaskReuest.loginRequest(mContext, userName, passWord);
+            }
+
+        } else if (i == R.id.login_forget_password) {
         }
     }
 

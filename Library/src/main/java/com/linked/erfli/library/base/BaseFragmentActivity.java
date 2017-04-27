@@ -35,11 +35,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        // 透明状态栏
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        // 透明导航栏
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         // 没有标题栏
+//        StatusBarUtil.setColor(TaskActivity.this, ContextCompat.getColor(mContext, R.color.blue));
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         PGApp = PGActivityUtil.getInstance();
