@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/item_notice_number"
+            style="@style/notice_item"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/item_notice_date"
+            style="@style/notice_item"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <!--左边图片start-->
+        <LinearLayout
+            android:id="@+id/item_notice_picture"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/item_notice_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <!--左边图片end-->
+        <!--左边日历start-->
+        <!--说明：默认是没有日历的，在没有图片的情况下才会显示日历-->
+        <RelativeLayout
+            android:id="@+id/item_notice_calendar"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight="3"
+            android:background="@mipmap/calendar_background"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/notice_year_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="13sp"
+                android:text="2017年3月"
+                android:textColor="#EA1E13" />
+
+            <TextView
+                android:id="@+id/notice_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:textSize="13sp"
+                android:text="星期二"
+                android:textColor="#EA1E13" />
+
+            <TextView
+                android:id="@+id/notice_lunar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="农历四月初一"
+                android:textSize="11sp"
+                android:paddingBottom="2dp"
+                android:textColor="#EA1E13" />
+
+            <TextView
+                android:id="@+id/notice_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="20"
+                android:textColor="#EA1E13"
+                android:textSize="13sp"
+                android:typeface="serif" />
+        </RelativeLayout>
+        <!--左边日历end-->
+        <!--右边的数据start-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_notice_name"
+                style="@style/notice_item"
+                android:layout_marginTop="15dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/item_notice_info"
+                style="@style/notice_item"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:lines="1" />
+        </LinearLayout>
+        <!--右边的数据end-->
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@color/white" />
+</LinearLayout>

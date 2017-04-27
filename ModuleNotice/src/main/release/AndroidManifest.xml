@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:supportsRtl="true">
-        <activity android:name=".NoticeActivity">
+        <activity android:name=".activity.NoticeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
