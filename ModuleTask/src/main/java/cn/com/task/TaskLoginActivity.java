@@ -68,15 +68,16 @@ public class TaskLoginActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.task_login_button) {
-            userName = login_username.getText().toString().trim();
-            passWord = login_password.getText().toString().trim();
-            if (isEmpt()) {
-                TaskReuest.loginRequest(mContext, userName, passWord);
-            }
-
-        } else if (i == R.id.login_forget_password) {
+        switch (v.getId()) {
+            case R.id.task_login_button:
+                userName = login_username.getText().toString().trim();
+                passWord = login_password.getText().toString().trim();
+                if (isEmpt()) {
+                    TaskReuest.loginRequest(mContext, userName, passWord);
+                }
+                break;
+            case R.id.login_forget_password:
+                break;
         }
     }
 
