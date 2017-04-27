@@ -4,18 +4,25 @@
 
     <application
         android:allowBackup="true"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/TaskAppTheme">
         <activity
             android:name=".TaskWelcomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".TaskLoginActivity" />
-        <activity android:name=".TaskActivity" />
+        <activity
+            android:name=".TaskActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".TaskEditorUserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>
