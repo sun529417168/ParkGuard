@@ -13,6 +13,7 @@ import com.linked.erfli.library.utils.SharedUtil;
 import java.util.ArrayList;
 
 import cn.com.notice.R;
+import cn.com.notice.adapter.NoticeAdapter;
 import cn.com.notice.bean.NoticeBean;
 
 
