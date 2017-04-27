@@ -30,9 +30,10 @@ public class MyTitle implements View.OnClickListener {
     private Context context;
 
     /**
-     * 单例模式中获取唯一的BYApplication实例
-     *
-     * @return
+     * 方法名：MyTitle
+     * 功    能：单利模式获取唯一title
+     * 参    数：
+     * 返回值：
      */
     public static MyTitle getInstance() {
         if (null == title) {
@@ -41,6 +42,12 @@ public class MyTitle implements View.OnClickListener {
         return title;
     }
 
+    /**
+     * 方法名：setTitle
+     * 功    能：设置标题名称
+     * 参    数：BaseActivity view, String info, PGActivityUtil PGApp, boolean flag
+     * 返回值：
+     */
     public void setTitle(BaseActivity view, String info, PGActivityUtil PGApp, boolean flag) {
         this.PGApp = PGApp;
         this.context = view;
@@ -53,6 +60,7 @@ public class MyTitle implements View.OnClickListener {
         titleName = (TextView) view.findViewById(R.id.title_name);
         titleName.setText(info);
         netText = (TextView) view.findViewById(R.id.title_net);
+        netText.setOnClickListener(this);
         boolean netConnect = view.isNetConnect();
         if (netConnect) {
             netText.setVisibility(View.GONE);
@@ -61,6 +69,12 @@ public class MyTitle implements View.OnClickListener {
         }
     }
 
+    /**
+     * 方法名：setNetText
+     * 功    能：判断网络变化提示
+     * 参    数：BaseActivity view, int netMobile
+     * 返回值：
+     */
     public void setNetText(BaseActivity view, int netMobile) {
         this.context = view;
         netText = (TextView) view.findViewById(R.id.title_net);

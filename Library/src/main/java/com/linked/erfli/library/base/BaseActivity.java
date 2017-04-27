@@ -163,6 +163,13 @@ public abstract class BaseActivity extends BaseCheckPermissionActivity implement
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        evevt = this;
+        inspectNet();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         OkHttpUtils.getInstance().cancelTag(this);
