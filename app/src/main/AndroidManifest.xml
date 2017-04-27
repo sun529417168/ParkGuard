@@ -6,12 +6,20 @@
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <!-- 阿里推送请填写你自己的- appKey -->
+        <meta-data
+            android:name="com.alibaba.app.appkey"
+            android:value="23660312" />
+        <!-- 阿里推送请填写你自己的appSecret -->
+        <meta-data
+            android:name="com.alibaba.app.appsecret"
+            android:value="43d570224c4e55b7c688f676ab2688bb" />
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,6 +43,21 @@
                 <data android:scheme="@string/jump_scheme" />
             </intent-filter>
         </activity>
+        <!--主界面-->
+        <activity
+            android:name=".activity.HomeActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--忘记密码界面-->
+        <activity
+            android:name=".activity.ForgetPasswordActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--完善自己资料的界面-->
+        <activity
+            android:name=".activity.EditorUserActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
