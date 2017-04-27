@@ -3,18 +3,20 @@
     package="cn.com.task">
 
     <application
+        android:name=".app.TaskApplication"
         android:allowBackup="true"
         android:supportsRtl="true"
         android:theme="@style/TaskAppTheme">
         <activity
             android:name=".TaskWelcomeActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/TaskWelcomeThem">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".TaskLoginActivity" />
+
         <activity
             android:name=".TaskActivity"
             android:screenOrientation="portrait"
@@ -23,6 +25,30 @@
             android:name=".TaskEditorUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".AddTaskActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".TaskDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".TaskSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".DetailImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".InputTextActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".TaskChoosePersonActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
