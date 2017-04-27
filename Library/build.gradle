@@ -42,4 +42,5 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.github.mzule.activityrouter:activityrouter:1.2.2'
     compile 'com.alibaba:fastjson:1.2.31'
+    compile files('libs/systembartint-1.0.4.jar')
 }
