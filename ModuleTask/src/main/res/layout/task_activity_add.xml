@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/add_task_title"
+        layout="@layout/title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/add_task_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <!--任务名称start-->
+            <RelativeLayout
+                android:id="@+id/task_name_layout"
+                style="@style/add_task_layout">
+
+                <TextView
+                    android:id="@+id/name"
+                    style="@style/add_task_textView"
+                    android:text="@string/add_task_name" />
+
+                <TextView
+                    android:id="@+id/add_task_name"
+                    style="@style/add_problem_textView"
+                    android:layout_width="200sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/add_task_name_right"
+                    android:ellipsize="marquee"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/add_task_inputPlease"
+                    android:maxLines="1" />
+
+                <ImageView
+                    android:id="@+id/add_task_name_right"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+
+            </RelativeLayout>
+            <!--任务名称end-->
+
+            <!--任务类型start-->
+            <RelativeLayout
+                android:id="@+id/add_task_typeLayout"
+                style="@style/add_task_layout">
+
+                <TextView
+                    android:id="@+id/leiXing"
+                    style="@style/add_task_textView"
+                    android:text="@string/add_task_type" />
+
+                <TextView
+                    android:id="@+id/add_task_type"
+                    style="@style/add_problem_textView"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/add_task_type_right"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/add_task_choose" />
+
+                <ImageView
+                    android:id="@+id/add_task_type_right"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--任务类型end-->
+
+            <!--任务地点start-->
+            <RelativeLayout style="@style/add_task_layout">
+
+                <TextView
+                    android:id="@+id/diDian"
+                    style="@style/add_task_textView"
+                    android:text="@string/add_task_address" />
+
+                <EditText
+                    android:id="@+id/add_task_address"
+                    style="@style/add_task_editView"
+                    android:layout_marginRight="13dp"
+                    android:layout_toRightOf="@+id/diDian"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/add_task_inputPlease" />
+
+            </RelativeLayout>
+            <!--任务地点end-->
+
+            <!--优先级start-->
+            <RelativeLayout
+                android:id="@+id/add_task_priorityLayout"
+                style="@style/add_task_layout">
+
+                <TextView
+                    style="@style/add_task_textView"
+                    android:text="@string/add_task_priority" />
+
+                <TextView
+                    android:id="@+id/add_task_priority"
+                    style="@style/add_problem_textView"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/add_task_priority_right"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/add_task_choose" />
+
+                <ImageView
+                    android:id="@+id/add_task_priority_right"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--优先级end-->
+            <!--开始时间start-->
+            <RelativeLayout
+                android:id="@+id/add_task_startTimeLayout"
+                style="@style/add_task_layout">
+
+                <TextView
+                    style="@style/add_task_textView"
+                    android:text="@string/add_task_startTime" />
+
+                <TextView
+                    android:id="@+id/add_task_startTime"
+                    style="@style/add_problem_textView"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/add_task_startTime_right"
+                    android:hint="@string/add_task_choose" />
+
+                <ImageView
+                    android:id="@+id/add_task_startTime_right"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--开始时间end-->
+            <!--结束时间start-->
+            <RelativeLayout
+                android:id="@+id/add_task_endTimeLayout"
+                style="@style/add_task_layout">
+
+                <TextView
+                    style="@style/add_task_textView"
+                    android:text="@string/add_task_endTime" />
+
+                <TextView
+                    android:id="@+id/add_task_endTime"
+                    style="@style/add_problem_textView"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/add_task_endTime_right"
+                    android:hint="@string/add_task_choose" />
+
+                <ImageView
+                    android:id="@+id/add_task_endTime_right"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--结束时间end-->
+            <!--下发人员start-->
+            <RelativeLayout
+                android:id="@+id/add_task_personLayout"
+                style="@style/add_task_layout">
+
+                <TextView
+                    style="@style/add_task_textView"
+                    android:text="@string/add_task_person" />
+
+                <TextView
+                    android:id="@+id/add_task_person"
+                    style="@style/add_problem_textView"
+                    android:layout_width="200dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/add_task_person_right"
+                    android:ellipsize="marquee"
+                    android:gravity="right"
+                    android:hint="@string/add_task_choose"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="1" />
+
+                <ImageView
+                    android:id="@+id/add_task_person_right"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--下发人员end-->
+
+            <!--图片上传start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/add_problem_detail_photoText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/add_task_image"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/add_task_takePhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@mipmap/camera" />
+
+                <cn.com.task.weight.ReportedGridview
+                    android:id="@+id/add_task_gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/add_problem_detail_photoText"
+                    android:layout_marginTop="15dp"
+                    android:horizontalSpacing="3dp"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:verticalSpacing="10dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_below="@+id/add_task_gridView" />
+            </RelativeLayout>
+            <!--图片上传end-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="@color/gray_4" />
+            <!--任务描述start-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/add_task_describe"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/add_task_inputInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@null"
+                    android:hint="@string/add_task_inputDescribe"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp" />
+            </LinearLayout>
+            <!--任务描述end-->
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/add_task_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_button"
+        android:text="@string/add_task_send"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</RelativeLayout>
