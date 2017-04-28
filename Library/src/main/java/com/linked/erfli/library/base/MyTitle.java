@@ -52,8 +52,9 @@ public class MyTitle implements View.OnClickListener {
         this.PGApp = PGApp;
         this.context = view;
         back = (LinearLayout) view.findViewById(R.id.title_back);
+        back.setOnClickListener(this);
         if (flag) {
-            back.setOnClickListener(this);
+            back.setVisibility(View.VISIBLE);
         } else {
             back.setVisibility(View.GONE);
         }

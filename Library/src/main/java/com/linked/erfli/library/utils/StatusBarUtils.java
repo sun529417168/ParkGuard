@@ -7,6 +7,7 @@ import android.os.Build;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.linked.erfli.library.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 
@@ -24,6 +25,18 @@ public class StatusBarUtils {
         tintManager.setStatusBarTintEnabled(true);
         // 通知栏所需颜色
         tintManager.setStatusBarTintResource(color);
+
+    }
+    public static void ff(final Context context) {
+        mContext = context;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+        }
+        SystemBarTintManager tintManager = new SystemBarTintManager(
+                (Activity) context);
+        tintManager.setStatusBarTintEnabled(true);
+        // 通知栏所需颜色
+        tintManager.setStatusBarTintResource(R.color.blue);
 
     }
 
