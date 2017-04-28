@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/task_datail_relativalayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_s"
@@ -12,8 +13,9 @@
         layout="@layout/title" />
 
     <ScrollView
+        android:id="@+id/task_detail_scrollow"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/task_detail_button_layout"
         android:layout_below="@+id/task_detail_title">
 
@@ -25,7 +27,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
                 android:gravity="bottom"
                 android:text="@string/task_detail_titleName"
                 android:textColor="@color/black"
@@ -217,25 +221,29 @@
 
 
             <!--任务描述start-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/task_detail_describe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:gravity="left|top"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
             <TextView
-                android:id="@+id/task_detail_describe"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:gravity="left|top"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:textColor="@color/black" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="5dp"
                 android:background="@color/white" />
-            <!--任务描述end-->
 
-
-            <!--=====================以下是反馈信息==================-->
             <LinearLayout
                 android:id="@+id/task_detail_feedbackLayout"
                 android:layout_width="match_parent"
@@ -243,11 +251,12 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="bottom"
+                    android:layout_marginTop="5dp"
                     android:text="@string/task_detail_bottomName"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -363,6 +372,12 @@
                     android:background="@color/white" />
                 <!--内容区域end-->
             </LinearLayout>
+
+
+            <!--任务描述end-->
+
+
+            <!--=====================以下是反馈信息==================-->
         </LinearLayout>
     </ScrollView>
 
@@ -372,7 +387,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@null">
+        android:background="@null"
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="match_parent"

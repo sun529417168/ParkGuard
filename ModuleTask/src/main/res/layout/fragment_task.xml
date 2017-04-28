@@ -21,6 +21,8 @@
         android:id="@+id/task_refresh_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:cacheColorHint="#00000000"
         android:divider="#19000000"
         android:dividerHeight="4dp"
@@ -46,4 +48,6 @@
             android:layout_centerInParent="true"
             android:background="@mipmap/nothing" />
     </RelativeLayout>
+
+
 </LinearLayout>

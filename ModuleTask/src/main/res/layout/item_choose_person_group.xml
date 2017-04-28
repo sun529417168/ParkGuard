@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:contentDescription="@null"
-        android:src="@mipmap/btn_browser" />
+        android:src="@mipmap/ex_right" />
 
     <TextView
         android:id="@+id/choose_person_groupText"
