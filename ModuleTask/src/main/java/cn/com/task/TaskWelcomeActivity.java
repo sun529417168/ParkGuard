@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.utils.SharedUtil;
+import com.linked.erfli.library.utils.StatusBarUtils;
+
 
 /**
  * Created by 志强 on 2017.4.26.
@@ -25,6 +27,7 @@ public class TaskWelcomeActivity extends BaseActivity {
     protected void setView() {
         setContentView(R.layout.task_activity_welcome);
         mContext = this;
+        StatusBarUtils.ff(mContext, R.color.transparent);
     }
 
     /**

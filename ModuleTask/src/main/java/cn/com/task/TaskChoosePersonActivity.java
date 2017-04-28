@@ -108,5 +108,7 @@ public class TaskChoosePersonActivity extends BaseActivity implements View.OnCli
             childCount = 0;
             parentCount++;
         }
+        adapter = new TaskChoosePersonAdapter(childrenData, groupData, childCheckBox, parentCheckBox, getApplicationContext(), explistview);
+        explistview.setAdapter(adapter);
     }
 }

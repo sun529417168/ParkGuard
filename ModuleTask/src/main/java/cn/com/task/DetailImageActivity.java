@@ -14,7 +14,7 @@ import com.linked.erfli.library.base.BaseActivity;
 public class DetailImageActivity extends BaseActivity {
     @Override
     protected void setView() {
-
+        setContentView(R.layout.task_activity_showphoto);
     }
 
     @Override
