@@ -1,22 +1,41 @@
 package cn.com.task.networkrequest;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.linked.erfli.library.config.UrlConfig;
 import com.linked.erfli.library.okhttps.OkHttpUtils;
 import com.linked.erfli.library.okhttps.callback.GenericsCallback;
+import com.linked.erfli.library.okhttps.callback.StringCallback;
 import com.linked.erfli.library.okhttps.utils.JsonGenericsSerializator;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.com.task.bean.TaskBean;
+import cn.com.task.bean.TaskChoosePersonBean;
+import cn.com.task.bean.TaskDetailBean;
+import cn.com.task.bean.TaskPriorityBean;
+import cn.com.task.bean.TaskTypeBean;
 import cn.com.task.bean.UserBean;
+import cn.com.task.interfaces.ChoosePersonInterface;
+import cn.com.task.interfaces.TaskAssignedInterface;
+import cn.com.task.interfaces.TaskListInterface;
 import cn.com.task.interfaces.TaskLoginInterface;
+import cn.com.task.interfaces.TaskTypeValuesInterface;
 import cn.com.task.utils.LoadingDialogUtil;
+import cn.com.task.weight.AddTaskPriorityPopwindow;
+import cn.com.task.weight.AddTaskTypePopwindow;
 import okhttp3.Call;
 
 /**
@@ -76,6 +95,270 @@ public class TaskReuest {
                     taskLoginInterface.getLoginResult(userBean);
                 }
                 if (LoadingDialogUtil.show(mActivity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 方法名：tasIssuedListRequest
+     * 功    能：任务列表
+     * 参    数：Activity activity String... strings
+     * 返回值：无
+     */
+    public static void tasIssuedListRequest(final Context activity, TaskListInterface myTaskListInterface, Object... strings) {
+        final TaskListInterface taskListInterface = myTaskListInterface;
+        LoadingDialogUtil.show(activity);
+        Map<String, Object> params = new HashMap<>();
+        try {
+            params.put("pageindex", strings[0]);
+            params.put("pagesize", strings[1]);
+            params.put("state", strings[2]);
+            params.put("PersonID", SharedUtil.getString(activity, "PersonID"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.post().url(UrlConfig.URL_GETTASISSUEDLIST).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onResponse(String response, int id) {
+                Log.i("taskList", response);
+                TaskBean taskList = JSON.parseObject(response, TaskBean.class);
+                taskListInterface.showTaskList(taskList);
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                if ("timeout".equals(e.getMessage().toString())) {
+                    ToastUtil.show(activity, "连接超时，请稍后再试");
+                }
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 方法名：taskDetailRequest
+     * 功    能：任务详情+反馈
+     * 参    数：final Context activity, TaskListInterface myTaskListInterface, String id
+     * 返回值：无
+     */
+    public static void taskDetailTaskAssignedRequest(final Activity activity, String id) {
+        LoadingDialogUtil.show(activity);
+        final TaskAssignedInterface taskAssignedInterface = (TaskAssignedInterface) activity;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            params.put("TaskAssignedID", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.post().url(UrlConfig.URL_GETTASKINFOANDTASKASSIGNEDINFOBYTASKASSIGNEDID).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onResponse(String response, int id) {
+                Log.i("taskDetailRequest", response);
+                TaskDetailBean taskBean = JSON.parseObject(response, TaskDetailBean.class);
+                taskAssignedInterface.getTaskDetail(taskBean);
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                if ("timeout".equals(e.getMessage().toString())) {
+                    ToastUtil.show(activity, "连接超时，请稍后再试");
+                }
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 方法名：filesRequest
+     * 功    能：任务反馈+上传图片
+     * 参    数：Context activity, Map<String, File> params
+     * 返回值：无
+     */
+    public static void filesRequest(final Activity activity, final ImageView reverse, Map<String, File> fileMap, Object... strings) {
+        LoadingDialogUtil.show(activity);
+        Map<String, Object> params = new HashMap<>();
+        params.put("FeedBackContent", strings[0]);
+        params.put("TaskAssignedID", strings[1]);
+        params.put("FeedbackState", strings[2]);
+        OkHttpUtils.post().files("mFile", fileMap).url(UrlConfig.URL_TASKASSIGNEDINFO).params(params).build().execute(new StringCallback() {
+            @Override
+            public void onResponse(String response, int id) {
+                if ("true".equals(response)) {
+                    ToastUtil.show(activity, "反馈成功");
+                    reverse.setVisibility(View.GONE);
+                    activity.finish();
+                } else {
+                    ToastUtil.show(activity, "反馈失败，请稍候再试");
+                    reverse.setVisibility(View.VISIBLE);
+                }
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                ToastUtil.show(activity, "错误代码" + e.getMessage().toString());
+                reverse.setVisibility(View.VISIBLE);
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 方法名：getTaskTypeRequest
+     * 功    能：获取任务下发类型
+     * 参    数：final Activity activity, final RelativeLayout typeLayout
+     * 返回值：无
+     */
+    public static void getTaskTypeRequest(final Activity activity, final RelativeLayout typeLayout, final int index) {
+        Map<String, Object> params = new HashMap<>();
+        LoadingDialogUtil.show(activity);
+        final TaskTypeValuesInterface taskTypeValuesInterface = (TaskTypeValuesInterface) activity;
+        OkHttpUtils.post().url(UrlConfig.URL_GETTASKTYPE).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onResponse(String response, int id) {
+                ArrayList<TaskTypeBean> listBean = (ArrayList<TaskTypeBean>) JSON.parseArray(response, TaskTypeBean.class);
+                AddTaskTypePopwindow mAddTaskType = new AddTaskTypePopwindow(activity, listBean);
+                mAddTaskType.showAtLocation(typeLayout, Gravity.BOTTOM, 0, 0);
+                mAddTaskType.setAddresskListener(new AddTaskTypePopwindow.OnAddressCListener() {
+                    @Override
+                    public void onClick(String name, String code) {
+                        taskTypeValuesInterface.getTaskType(name, code, index);
+                    }
+                });
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                ToastUtil.show(activity, "服务器有错误，请稍候再试");
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 方法名：getPriorityRequest
+     * 功    能：获取优先级类型
+     * 参    数：final Activity activity, final RelativeLayout typeLayout
+     * 返回值：无
+     */
+    public static void getPriorityRequest(final Activity activity, final RelativeLayout typeLayout, final int index) {
+        LoadingDialogUtil.show(activity);
+        final TaskTypeValuesInterface taskTypeValuesInterface = (TaskTypeValuesInterface) activity;
+        OkHttpUtils.get().url(UrlConfig.URL_GETTASKPRIORITY).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onResponse(String response, int id) {
+                ArrayList<TaskPriorityBean> listBean = (ArrayList<TaskPriorityBean>) JSON.parseArray(response, TaskPriorityBean.class);
+                AddTaskPriorityPopwindow mAddTaskPriority = new AddTaskPriorityPopwindow(activity, listBean);
+                mAddTaskPriority.showAtLocation(typeLayout, Gravity.BOTTOM, 0, 0);
+                mAddTaskPriority.setAddresskListener(new AddTaskPriorityPopwindow.OnAddressCListener() {
+                    @Override
+                    public void onClick(String name, String code) {
+                        taskTypeValuesInterface.getTaskType(name, code, index);
+                    }
+                });
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                ToastUtil.show(activity, "服务器有错误，请稍候再试");
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 方法名：addTaskRequests
+     * 功    能：新增任务
+     * 参    数：Context activity, Map<String,File> fileMap, Object... strings
+     * 返回值：无
+     */
+    public static void addTaskRequests(final Activity activity, Map<String, File> fileMap, Object... strings) {
+        LoadingDialogUtil.show(activity);
+        Map<String, Object> params = new HashMap<>();
+        params.put("AddTaskName", strings[0]);
+        params.put("AddTaskType", strings[1]);
+        params.put("AddTaskAddr", strings[2]);
+        params.put("AddTaskPriority", strings[3]);
+        params.put("AddStartDate", strings[4]);
+        params.put("AddEndDate", strings[5]);
+        params.put("PersonIDs", strings[6]);
+        params.put("AddTaskDes", strings[7]);
+        params.put("PersonID", SharedUtil.getString(activity, "PersonID"));
+        OkHttpUtils.post().files("mFile", fileMap).url(UrlConfig.URL_UPLOADTASK).params(params).build().execute(new StringCallback() {
+            @Override
+            public void onResponse(String response, int id) {
+                if ("true".equals(response)) {
+                    ToastUtil.show(activity, "上报成功");
+                    activity.finish();
+                } else {
+                    ToastUtil.show(activity, "上报失败，请稍候再试");
+                }
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.i("addTaskRequestsError", e.getMessage().toString());
+                ToastUtil.show(activity, "服务器异常，请稍后再试");
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 方法名：GetPersonInfoByDepartmentRequest
+     * 功    能：获取人员部门树状结构数据
+     * 参    数：final Activity activity
+     * 返回值：无
+     */
+    public static void GetPersonInfoByDepartmentRequest(final Activity activity) {
+        LoadingDialogUtil.show(activity);
+        final ChoosePersonInterface personInterface = (ChoosePersonInterface) activity;
+        OkHttpUtils.get().url(UrlConfig.URL_GETPERSONINFOBYDEPARTMENT).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onResponse(String response, int id) {
+                ArrayList<TaskChoosePersonBean> choosePersonList = (ArrayList<TaskChoosePersonBean>) JSON.parseArray(response, TaskChoosePersonBean.class);
+                personInterface.getPerson(choosePersonList);
+                if (LoadingDialogUtil.show(activity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                ToastUtil.show(activity, "服务器有错误，请稍候再试");
+                if (LoadingDialogUtil.show(activity).isShowing()) {
                     LoadingDialogUtil.dismiss();
                 }
             }
