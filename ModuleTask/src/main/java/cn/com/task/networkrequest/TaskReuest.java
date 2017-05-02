@@ -311,7 +311,7 @@ public class TaskReuest {
         params.put("PersonIDs", strings[6]);
         params.put("AddTaskDes", strings[7]);
         params.put("PersonID", SharedUtil.getString(activity, "PersonID"));
-        OkHttpUtils.post().files("mFile", fileMap).url(UrlConfig.URL_UPLOADTASK).params(params).build().execute(new StringCallback() {
+        OkHttpUtils.post().files("AddImageZ", fileMap).url(UrlConfig.URL_UPLOADTASK).params(params).build().execute(new StringCallback() {
             @Override
             public void onResponse(String response, int id) {
                 if ("true".equals(response)) {

@@ -118,9 +118,9 @@ public class TaskChoosePersonAdapter extends BaseExpandableListAdapter {
         ImageView iv = (ImageView) view.findViewById(R.id.choose_person_groupImage);
 
         if (isExpanded) {
-            iv.setImageResource(R.mipmap.btn_browser2);
+            iv.setImageResource(R.mipmap.ex_down);
         } else {
-            iv.setImageResource(R.mipmap.btn_browser);
+            iv.setImageResource(R.mipmap.ex_right);
         }
 
         TextView text = (TextView) view.findViewById(R.id.choose_person_groupText);

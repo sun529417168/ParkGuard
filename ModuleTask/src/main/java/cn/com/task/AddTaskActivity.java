@@ -240,7 +240,7 @@ public class AddTaskActivity extends TakePhotoActivity implements View.OnClickLi
         Log.i("imagePaths", imagePath + "======" + imageIndex);
         listPath.add(imagePath);
         mCameraFile = new File(imagePath);
-        fileMap.put(imagePath, mCameraFile);
+        fileMap.put("AddImage" + imagePath, mCameraFile);
         listFile.add(mCameraFile);
         showImg(imagePath);
     }

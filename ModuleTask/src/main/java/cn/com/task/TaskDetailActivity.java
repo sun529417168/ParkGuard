@@ -16,11 +16,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.linked.erfli.library.utils.MyUtils;
@@ -90,11 +92,15 @@ public class TaskDetailActivity extends TakePhotoActivity implements View.OnClic
     private String taskId = "";
     private ImageView reverse;
 
+    //new add 2017年4月28日15:35:41 zzq
+    private FrameLayout task_detail_button_layout;
+    private ScrollView task_detail_scrollow;
+
     @Override
     protected void setView() {
         setContentView(R.layout.activity_task_detail);
         context = this;
-        StatusBarUtils.ff(context,R.color.blue);
+        StatusBarUtils.ff(context, R.color.blue);
     }
 
     @Override
@@ -116,6 +122,11 @@ public class TaskDetailActivity extends TakePhotoActivity implements View.OnClic
 
     @Override
     protected void init() {
+        //new add zzq 2017年4月28日15:36:51
+        task_detail_button_layout = (FrameLayout) findViewById(R.id.task_detail_button_layout);
+        task_detail_scrollow = (ScrollView) findViewById(R.id.task_detail_scrollow);
+
+
         titleName = (TextView) findViewById(R.id.title_name);
         titleName.setText("任务详情");
         back = (LinearLayout) findViewById(R.id.title_back);
@@ -340,6 +351,8 @@ public class TaskDetailActivity extends TakePhotoActivity implements View.OnClic
             stateReplyText.setText("已完成");
             submitBtn.setVisibility(View.INVISIBLE);
             takePhoto.setVisibility(View.INVISIBLE);
+            task_detail_button_layout.setVisibility(View.GONE);
+
             infoEdit.setFocusable(false);
 
         }
@@ -349,6 +362,7 @@ public class TaskDetailActivity extends TakePhotoActivity implements View.OnClic
             noOver.setVisibility(View.GONE);
             stateReplyText.setText("未完成");
             submitBtn.setVisibility(View.INVISIBLE);
+            task_detail_button_layout.setVisibility(View.GONE);
             takePhoto.setVisibility(View.INVISIBLE);
             infoEdit.setFocusable(false);
         }
@@ -365,6 +379,8 @@ public class TaskDetailActivity extends TakePhotoActivity implements View.OnClic
 
     @Override
     public void getTaskDetail(TaskDetailBean taskDetailBean) {
+        task_detail_button_layout.setVisibility(View.VISIBLE);
+        task_detail_scrollow.setVisibility(View.VISIBLE);
         taskBean = taskDetailBean;
         if (taskBean.getTaskAssigned().getFeedbackState() == 3 || taskBean.getTaskAssigned().getFeedbackState() == 4) {
             CalendarUtils.deleteCalendarInfo(context, taskId);
