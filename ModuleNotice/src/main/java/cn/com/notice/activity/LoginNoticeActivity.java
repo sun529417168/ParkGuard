@@ -1,27 +1,23 @@
-package cn.com.parkguard.activity;
+package cn.com.notice.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.alibaba.sdk.android.push.CloudPushService;
-import com.alibaba.sdk.android.push.CommonCallback;
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
-import cn.com.parkguard.Utils.MyRequest;
-import cn.com.parkguard.R;
-import cn.com.parkguard.bean.UserBean;
-import cn.com.parkguard.interfaces.LoginInterface;
+import cn.com.notice.R;
+import cn.com.notice.Utils.MyRequest;
+import cn.com.notice.bean.UserBean;
+import cn.com.notice.interfaces.LoginInterface;
 
 
 /**
@@ -32,8 +28,7 @@ import cn.com.parkguard.interfaces.LoginInterface;
  * 版    本：V1.0.0
  */
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginInterface {
-    private Context context;
+public class LoginNoticeActivity extends BaseActivity implements View.OnClickListener, LoginInterface {
     private EditText inputUsername, inputPassword;//用户名，密码
     private String username, password;
     private Button loginBtn;
@@ -41,8 +36,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void setView() {
-        setContentView(R.layout.activity_login);
-        context = this;
+        setContentView(R.layout.activity_notice_login);
     }
 
     @Override
@@ -72,28 +66,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case R.id.login_button:
-                username = inputUsername.getText().toString().trim();
-                password = inputPassword.getText().toString().trim();
-                if (isEmpt()) {
-                    MyRequest.loginRequest(this, username, password);
-                }
-                break;
-            case R.id.login_forget_password:
-                Intent intent = new Intent(this, ForgetPasswordActivity.class);
-                startActivity(intent);
-                break;
+        int i = v.getId();
+        if (i == R.id.login_button) {
+            username = inputUsername.getText().toString().trim();
+            password = inputPassword.getText().toString().trim();
+            if (isEmpt()) {
+                MyRequest.loginRequest(this, username, password);
+            }
+
+        } else if (i == R.id.login_forget_password) {
+            Intent intent = new Intent(this, ForgetPasswordActivity.class);
+            startActivity(intent);
+
         }
     }
 
     private boolean isEmpt() {
         boolean flag = false;
         if (TextUtils.isEmpty(username)) {
-            ToastUtil.show(context, "请输入用户名");
+            ToastUtil.show(this, "请输入用户名");
             flag = false;
         } else if (TextUtils.isEmpty(password)) {
-            ToastUtil.show(context, "请输入密码");
+            ToastUtil.show(this, "请输入密码");
             flag = false;
         } else {
             flag = true;
@@ -105,19 +99,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void login(final UserBean userBean) {
         SharedUtil.setString(this, "PersonID", userBean.getPersonId() + "");
         SharedUtil.setBoolean(this, "isSuccess", true);
-//        CloudPushService pushService = PushServiceFactory.getCloudPushService();
-//        pushService.bindAccount(userBean.getPersonId() + "", new CommonCallback() {
-//            @Override
-//            public void onSuccess(String s) {
-//                Log.i("loginInitUserName", "bind account success");
-//            }
-//
-//            @Override
-//            public void onFailed(String errorCode, String errorMessage) {
-//                Log.i("loginInitUserNameError", "bind account fail" + "err:" + errorCode + " - message:" + errorMessage);
-//                initPersonIdAli();
-//            }
-//        });
         if (userBean.getPersonId() == 0) {
             ToastUtil.show(this, "用户名或者密码不对，请重新输入");
             return;
@@ -130,28 +111,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
         if (1 == userBean.getUserType()) {
             SharedUtil.setBoolean(this, "isLogin", true);
-            Intent intent = new Intent(this, HomeActivity.class);
+            Intent intent = new Intent(this, NoticeActivity.class);
             startActivity(intent);
             this.finish();
         }
     }
 
-    private void initPersonIdAli() {
-        while (SharedUtil.getBoolean(this, "isSuccess", false)) {
-            CloudPushService pushService = PushServiceFactory.getCloudPushService();
-            pushService.bindAccount(SharedUtil.getString(this, "personId"), new CommonCallback() {
-                @Override
-                public void onSuccess(String s) {
-                    SharedUtil.setBoolean(LoginActivity.this, "isSuccess", false);
-                    Log.i("InitPersonId", "bind account success");
-                }
-
-                @Override
-                public void onFailed(String errorCode, String errorMessage) {
-                    Log.i("InitPersonIdError", "bind account fail" + "err:" + errorCode + " - message:" + errorMessage);
-                }
-            });
-        }
-    }
 
 }

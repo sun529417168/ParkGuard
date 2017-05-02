@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_s"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/title" />
+
+    <!--编号start-->
+    <RelativeLayout style="@style/notice_layout">
+
+        <TextView
+            style="@style/notice_detail_textView"
+            android:text="@string/notice_detail_number" />
+
+        <TextView
+            android:id="@+id/notice_detail_number"
+            style="@style/notice_detail_textView"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <!--编号end-->
+
+    <!--名称start-->
+    <RelativeLayout style="@style/notice_layout">
+
+        <TextView
+            style="@style/notice_detail_textView"
+            android:text="@string/notice_detail_name" />
+
+        <TextView
+            android:id="@+id/notice_detail_name"
+            style="@style/notice_detail_textView"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <!--名称end-->
+
+
+    <!--类型start-->
+    <RelativeLayout style="@style/notice_layout">
+
+        <TextView
+            style="@style/notice_detail_textView"
+            android:text="@string/notice_detail_type" />
+
+        <TextView
+            android:id="@+id/notice_detail_type"
+            style="@style/notice_detail_textView"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <!--类型end-->
+
+
+    <!--状态start-->
+    <RelativeLayout style="@style/notice_layout">
+
+        <TextView
+            style="@style/notice_detail_textView"
+            android:text="@string/notice_detail_state" />
+
+        <TextView
+            android:id="@+id/notice_detail_state"
+            style="@style/notice_detail_textView"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <!--状态end-->
+
+
+    <!--发送人start-->
+    <RelativeLayout style="@style/notice_layout">
+
+        <TextView
+            style="@style/notice_detail_textView"
+            android:text="@string/notice_detail_sender" />
+
+        <TextView
+            android:id="@+id/notice_detail_sender"
+            style="@style/notice_detail_textView"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <!--发送人end-->
+
+    <!--发送时间start-->
+    <RelativeLayout style="@style/notice_layout">
+
+        <TextView
+            style="@style/notice_detail_textView"
+            android:text="@string/notice_detail_sendTime" />
+
+        <TextView
+            android:id="@+id/notice_detail_sendTime"
+            style="@style/notice_detail_textView"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <!--发送时间end-->
+
+    <!--附件start-->
+    <RelativeLayout
+        android:id="@+id/notice_detail_state_fileLayout"
+        style="@style/notice_layout">
+
+        <TextView
+            android:id="@+id/notice_detail_fileName"
+            style="@style/notice_detail_textView" />
+
+
+        <TextView
+            android:id="@+id/notice_detail_attachment"
+            style="@style/notice_detail_textView"
+            android:layout_alignParentRight="true"
+            android:text="@string/notice_detail_download"
+            android:textColor="@color/blue" />
+    </RelativeLayout>
+    <!--附件end-->
+    <!--图片start-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:id="@+id/notice_detail_photoText_describe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/task_detail_image"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+
+        <com.linked.erfli.library.weight.ReportedGridview
+            android:id="@+id/notice_detail_gridView_describe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/notice_detail_photoText_describe"
+            android:layout_marginTop="15dp"
+            android:horizontalSpacing="3dp"
+            android:numColumns="3"
+            android:scrollbars="none"
+            android:verticalSpacing="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_below="@+id/notice_detail_gridView_describe" />
+    </RelativeLayout>
+    <!--图片end-->
+    <!--内容区域start-->
+    <TextView
+        android:id="@+id/notice_detail_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="left|top"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white" />
+    <!--内容区域end-->
+</LinearLayout>

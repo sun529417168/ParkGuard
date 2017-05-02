@@ -1,4 +1,4 @@
-package cn.com.parkguard.activity;
+package cn.com.notice.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,9 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.linked.erfli.library.base.BaseActivity;
-import com.linked.erfli.library.base.MyTitle;
 
-import cn.com.parkguard.R;
+import cn.com.notice.R;
 
 
 /**
@@ -22,6 +21,8 @@ import cn.com.parkguard.R;
  */
 
 public class ForgetPasswordActivity extends BaseActivity implements View.OnClickListener {
+    private TextView titleName;
+    private LinearLayout back;
     private TextView callPhone;
 
     @Override
@@ -31,31 +32,30 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
-        MyTitle.getInstance().setTitle(this, "忘记密码", PGApp, true);
+
     }
 
     @Override
     protected void init() {
+        titleName = (TextView) findViewById(R.id.title_name);
+        titleName.setText("忘记密码");
+        back = (LinearLayout) findViewById(R.id.title_back);
+        back.setVisibility(View.VISIBLE);
+        back.setOnClickListener(this);
         callPhone = (TextView) findViewById(R.id.forget_password_call);
         callPhone.setOnClickListener(this);
     }
 
     @Override
-    public void onNetChange(int netMobile) {
-        super.onNetChange(netMobile);
-        MyTitle.getInstance().setNetText(this, netMobile);
-    }
-
-    @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_back:
-                PGApp.finishTop();
-                break;
-            case R.id.forget_password_call:
-                Intent phoneIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "6566988"));
-                startActivity(phoneIntent);
-                break;
+        int i = v.getId();
+        if (i == R.id.title_back) {
+            PGApp.finishTop();
+
+        } else if (i == R.id.forget_password_call) {
+            Intent phoneIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "6566988"));
+            startActivity(phoneIntent);
+
         }
     }
 }

@@ -2,19 +2,28 @@ package cn.com.notice.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.base.BaseActivity;
+import com.linked.erfli.library.base.MyTitle;
+import com.linked.erfli.library.refresh.PullToRefreshBase;
 import com.linked.erfli.library.refresh.PullToRefreshListView;
 import com.linked.erfli.library.utils.SharedUtil;
+import com.linked.erfli.library.utils.StatusBarUtils;
 
 import java.util.ArrayList;
 
 import cn.com.notice.R;
+import cn.com.notice.Utils.MyRequest;
 import cn.com.notice.adapter.NoticeAdapter;
 import cn.com.notice.bean.NoticeBean;
+import cn.com.notice.interfaces.NoticeListInterface;
 
 
 /**
@@ -25,8 +34,7 @@ import cn.com.notice.bean.NoticeBean;
  * 版    本：V1.0.0
  */
 @Router("notice_list")
-public class NoticeActivity extends BaseActivity {
-    private Context context;
+public class NoticeActivity extends BaseActivity implements View.OnClickListener, NoticeListInterface {
     private TextView titleName;//标题名称
     /**
      * 全部，一天，一个星期，一个月
@@ -47,11 +55,108 @@ public class NoticeActivity extends BaseActivity {
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
+        MyTitle.getInstance().setTitle(this, "通知", PGApp, false);
+        request(timeNum);
+    }
 
+    private void request(int searchTime) {
+        MyRequest.getNoticeListRequest(this, this, searchTime);
     }
 
     @Override
     protected void init() {
+        titleName = (TextView) findViewById(R.id.title_name);
+        titleName.setText("通知公告");
+        mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.notice_refresh_list);
+        mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+        noticeAll = (TextView) findViewById(R.id.notice_all);
+        noticeOneDay = (TextView) findViewById(R.id.notice_oneDay);
+        noticeOneWeek = (TextView) findViewById(R.id.notice_oneWeek);
+        noticeOneMonth = (TextView) findViewById(R.id.notice_oneMonth);
+        textviews = new TextView[]{noticeAll, noticeOneDay, noticeOneWeek, noticeOneMonth};
+        nothing = (RelativeLayout) findViewById(R.id.notice_nothing);
+        setTextBack(noticeAll);
+        noticeAll.setOnClickListener(this);
+        noticeOneDay.setOnClickListener(this);
+        noticeOneWeek.setOnClickListener(this);
+        noticeOneMonth.setOnClickListener(this);
+        mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                Log.e("TAG", "onPullDownToRefresh");
+                // 这里写下拉刷新的任务
+                request(timeNum);
+                noticeAdapter.notifyDataSetChanged();
+                mPullRefreshListView.onRefreshComplete();
+            }
 
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                Log.e("TAG", "onPullUpToRefresh");
+                // 这里写上拉加载更多的任务
+                request(timeNum);
+                noticeAdapter.notifyDataSetChanged();
+                mPullRefreshListView.onRefreshComplete();
+            }
+        });
+    }
+
+    @Override
+    public void onNetChange(int netMobile) {
+        super.onNetChange(netMobile);
+        MyTitle.getInstance().setNetText(this, netMobile);
+    }
+
+    private void setTextBack(TextView view) {
+        for (int i = 0; i < textviews.length; i++) {
+            if (view.getId() == textviews[i].getId()) {
+                textviews[i].setTextColor(ContextCompat.getColor(this, R.color.white));
+                textviews[i].setBackgroundResource(R.color.blue2);
+            } else {
+                textviews[i].setTextColor(ContextCompat.getColor(this, R.color.blue));
+                textviews[i].setBackgroundResource(R.color.white);
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.notice_all) {
+            setTextBack(noticeAll);
+            timeNum = 0;
+            request(timeNum);
+
+        } else if (i == R.id.notice_oneDay) {
+            setTextBack(noticeOneDay);
+            timeNum = 1;
+            request(timeNum);
+
+        } else if (i == R.id.notice_oneWeek) {
+            setTextBack(noticeOneWeek);
+            timeNum = 2;
+            request(timeNum);
+
+        } else if (i == R.id.notice_oneMonth) {
+            setTextBack(noticeOneMonth);
+            timeNum = 3;
+            request(timeNum);
+
+        }
+    }
+
+    @Override
+    public void getNoticeList(NoticeBean noticeBean) {
+        if (noticeBean.getRows().size() == 0) {
+            mPullRefreshListView.setVisibility(View.GONE);
+            nothing.setVisibility(View.VISIBLE);
+        } else {
+            mPullRefreshListView.setVisibility(View.VISIBLE);
+            nothing.setVisibility(View.GONE);
+            noticeList = (ArrayList<NoticeBean.RowsBean>) noticeBean.getRows();
+            noticeAdapter = new NoticeAdapter(this, noticeList);
+            mPullRefreshListView.setAdapter(noticeAdapter);
+            noticeAdapter.notifyDataSetChanged();
+        }
     }
 }
