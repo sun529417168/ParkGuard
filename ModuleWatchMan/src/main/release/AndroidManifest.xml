@@ -7,13 +7,23 @@
         android:supportsRtl="true">
         <activity
             android:name=".WatchManActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/AppTheme">
+            <intent-filter>
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".WatchManLoginActivity" />
+        <activity android:name=".WatchManWelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".WatchManEditorUserActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
