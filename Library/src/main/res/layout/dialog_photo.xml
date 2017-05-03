@@ -37,16 +37,16 @@
         android:layout_marginTop="8dip"
         android:background="@drawable/sex_background"
         android:gravity="center"
-        android:visibility="gone"
         android:text="@string/photo_file"
         android:textColor="@color/blue2"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/dialog_photo_cancel"
         android:layout_width="match_parent"
         android:layout_height="42dip"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="8dip"
         android:background="@drawable/sex_background"
         android:gravity="center"

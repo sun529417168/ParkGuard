@@ -13,9 +13,6 @@ import com.linked.erfli.library.okhttps.OkHttpUtils;
 import com.linked.erfli.library.service.NetBroadcastReceiver;
 import com.linked.erfli.library.utils.NetWorkUtils;
 import com.linked.erfli.library.utils.PGActivityUtil;
-import com.linked.erfli.library.utils.SharedUtil;
-import com.linked.erfli.library.utils.StatusBarUtils;
-import com.linked.erfli.library.utils.ToastUtil;
 
 
 /**
@@ -49,7 +46,7 @@ public abstract class BaseActivity extends BaseCheckPermissionActivity implement
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         setOnCreate(savedInstanceState);
-        StatusBarUtils.ff(this);
+//        StatusBarUtils.ff(this);
     }
 
     /**

@@ -1,4 +1,4 @@
-package cn.com.task;
+package com.linked.erfli.library;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,14 +22,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
+
 /**
- * 文件名：DetailImageActivity
- * 描    述：图片详情类
- * 作    者：zzq
- * 时    间：2017年4月27日15:35:00
- * 版    本：V1.0.0
+ * Created by 志强 on 2017.5.2.
  */
-public class DetailImageActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+
+public class ShowPhotoActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     /**
      * ViewPager
      */
@@ -70,13 +68,12 @@ public class DetailImageActivity extends BaseActivity implements ViewPager.OnPag
 
     @Override
     protected void setView() {
-        setContentView(R.layout.task_activity_showphoto);
-
+        setContentView(R.layout.showphoto);
+        StatusBarUtils.ff(ShowPhotoActivity.this, R.color.black);
     }
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
-        StatusBarUtils.ff(DetailImageActivity.this,R.color.black);
         imageType = getIntent().getIntExtra("type", 0);
         if (imageType == 1) {
             listPath = getIntent().getStringArrayListExtra("listPath");
@@ -90,6 +87,7 @@ public class DetailImageActivity extends BaseActivity implements ViewPager.OnPag
             }
         }
     }
+
     public void getBitmap(final String url, ImageView imageView) {
         Bitmap bm = null;
         try {
@@ -115,6 +113,7 @@ public class DetailImageActivity extends BaseActivity implements ViewPager.OnPag
             e.printStackTrace();
         }
     }
+
     @Override
     protected void init() {
         ViewGroup group = (ViewGroup) findViewById(R.id.activity_detailImage_viewGroup);
@@ -166,7 +165,10 @@ public class DetailImageActivity extends BaseActivity implements ViewPager.OnPag
         viewPager.setAdapter(new MyAdapter());
         // 设置监听，主要是设置点点的背景
         viewPager.addOnPageChangeListener(this);
+        // 设置ViewPager的默认项, 设置为长度的100倍，这样子开始就能往左滑动
+//        viewPager.setCurrentItem((mImageViews.length) * 100);
     }
+
     /**
      * 文件名：MyAdapter
      * 描    述：图片滑动的适配器
