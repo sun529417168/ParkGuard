@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+
+        <TextView
+            android:id="@+id/item_problem_number"
+            style="@style/problem_item"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@+id/item_task_date" />
+
+        <TextView
+            android:id="@+id/item_problem_state"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/item_problem_date"
+            android:gravity="center"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/item_problem_date"
+            style="@style/problem_item"
+            android:layout_alignParentLeft="true"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <!--左边图片start-->
+        <LinearLayout
+            android:id="@+id/item_problem_picture"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/item_problem_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <!--左边图片end-->
+        <!--左边日历start-->
+        <!--说明：默认是没有日历的，在没有图片的情况下才会显示日历-->
+        <RelativeLayout
+            android:id="@+id/item_problem_calendar"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight="3"
+            android:background="@mipmap/calendar_background"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/problem_year_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="2017年3月"
+                android:textColor="#EA1E13"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/problem_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:text="星期二"
+                android:textColor="#EA1E13"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/problem_lunar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="2dp"
+                android:text="农历四月初一"
+                android:textColor="#EA1E13"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/problem_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="28"
+                android:textColor="#EA1E13"
+                android:textSize="13sp"
+                android:typeface="serif" />
+        </RelativeLayout>
+        <!--左边日历end-->
+        <!--右边的数据start-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/item_problem_name"
+                style="@style/problem_item"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/item_problem_sender"
+                style="@style/problem_item"
+                android:layout_marginTop="5dp" />
+
+
+            <TextView
+                android:id="@+id/item_problem_info"
+                style="@style/problem_item"
+                android:layout_marginTop="5dp"
+                android:duplicateParentState="true"
+                android:ellipsize="end"
+                android:lines="1" />
+
+            <TextView
+                android:id="@+id/item_problem_executor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true" />
+        </LinearLayout>
+        <!--右边的数据end-->
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@color/white" />
+</LinearLayout>

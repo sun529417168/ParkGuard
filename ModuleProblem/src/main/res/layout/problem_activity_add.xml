@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <include
+        android:id="@+id/add_problem_detail_title"
+        layout="@layout/title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_problem_detail_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!--问题类型start-->
+            <RelativeLayout
+                android:id="@+id/add_problem_typeLayout"
+                style="@style/add_problem_layout">
+
+                <TextView
+                    style="@style/add_problem_textView"
+                    android:text="@string/add_problem_type" />
+
+                <TextView
+                    android:id="@+id/add_problem_type"
+                    style="@style/add_problem_textView"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/add_problem_type_right"
+                    android:hint="@string/add_problem_choose" />
+
+                <ImageView
+                    android:id="@+id/add_problem_type_right"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--问题类型end-->
+
+            <!--所在区域start-->
+            <RelativeLayout
+                android:id="@+id/add_problem_positionLayout"
+                style="@style/add_problem_layout">
+
+                <TextView
+                    style="@style/add_problem_textView"
+                    android:text="@string/add_problem_address" />
+
+                <TextView
+                    android:id="@+id/add_problem_address"
+                    style="@style/add_problem_textView"
+                    android:layout_width="200sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/add_problem_position_right"
+                    android:ellipsize="marquee"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/add_problem_inputPlease"
+                    android:maxLines="1" />
+
+                <ImageView
+                    android:id="@+id/add_problem_position_right"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--所在区域end-->
+
+            <!--上报人start-->
+            <RelativeLayout style="@style/add_problem_layout">
+
+                <TextView
+                    style="@style/add_problem_textView"
+                    android:text="@string/add_problem_sender" />
+
+                <TextView
+                    android:id="@+id/add_problem_sender"
+                    style="@style/add_problem_textView"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="13dp" />
+            </RelativeLayout>
+            <!--上报人end-->
+
+            <!--发现时间start-->
+            <RelativeLayout
+                android:id="@+id/add_problem_findTimeLayout"
+                style="@style/add_problem_layout">
+
+                <TextView
+                    style="@style/add_problem_textView"
+                    android:text="@string/add_problem_findTime" />
+
+                <TextView
+                    android:id="@+id/add_problem_findTime"
+                    style="@style/add_problem_textView"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/add_problem_date_find_right" />
+
+                <ImageView
+                    android:id="@+id/add_problem_date_find_right"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--发现时间end-->
+
+
+            <!--上报时间start-->
+            <RelativeLayout
+                style="@style/add_problem_layout"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/add_problem_textView"
+                    android:text="@string/add_problem_sendTime" />
+
+                <TextView
+                    android:id="@+id/add_problem_sendTime"
+                    style="@style/add_problem_textView"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="13dp" />
+
+            </RelativeLayout>
+            <!--上报时间end-->
+
+
+            <!--图片start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/add_problem_detail_photoText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/add_problem_image"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/add_problem_detail_takePhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@mipmap/camera" />
+
+                <cn.com.problem.weight.ReportedGridview
+                    android:id="@+id/add_problem_detail_gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/add_problem_detail_photoText"
+                    android:layout_marginTop="15dp"
+                    android:horizontalSpacing="3dp"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:verticalSpacing="10dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_below="@+id/add_problem_detail_gridView" />
+            </RelativeLayout>
+            <!--图片end-->
+            <!--内容区域start-->
+            <EditText
+                android:id="@+id/add_problem_inputInfo"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="left|top"
+                android:hint="@string/add_problem_inputProblemInfo"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="16sp" />
+            <!--内容区域end-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/add_problem_detail_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_button"
+        android:text="@string/add_problem_button"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</RelativeLayout>

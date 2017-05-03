@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_s"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <include
+        android:id="@+id/problem_detail_title"
+        layout="@layout/title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/problem_detail_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:gravity="bottom"
+                android:text="@string/problem_detail_titleName"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <!--编号start-->
+            <RelativeLayout style="@style/problem_layout">
+
+                <TextView
+                    style="@style/problem_detail_textView"
+                    android:text="@string/problem_detail_number" />
+
+                <TextView
+                    android:id="@+id/problem_detail_number"
+                    style="@style/problem_detail_textView"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <!--编号end-->
+
+
+            <!--问题名称start-->
+            <!-- <RelativeLayout style="@style/problem_layout">
+
+                 <TextView
+                     style="@style/problem_detail_textView"
+                     android:text="@string/problem_detail_name" />
+
+                 <TextView
+                     android:id="@+id/problem_detail_name"
+                     style="@style/problem_detail_textView"
+                     android:layout_alignParentRight="true" />
+             </RelativeLayout>-->
+            <!--问题名称end-->
+
+
+            <!--状态start-->
+            <RelativeLayout style="@style/problem_layout">
+
+                <TextView
+                    style="@style/problem_detail_textView"
+                    android:text="@string/problem_detail_state" />
+
+                <TextView
+                    android:id="@+id/problem_detail_state"
+                    style="@style/problem_detail_textView"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <!--状态end-->
+
+
+            <!--类型start-->
+            <RelativeLayout style="@style/problem_layout">
+
+                <TextView
+                    style="@style/problem_detail_textView"
+                    android:text="@string/problem_detail_type" />
+
+                <TextView
+                    android:id="@+id/problem_detail_type"
+                    style="@style/problem_detail_textView"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <!--类型end-->
+
+
+            <!--区域start-->
+            <RelativeLayout style="@style/problem_layout">
+
+                <TextView
+                    style="@style/problem_detail_textView"
+                    android:text="@string/problem_detail_area" />
+
+                <TextView
+                    android:id="@+id/problem_detail_area"
+                    style="@style/problem_detail_textView"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <!--区域end-->
+
+
+            <!--上报人start-->
+            <RelativeLayout style="@style/problem_layout">
+
+                <TextView
+                    style="@style/problem_detail_textView"
+                    android:text="@string/problem_detail_sender" />
+
+                <TextView
+                    android:id="@+id/problem_detail_sender"
+                    style="@style/problem_detail_textView"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <!--上报人end-->
+
+
+            <!--上报时间start-->
+            <RelativeLayout style="@style/problem_layout">
+
+                <TextView
+                    style="@style/problem_detail_textView"
+                    android:text="@string/problem_detail_sendTime" />
+
+                <TextView
+                    android:id="@+id/problem_detail_sendTime"
+                    style="@style/problem_detail_textView"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <!--上报时间end-->
+
+
+            <!--图片start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/problem_detail_photoText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/problem_detail_image"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/problem_detail_takePhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@mipmap/camera"
+                    android:visibility="invisible" />
+
+                <com.linked.erfli.library.weight.ReportedGridview
+                    android:id="@+id/problem_detail_gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/problem_detail_photoText"
+                    android:layout_marginTop="15dp"
+                    android:horizontalSpacing="3dp"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:verticalSpacing="10dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_below="@+id/problem_detail_gridView" />
+            </RelativeLayout>
+            <!--图片end-->
+
+
+            <!--问题描述start-->
+            <TextView
+                android:id="@+id/problem_detail_describe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="left|top"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="@color/black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/white" />
+            <!--问题描述end-->
+
+
+            <!--==================================回复信息==============================-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="bottom"
+                android:text="@string/problem_detail_bottomName"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <!--回复时间start-->
+            <RelativeLayout style="@style/problem_layout">
+
+                <TextView
+                    style="@style/problem_detail_textView"
+                    android:text="@string/problem_detail_replyTime" />
+
+                <TextView
+                    android:id="@+id/problem_detail_replyTime"
+                    style="@style/problem_detail_textView"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <!--回复时间end-->
+
+
+            <!--回复内容start-->
+            <TextView
+                android:id="@+id/problem_detail_infoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="left|top"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="@color/black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/white" />
+            <!--回复内容end-->
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/problem_detail_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_button"
+        android:text="@string/problem_detail_button"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone" />
+</RelativeLayout>
