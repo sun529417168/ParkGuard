@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.linked.erfli.library.ShowPhotoActivity;
 import com.linked.erfli.library.utils.StatusBarUtils;
 import com.linked.erfli.library.utils.ToastUtil;
 
@@ -305,7 +306,7 @@ public class AddTaskActivity extends TakePhotoActivity implements View.OnClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent in = new Intent(this, DetailImageActivity.class);
+        Intent in = new Intent(this, ShowPhotoActivity.class);
         in.putStringArrayListExtra("listPath", listPath);
         startActivity(in);
     }

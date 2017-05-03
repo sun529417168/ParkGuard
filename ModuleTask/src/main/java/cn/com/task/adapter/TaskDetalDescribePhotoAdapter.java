@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.linked.erfli.library.ShowPhotoActivity;
 import com.linked.erfli.library.base.MyBaseAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.com.task.DetailImageActivity;
 import cn.com.task.R;
 
 
@@ -43,7 +43,7 @@ public class TaskDetalDescribePhotoAdapter extends MyBaseAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(context, DetailImageActivity.class);
+                Intent in = new Intent(context, ShowPhotoActivity.class);
                 in.putExtra("type", 1);
                 in.putStringArrayListExtra("listPath", list);
                 context.startActivity(in);

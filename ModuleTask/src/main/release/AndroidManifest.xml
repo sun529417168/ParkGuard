@@ -38,15 +38,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".DetailImageActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".InputTextActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".TaskChoosePersonActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.linked.erfli.library.ShowPhotoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
     </application>
