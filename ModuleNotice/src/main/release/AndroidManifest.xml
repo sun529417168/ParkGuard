@@ -9,13 +9,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.LoginNoticeActivity">
+        <activity android:name=".activity.NoticeWelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--登陆界面-->
+        <activity
+            android:name=".activity.LoginNoticeActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <!--通告列表界面-->
         <activity
             android:name=".activity.NoticeActivity"

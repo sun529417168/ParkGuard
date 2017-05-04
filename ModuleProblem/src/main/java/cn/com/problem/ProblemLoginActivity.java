@@ -68,16 +68,15 @@ public class ProblemLoginActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.problem_login_button:
-                userName = problem_login_username.getText().toString().trim();
-                passWord = problem_login_password.getText().toString().trim();
-                if (isEmpt()) {
-                    ProblemRequest.loginRequest(mContext, userName, passWord);
-                }
-                break;
-            case R.id.problem_login_forget_password:
-                break;
+        int i = v.getId();
+        if (i == R.id.problem_login_button) {
+            userName = problem_login_username.getText().toString().trim();
+            passWord = problem_login_password.getText().toString().trim();
+            if (isEmpt()) {
+                ProblemRequest.loginRequest(mContext, userName, passWord);
+            }
+
+        } else if (i == R.id.problem_login_forget_password) {
         }
     }
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.refresh.PullToRefreshBase;
 import com.linked.erfli.library.refresh.PullToRefreshListView;
+import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -74,6 +76,9 @@ public class ProblemActivity extends BaseActivity
 
     private ProblemActivity mContext;
     private int ViewHight = 0;
+    private long exitTime;//上一次按退出键时间
+    private static final long TIME = 2000;//双击回退键间隔时间
+
 
     @Override
     protected void setView() {
@@ -182,37 +187,36 @@ public class ProblemActivity extends BaseActivity
     @Override
     public void onClick(View v) {
         List list;
-        switch (v.getId()) {
-            case R.id.problem_addInfo:
-                Intent intent = new Intent(mContext, AddProblemActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.problem_layout_type:
-//                list = new ArrayList();
+        int i = v.getId();
+        if (i == R.id.problem_addInfo) {
+            Intent intent = new Intent(mContext, AddProblemActivity.class);
+            startActivity(intent);
+
+        } else if (i == R.id.problem_layout_type) {//                list = new ArrayList();
 //                list.add("全部");
 //                list.add("部件问题");
 //                list.add("事件问题");
 //                popupWindow = PopWindowUtils.showProblemPop(getActivity(), this, v, list, 0,ViewHight);
-                ProblemRequest.getProblemTypeLeft(mContext, this);
-                setTextViewColor(typeText);
-                break;
-            case R.id.problem_layout_time:
-                list = new ArrayList();
-                list.add("全部");
-                list.add("三天");
-                list.add("一周");
-                list.add("一个月");
-                popupWindow = PopWindowUtils.showProblemPop(mContext, this, v, list, 1, ViewHight);
-                setTextViewColor(timeText);
-                break;
-            case R.id.problem_layout_state:
-                list = new ArrayList();
-                list.add("全部");
-                list.add("已上报");
-                list.add("已回复");
-                popupWindow = PopWindowUtils.showProblemPop(mContext, this, v, list, 2, ViewHight);
-                setTextViewColor(stateText);
-                break;
+            ProblemRequest.getProblemTypeLeft(mContext, this);
+            setTextViewColor(typeText);
+
+        } else if (i == R.id.problem_layout_time) {
+            list = new ArrayList();
+            list.add("全部");
+            list.add("三天");
+            list.add("一周");
+            list.add("一个月");
+            popupWindow = PopWindowUtils.showProblemPop(mContext, this, v, list, 1, ViewHight);
+            setTextViewColor(timeText);
+
+        } else if (i == R.id.problem_layout_state) {
+            list = new ArrayList();
+            list.add("全部");
+            list.add("已上报");
+            list.add("已回复");
+            popupWindow = PopWindowUtils.showProblemPop(mContext, this, v, list, 2, ViewHight);
+            setTextViewColor(stateText);
+
         }
     }
 
@@ -282,5 +286,25 @@ public class ProblemActivity extends BaseActivity
     public void onResume() {
         super.onResume();
         requestData(pageindex, searchState, searchProblemType, searchDate);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (SharedUtil.getBoolean(this, "isProblem", false)) {
+                PGApp.finishTop();
+                return true;
+            } else {
+                if ((System.currentTimeMillis() - exitTime) > TIME) {
+                    ToastUtil.show(this, "再按一次返回键退出");
+                    exitTime = System.currentTimeMillis();
+                    return true;
+                } else {
+                    PGApp.exit();
+                }
+            }
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

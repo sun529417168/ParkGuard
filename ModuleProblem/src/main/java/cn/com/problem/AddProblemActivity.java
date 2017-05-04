@@ -129,46 +129,46 @@ public class AddProblemActivity extends TakePhotoActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_back:
-                PGApp.finishTop();
-                break;
-            case R.id.add_problem_detail_takePhoto://点击拍照
-                File file = new File(Environment.getExternalStorageDirectory(), "/XiBeiProblem/" + System.currentTimeMillis() + ".jpg");
-                if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
-                Uri imageUri = Uri.fromFile(file);
-                CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(700).create();//压缩方法实例化就是压缩图片，根据配置参数压缩
-                getTakePhoto().onEnableCompress(compressConfig, true).onPickFromCapture(imageUri);//从相机拍取照片不裁剪
-                break;
-            case R.id.add_problem_typeLayout://问题类型
-                ProblemRequest.getProblemTypeLeft(this, AddProblemActivity.this);
-                break;
-            case R.id.add_problem_positionLayout:
-                Intent intent = new Intent(AddProblemActivity.this, InputTextActivity.class);
-                address = positionText.getText().toString().trim();
-                if (!TextUtils.isEmpty(address)) {
-                    intent.putExtra("value", address);
-                }
-                startActivityForResult(intent, 1);
-                break;
-            case R.id.add_problem_findTimeLayout://发现时间
-                DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(AddProblemActivity.this, "");
-                dateTimePicKDialog.dateTimePicKDialog(findTimeText);
-                break;
-            case R.id.add_problem_detail_button://上传数据
-                if (!MyUtils.gpsIsOPen(this)) {
-                    DialogUtils.initGPS(this);
-                    return;
-                }
-                MyUtils.getLoc(AddProblemActivity.this);
-                //problemTitle = nameEdit.getText().toString().trim();
-                findDate = findTimeText.getText().toString().trim();
-                problemDes = inputInfoEdit.getText().toString().trim();
-                if (isEmpty()) {
-                    ProblemRequest.addProblemRequestsb(this, fileMap, problemType, address, gps, findDate, problemDes);//不管有没有图片
-                }
+        int i = v.getId();
+        if (i == R.id.title_back) {
+            PGApp.finishTop();
 
-                break;
+        } else if (i == R.id.add_problem_detail_takePhoto) {
+            File file = new File(Environment.getExternalStorageDirectory(), "/XiBeiProblem/" + System.currentTimeMillis() + ".jpg");
+            if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
+            Uri imageUri = Uri.fromFile(file);
+            CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(700).create();//压缩方法实例化就是压缩图片，根据配置参数压缩
+            getTakePhoto().onEnableCompress(compressConfig, true).onPickFromCapture(imageUri);//从相机拍取照片不裁剪
+
+        } else if (i == R.id.add_problem_typeLayout) {
+            ProblemRequest.getProblemTypeLeft(this, AddProblemActivity.this);
+
+        } else if (i == R.id.add_problem_positionLayout) {
+            Intent intent = new Intent(AddProblemActivity.this, InputTextActivity.class);
+            address = positionText.getText().toString().trim();
+            if (!TextUtils.isEmpty(address)) {
+                intent.putExtra("value", address);
+            }
+            startActivityForResult(intent, 1);
+
+        } else if (i == R.id.add_problem_findTimeLayout) {
+            DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(AddProblemActivity.this, "");
+            dateTimePicKDialog.dateTimePicKDialog(findTimeText);
+
+        } else if (i == R.id.add_problem_detail_button) {
+            if (!MyUtils.gpsIsOPen(this)) {
+                DialogUtils.initGPS(this);
+                return;
+            }
+            MyUtils.getLoc(AddProblemActivity.this);
+            //problemTitle = nameEdit.getText().toString().trim();
+            findDate = findTimeText.getText().toString().trim();
+            problemDes = inputInfoEdit.getText().toString().trim();
+            if (isEmpty()) {
+                ProblemRequest.addProblemRequestsb(this, fileMap, problemType, address, gps, findDate, problemDes);//不管有没有图片
+            }
+
+
         }
     }
 

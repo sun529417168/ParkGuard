@@ -48,18 +48,18 @@ public class InputTextActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        switch (v.getId()) {
-            case R.id.title_back:
-                intent.putExtra("return_value", oldText);
-                setResult(RESULT_CANCELED, intent);
-                finish();
-                break;
-            case R.id.title_save:
-                text = editText.getText().toString();
-                intent.putExtra("return_value", text);
-                setResult(RESULT_OK, intent);
-                finish();
-                break;
+        int i = v.getId();
+        if (i == R.id.title_back) {
+            intent.putExtra("return_value", oldText);
+            setResult(RESULT_CANCELED, intent);
+            finish();
+
+        } else if (i == R.id.title_save) {
+            text = editText.getText().toString();
+            intent.putExtra("return_value", text);
+            setResult(RESULT_OK, intent);
+            finish();
+
         }
     }
 }

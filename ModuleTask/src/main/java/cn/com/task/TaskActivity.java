@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 
 import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.base.BaseFragmentActivity;
+import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.StatusBarUtils;
+import com.linked.erfli.library.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,8 @@ public class TaskActivity extends BaseFragmentActivity {
     private ViewPager activity_main_viewpager;
     private static List<Fragment> fragmentList = new ArrayList<Fragment>();
     private FragmentPagerAdapter fragmentPagerAdapter;
+    private long exitTime;//上一次按退出键时间
+    private static final long TIME = 2000;//双击回退键间隔时间
 
     @Override
     public void setView() {
@@ -65,5 +70,25 @@ public class TaskActivity extends BaseFragmentActivity {
         };
         activity_main_viewpager.setAdapter(fragmentPagerAdapter);
         activity_main_viewpager.setCurrentItem(0);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (SharedUtil.getBoolean(this, "isTask", false)) {
+                PGApp.finishTop();
+                return true;
+            } else {
+                if ((System.currentTimeMillis() - exitTime) > TIME) {
+                    ToastUtil.show(this, "再按一次返回键退出");
+                    exitTime = System.currentTimeMillis();
+                    return true;
+                } else {
+                    PGApp.exit();
+                }
+            }
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

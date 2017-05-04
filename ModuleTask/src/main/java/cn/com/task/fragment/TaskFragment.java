@@ -153,15 +153,15 @@ public class TaskFragment extends BaseFragment implements TaskListInterface, Vie
     @Override
     public void onClick(View v) {
         Intent intent;
-        switch (v.getId()) {
-            case R.id.title_search:
-                intent = new Intent(getActivity(), TaskSearchActivity.class);
-                startActivityForResult(intent, 200);
-                break;
-            case R.id.problem_addInfo:
-                intent = new Intent(context, AddTaskActivity.class);
-                startActivity(intent);
-                break;
+        int i = v.getId();
+        if (i == R.id.title_search) {
+            intent = new Intent(getActivity(), TaskSearchActivity.class);
+            startActivityForResult(intent, 200);
+
+        } else if (i == R.id.problem_addInfo) {
+            intent = new Intent(context, AddTaskActivity.class);
+            startActivity(intent);
+
         }
     }
 

@@ -19,7 +19,7 @@
         <meta-data
             android:name="com.alibaba.app.appsecret"
             android:value="43d570224c4e55b7c688f676ab2688bb" />
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,6 +43,11 @@
                 <data android:scheme="@string/jump_scheme" />
             </intent-filter>
         </activity>
+        <!--登陆界面-->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <!--主界面-->
         <activity
             android:name=".activity.HomeActivity"

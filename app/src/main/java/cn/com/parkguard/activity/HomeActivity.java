@@ -18,6 +18,8 @@ import com.github.mzule.activityrouter.router.Routers;
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.utils.MyUtils;
 import com.linked.erfli.library.utils.NetWorkUtils;
+import com.linked.erfli.library.utils.SharedUtil;
+import com.linked.erfli.library.utils.StatusBarUtils;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
+        StatusBarUtils.ff(this, R.color.home_title);
         ArrayList<HomeBean> homeList = (ArrayList<HomeBean>) JSON.parseArray(MyUtils.getFromAssets(this, "home.txt"), HomeBean.class);
         for (int i = 0; i < homeList.size(); i++) {
             if (homeList.get(i).isIsTrue()) {
@@ -81,18 +84,22 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (homeArrayList.get(position).getId()) {
             case 101:
+                SharedUtil.setBoolean(this, "isTask", true);
                 Routers.open(HomeActivity.this, Uri.parse("modularization://task_list"));
                 break;
             case 102:
+                SharedUtil.setBoolean(this, "isNotice", true);
                 Routers.open(HomeActivity.this, Uri.parse("modularization://notice_list"));
                 break;
             case 103:
+                SharedUtil.setBoolean(this, "isProblem", true);
                 Routers.open(HomeActivity.this, Uri.parse("modularization://problem_list"));
                 break;
             case 104:
                 //统计
                 break;
             case 105:
+                SharedUtil.setBoolean(this, "isWatchMan", true);
                 Routers.open(HomeActivity.this, Uri.parse("modularization://watchman"));
                 break;
             case 106:
@@ -102,6 +109,7 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
 
                 break;
             case 108:
+                SharedUtil.setBoolean(this, "isMonitor", true);
                 Routers.open(HomeActivity.this, Uri.parse("modularization://monitor"));
                 break;
         }

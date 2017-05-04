@@ -171,23 +171,23 @@ public class TaskDetailActivity extends TakePhotoActivity implements View.OnClic
     private CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            switch (buttonView.getId()) {
-                case R.id.task_detail_state_over:
-                    if (isChecked) {
-                        noOver.setChecked(false);
-                        feedbackState = 3;
-                    } else {
-                        feedbackState = -1;
-                    }
-                    break;
-                case R.id.task_detail_state_noOver:
-                    if (isChecked) {
-                        over.setChecked(false);
-                        feedbackState = 4;
-                    } else {
-                        feedbackState = -1;
-                    }
-                    break;
+            int i = buttonView.getId();
+            if (i == R.id.task_detail_state_over) {
+                if (isChecked) {
+                    noOver.setChecked(false);
+                    feedbackState = 3;
+                } else {
+                    feedbackState = -1;
+                }
+
+            } else if (i == R.id.task_detail_state_noOver) {
+                if (isChecked) {
+                    over.setChecked(false);
+                    feedbackState = 4;
+                } else {
+                    feedbackState = -1;
+                }
+
             }
 
         }
@@ -195,71 +195,71 @@ public class TaskDetailActivity extends TakePhotoActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_back:
-                PGApp.finishTop();
-                break;
-            case R.id.task_detail_takePhoto://拍照
-                File file = new File(Environment.getExternalStorageDirectory(), "/XiBei/" + System.currentTimeMillis() + ".jpg");
-                if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
-                Uri imageUri = Uri.fromFile(file);
-                CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();//压缩方法实例化就是压缩图片，根据配置参数压缩
-                getTakePhoto().onEnableCompress(compressConfig, true).onPickFromCapture(imageUri);//从相机拍取照片不裁剪
-                break;
-            case R.id.task_detail_button:// 确认提交
-                info = infoEdit.getText().toString().trim();
-                if (feedbackState == -1) {
-                    ToastUtil.show(context, "请选择反馈状态");
-                    return;
-                }
-                if (feedbackState == 3 && listFile.size() == 0) {
-                    ToastUtil.show(context, "请您拍照");
-                    return;
-                }
-                if (TextUtils.isEmpty(info)) {
-                    ToastUtil.show(context, "请输入反馈内容");
-                    return;
-                }
-                TaskReuest.filesRequest(this, reverse, fileMap, info, taskBean.getTask().getTaskAssignedID(), feedbackState);
-                break;
-            case R.id.task_detail_state_file://点击下载
-                if (isEmpty()) {
-                    if (isAttachment()) {
-                        for (TaskDetailBean.TaskBean.ImageListBean imageBean : taskBean.getTask().getImageList()) {
-                            if (imageBean.getAttachmentType() == 2) {
-                                if (MyUtils.getVideoFileName(path).size() > 0) {
-                                    for (String fileUrl : MyUtils.getVideoFileName(path)) {
-                                        if (fileUrl.equals(imageBean.getFileName())) {
-                                            File files = new File(path + fileUrl);// 这里更改为你的名称
-                                            Log.i("fileName", fileUrl + "=======" + files.getPath());
-                                            Uri path = Uri.fromFile(files);
-                                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                                            intent.setDataAndType(path, "application/msword");
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            try {
-                                                startActivity(intent);
-                                            } catch (ActivityNotFoundException e) {
-                                                ToastUtil.show(context, "出现异常，请稍候再试");
-                                            }
-                                            break;
+        int i = v.getId();
+        if (i == R.id.title_back) {
+            PGApp.finishTop();
+
+        } else if (i == R.id.task_detail_takePhoto) {
+            File file = new File(Environment.getExternalStorageDirectory(), "/XiBei/" + System.currentTimeMillis() + ".jpg");
+            if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
+            Uri imageUri = Uri.fromFile(file);
+            CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();//压缩方法实例化就是压缩图片，根据配置参数压缩
+            getTakePhoto().onEnableCompress(compressConfig, true).onPickFromCapture(imageUri);//从相机拍取照片不裁剪
+
+        } else if (i == R.id.task_detail_button) {
+            info = infoEdit.getText().toString().trim();
+            if (feedbackState == -1) {
+                ToastUtil.show(context, "请选择反馈状态");
+                return;
+            }
+            if (feedbackState == 3 && listFile.size() == 0) {
+                ToastUtil.show(context, "请您拍照");
+                return;
+            }
+            if (TextUtils.isEmpty(info)) {
+                ToastUtil.show(context, "请输入反馈内容");
+                return;
+            }
+            TaskReuest.filesRequest(this, reverse, fileMap, info, taskBean.getTask().getTaskAssignedID(), feedbackState);
+
+        } else if (i == R.id.task_detail_state_file) {
+            if (isEmpty()) {
+                if (isAttachment()) {
+                    for (TaskDetailBean.TaskBean.ImageListBean imageBean : taskBean.getTask().getImageList()) {
+                        if (imageBean.getAttachmentType() == 2) {
+                            if (MyUtils.getVideoFileName(path).size() > 0) {
+                                for (String fileUrl : MyUtils.getVideoFileName(path)) {
+                                    if (fileUrl.equals(imageBean.getFileName())) {
+                                        File files = new File(path + fileUrl);// 这里更改为你的名称
+                                        Log.i("fileName", fileUrl + "=======" + files.getPath());
+                                        Uri path = Uri.fromFile(files);
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(path, "application/msword");
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        try {
+                                            startActivity(intent);
+                                        } catch (ActivityNotFoundException e) {
+                                            ToastUtil.show(context, "出现异常，请稍候再试");
                                         }
+                                        break;
                                     }
                                 }
                             }
                         }
-                    } else {
-                        for (TaskDetailBean.TaskBean.ImageListBean imageBean : taskBean.getTask().getImageList()) {
-                            if (imageBean.getAttachmentType() == 2) {
-                                DownloadUtil down = new DownloadUtil(TaskDetailActivity.this, imageBean.getFileName(), imageBean.getFileUrl(), filePath);
-                                down.showDownloadDialog();
-                            }
+                    }
+                } else {
+                    for (TaskDetailBean.TaskBean.ImageListBean imageBean : taskBean.getTask().getImageList()) {
+                        if (imageBean.getAttachmentType() == 2) {
+                            DownloadUtil down = new DownloadUtil(TaskDetailActivity.this, imageBean.getFileName(), imageBean.getFileUrl(), filePath);
+                            down.showDownloadDialog();
                         }
                     }
                 }
-                break;
-            case R.id.task_detail_nameLayout://点击名称查看
-                DialogUtils.showTaskNameDialog(this, taskBean.getTask().getTaskName());
-                break;
+            }
+
+        } else if (i == R.id.task_detail_nameLayout) {
+            DialogUtils.showTaskNameDialog(this, taskBean.getTask().getTaskName());
+
         }
     }
 

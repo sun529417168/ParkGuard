@@ -87,17 +87,17 @@ public class ProblemDetailActivity extends TakePhotoActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_back:
-                PGApp.finishTop();
-                break;
-            case R.id.problem_detail_takePhoto:
-                File file = new File(Environment.getExternalStorageDirectory(), "/sultan/" + "reported" + "pic" + System.currentTimeMillis() + ".jpg");
-                if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
-                Uri imageUri = Uri.fromFile(file);
-                CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();//压缩方法实例化就是压缩图片，根据配置参数压缩
-                getTakePhoto().onEnableCompress(compressConfig, true).onPickFromCapture(imageUri);//从相机拍取照片不裁剪
-                break;
+        int i = v.getId();
+        if (i == R.id.title_back) {
+            PGApp.finishTop();
+
+        } else if (i == R.id.problem_detail_takePhoto) {
+            File file = new File(Environment.getExternalStorageDirectory(), "/sultan/" + "reported" + "pic" + System.currentTimeMillis() + ".jpg");
+            if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
+            Uri imageUri = Uri.fromFile(file);
+            CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();//压缩方法实例化就是压缩图片，根据配置参数压缩
+            getTakePhoto().onEnableCompress(compressConfig, true).onPickFromCapture(imageUri);//从相机拍取照片不裁剪
+
         }
     }
 

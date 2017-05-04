@@ -137,52 +137,52 @@ public class AddTaskActivity extends TakePhotoActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_back:
-                PGApp.finishTop();
-                break;
-            case R.id.add_task_typeLayout://任务类型
-                TaskReuest.getTaskTypeRequest(AddTaskActivity.this, typeLayout, 0);
-                break;
-            case R.id.add_task_priorityLayout://优先级
-                TaskReuest.getPriorityRequest(AddTaskActivity.this, typeLayout, 1);
-                break;
-            case R.id.add_task_startTimeLayout://开始时间
-                DateTimePickDialogUtil startPickDialog = new DateTimePickDialogUtil(AddTaskActivity.this, "");
-                startPickDialog.dateTimePicKDialog(startTimeText);
-                break;
-            case R.id.add_task_endTimeLayout://结束时间
-                DateTimePickDialogUtil endPickDialog = new DateTimePickDialogUtil(AddTaskActivity.this, "");
-                endPickDialog.dateTimePicKDialog(endTimeText);
-                break;
-            case R.id.add_task_takePhoto://拍照
-                showPhotoDialog = DialogUtils.showPhotoDialog(this);
-                break;
-            case R.id.add_task_personLayout://人员下发
-                startActivityForResult(new Intent(this, TaskChoosePersonActivity.class), 11);
-                break;
-            case R.id.task_name_layout: //任务名称
-                Intent intent = new Intent(AddTaskActivity.this, InputTextActivity.class);
-                inputName = textName.getText().toString().trim();
-                if (!TextUtils.isEmpty(inputName)) {
-                    intent.putExtra("value", inputName);
-                }
-                startActivityForResult(intent, 1);
-                break;
-            case R.id.add_task_button:
-                inputTypeName = typeText.getText().toString().trim();
-                inputAddress = addressEdit.getText().toString().trim();
-                inputPriorityName = priorityText.getText().toString().trim();
-                inputStartTime = startTimeText.getText().toString().trim();
-                inputEndTime = endTimeText.getText().toString().trim();
-                inputPerson = personText.getText().toString().trim();
-                inputInfo = infoEdit.getText().toString().trim();
-                if (isEmpty()) {
-                    inputPersonId = inputPersonId.substring(0, inputPersonId.length() - 1);
+        int i = v.getId();
+        if (i == R.id.title_back) {
+            PGApp.finishTop();
+
+        } else if (i == R.id.add_task_typeLayout) {
+            TaskReuest.getTaskTypeRequest(AddTaskActivity.this, typeLayout, 0);
+
+        } else if (i == R.id.add_task_priorityLayout) {
+            TaskReuest.getPriorityRequest(AddTaskActivity.this, typeLayout, 1);
+
+        } else if (i == R.id.add_task_startTimeLayout) {
+            DateTimePickDialogUtil startPickDialog = new DateTimePickDialogUtil(AddTaskActivity.this, "");
+            startPickDialog.dateTimePicKDialog(startTimeText);
+
+        } else if (i == R.id.add_task_endTimeLayout) {
+            DateTimePickDialogUtil endPickDialog = new DateTimePickDialogUtil(AddTaskActivity.this, "");
+            endPickDialog.dateTimePicKDialog(endTimeText);
+
+        } else if (i == R.id.add_task_takePhoto) {
+            showPhotoDialog = DialogUtils.showPhotoDialog(this);
+
+        } else if (i == R.id.add_task_personLayout) {
+            startActivityForResult(new Intent(this, TaskChoosePersonActivity.class), 11);
+
+        } else if (i == R.id.task_name_layout) {
+            Intent intent = new Intent(AddTaskActivity.this, InputTextActivity.class);
+            inputName = textName.getText().toString().trim();
+            if (!TextUtils.isEmpty(inputName)) {
+                intent.putExtra("value", inputName);
+            }
+            startActivityForResult(intent, 1);
+
+        } else if (i == R.id.add_task_button) {
+            inputTypeName = typeText.getText().toString().trim();
+            inputAddress = addressEdit.getText().toString().trim();
+            inputPriorityName = priorityText.getText().toString().trim();
+            inputStartTime = startTimeText.getText().toString().trim();
+            inputEndTime = endTimeText.getText().toString().trim();
+            inputPerson = personText.getText().toString().trim();
+            inputInfo = infoEdit.getText().toString().trim();
+            if (isEmpty()) {
+                inputPersonId = inputPersonId.substring(0, inputPersonId.length() - 1);
 //                    Log.i("inputPersonId", "名称:" + inputName + ",类型:" + inputType + ",地点:" + inputAddress + ",优先级:" + inputPriority + ",开始时间:" + inputStartTime + ",结束时间:" + inputEndTime + ",下发人员:" + inputPersonId + ",内容:" + inputInfo + ",图片:" + fileMap.get("AddImage1").getPath());
-                    TaskReuest.addTaskRequests(this, fileMap, inputName, inputType, inputAddress, inputPriority, inputStartTime, inputEndTime, inputPersonId, inputInfo);//不管有没有图片
-                }
-                break;
+                TaskReuest.addTaskRequests(this, fileMap, inputName, inputType, inputAddress, inputPriority, inputStartTime, inputEndTime, inputPersonId, inputInfo);//不管有没有图片
+            }
+
         }
     }
 
