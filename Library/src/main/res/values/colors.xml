@@ -24,6 +24,7 @@
     <color name="google_green">#008744</color>
     <color name="google_yellow">#ffa700</color>
     <color name="pale_pink">#FDEEDE</color>
+    <color name="home_title">#F0EDE8</color>
 
     <!--蓝色-->
     <color name="blue">#079EFE</color>
