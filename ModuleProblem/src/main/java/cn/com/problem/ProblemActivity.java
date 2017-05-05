@@ -78,7 +78,7 @@ public class ProblemActivity extends BaseActivity
     private int ViewHight = 0;
     private long exitTime;//上一次按退出键时间
     private static final long TIME = 2000;//双击回退键间隔时间
-
+    private LinearLayout title_back;
 
     @Override
     protected void setView() {
@@ -97,6 +97,11 @@ public class ProblemActivity extends BaseActivity
 
     @Override
     protected void init() {
+        if (SharedUtil.getBoolean(this, "isProblem", false)) {
+            title_back = (LinearLayout) findViewById(R.id.title_back);
+            title_back.setVisibility(View.VISIBLE);
+            title_back.setOnClickListener(this);
+        }
         titleName = (TextView) findViewById(R.id.title_name);
         titleName.setText("问题上报");
         mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.problem_refresh_list);
@@ -216,7 +221,8 @@ public class ProblemActivity extends BaseActivity
             list.add("已回复");
             popupWindow = PopWindowUtils.showProblemPop(mContext, this, v, list, 2, ViewHight);
             setTextViewColor(stateText);
-
+        } else if (i == R.id.title_back) {
+            PGApp.finishTop();
         }
     }
 

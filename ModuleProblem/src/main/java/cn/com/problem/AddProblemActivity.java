@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.linked.erfli.library.ShowPhotoActivity;
+import com.linked.erfli.library.ShowZoomPhotoActivity;
 import com.linked.erfli.library.adapter.TaskDetalPhotoAdapter;
 import com.linked.erfli.library.function.takephoto.app.TakePhotoActivity;
 import com.linked.erfli.library.function.takephoto.compress.CompressConfig;
@@ -206,8 +206,9 @@ public class AddProblemActivity extends TakePhotoActivity implements View.OnClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent in = new Intent(this, ShowPhotoActivity.class);
+        Intent in = new Intent(this, ShowZoomPhotoActivity.class);
         in.putStringArrayListExtra("listPath", listPath);
+        in.putExtra("current", position);
         startActivity(in);
     }
 
@@ -258,14 +259,23 @@ public class AddProblemActivity extends TakePhotoActivity implements View.OnClic
         switch (requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
-                    address = data.getStringExtra("return_value");
-                    positionText.setText(address);
+                    try {
+                        address = data.getStringExtra("return_value");
+                        positionText.setText(address);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (resultCode == RESULT_CANCELED) {
-                    address = data.getStringExtra("return_value");
-                    positionText.setText(address);
+                    try {
+                        address = data.getStringExtra("return_value");
+                        positionText.setText(address);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
+
             default:
                 break;
         }
