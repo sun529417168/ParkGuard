@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.linked.erfli.library.ShowZoomPhotoActivity;
 import com.linked.erfli.library.base.MyBaseAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -38,14 +39,14 @@ public class NoticeDetalPhotoAdapter extends MyBaseAdapter {
     @Override
     public void onInitView(View view, int position) {
         ImageView imageView = get(view, R.id.item_grid_image);
-        ImageLoader.getInstance().displayImage( list.get(position), imageView);
+        ImageLoader.getInstance().displayImage(list.get(position), imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent in = new Intent(context, DetailImageActivity.class);
-//                in.putExtra("type",1);
-//                in.putStringArrayListExtra("listPath",list );
-//                context.startActivity(in);
+                Intent in = new Intent(context, ShowZoomPhotoActivity.class);
+                in.putExtra("type", 1);
+                in.putStringArrayListExtra("listPath", list);
+                context.startActivity(in);
             }
         });
     }

@@ -1,11 +1,11 @@
 package cn.com.notice.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,7 +16,6 @@ import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.refresh.PullToRefreshBase;
 import com.linked.erfli.library.refresh.PullToRefreshListView;
 import com.linked.erfli.library.utils.SharedUtil;
-import com.linked.erfli.library.utils.StatusBarUtils;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -51,6 +50,7 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
     private int timeNum = 0;
     private long exitTime;//上一次按退出键时间
     private static final long TIME = 2000;//双击回退键间隔时间
+    private LinearLayout title_back;
 
     @Override
     protected void setView() {
@@ -69,6 +69,11 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void init() {
+        if (SharedUtil.getBoolean(this, "isNotice", false)) {
+            title_back = (LinearLayout) findViewById(R.id.title_back);
+            title_back.setVisibility(View.VISIBLE);
+            title_back.setOnClickListener(this);
+        }
         titleName = (TextView) findViewById(R.id.title_name);
         titleName.setText("通知公告");
         mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.notice_refresh_list);
@@ -145,7 +150,8 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
             setTextBack(noticeOneMonth);
             timeNum = 3;
             request(timeNum);
-
+        } else if (i == R.id.title_back) {
+            PGApp.finishTop();
         }
     }
 

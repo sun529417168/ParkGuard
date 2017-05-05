@@ -41,6 +41,12 @@
             android:name=".activity.EditorUserActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <!--图片展示页面-->
+        <activity
+            android:name="com.linked.erfli.library.ShowZoomPhotoActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>
