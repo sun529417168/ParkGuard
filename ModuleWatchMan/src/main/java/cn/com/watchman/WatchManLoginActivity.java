@@ -57,16 +57,15 @@ public class WatchManLoginActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.task_login_button:
-                userName = login_username.getText().toString().trim();
-                passWord = login_password.getText().toString().trim();
-               if (isEmpt()) {
-                    WatchManRequest.loginRequest(mContext, userName, passWord);
-                }
-                break;
-            case R.id.login_forget_password:
-                break;
+        int i = v.getId();
+        if (i == R.id.task_login_button) {
+            userName = login_username.getText().toString().trim();
+            passWord = login_password.getText().toString().trim();
+            if (isEmpt()) {
+                WatchManRequest.loginRequest(mContext, userName, passWord);
+            }
+
+        } else if (i == R.id.login_forget_password) {
         }
     }
 
