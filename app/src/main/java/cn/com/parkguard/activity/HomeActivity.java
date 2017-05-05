@@ -1,6 +1,5 @@
 package cn.com.parkguard.activity;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -8,10 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
-
-import cn.com.parkguard.R;
-import cn.com.parkguard.adapter.HomeAdapter;
-import cn.com.parkguard.bean.HomeBean;
 
 import com.alibaba.fastjson.JSON;
 import com.github.mzule.activityrouter.router.Routers;
@@ -23,6 +18,11 @@ import com.linked.erfli.library.utils.StatusBarUtils;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import java.util.ArrayList;
+
+import cn.com.parkguard.R;
+import cn.com.parkguard.adapter.HomeAdapter;
+import cn.com.parkguard.bean.HomeBean;
+
 
 public class HomeActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     private TextView netText;
