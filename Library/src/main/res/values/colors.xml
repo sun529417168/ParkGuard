@@ -50,4 +50,6 @@
     <color name="yellow">#C0B619</color>
     <!--绿色-->
     <color name="green">#1E7101</color>
+    <!--透明-->
+    <color name="transparent">#00000000</color>
 </resources>
