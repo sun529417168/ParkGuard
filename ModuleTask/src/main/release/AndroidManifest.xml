@@ -46,9 +46,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.linked.erfli.library.ShowPhotoActivity"
+            android:name="com.linked.erfli.library.ShowZoomPhotoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

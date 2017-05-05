@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.linked.erfli.library.base.BaseFragment;
 import com.linked.erfli.library.refresh.PullToRefreshBase;
 import com.linked.erfli.library.refresh.PullToRefreshListView;
+import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class TaskFragment extends BaseFragment implements TaskListInterface, Vie
     private int pageindex = 1;//页码数
     private List<TaskBean.RowsBean> rowsBeanList = new ArrayList();
     private LinearLayout addTask;
+    private LinearLayout title_back;
 
     @Override
     protected View setView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +67,11 @@ public class TaskFragment extends BaseFragment implements TaskListInterface, Vie
 
     @Override
     protected void init(View rootView) {
+        if (SharedUtil.getBoolean(context, "isTask", false)) {
+            title_back = (LinearLayout) rootView.findViewById(R.id.title_back);
+            title_back.setVisibility(View.VISIBLE);
+            title_back.setOnClickListener(this);
+        }
         title_name = (TextView) rootView.findViewById(R.id.title_name);
         title_name.setText("任务");
         searchLayout = (LinearLayout) rootView.findViewById(R.id.title_search);
@@ -161,7 +168,8 @@ public class TaskFragment extends BaseFragment implements TaskListInterface, Vie
         } else if (i == R.id.problem_addInfo) {
             intent = new Intent(context, AddTaskActivity.class);
             startActivity(intent);
-
+        } else if (i == R.id.title_back) {
+            getActivity().finish();
         }
     }
 

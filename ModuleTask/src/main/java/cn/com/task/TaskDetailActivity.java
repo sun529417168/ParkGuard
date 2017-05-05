@@ -25,7 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.linked.erfli.library.ShowPhotoActivity;
+import com.linked.erfli.library.ShowZoomPhotoActivity;
 import com.linked.erfli.library.utils.MyUtils;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.StatusBarUtils;
@@ -330,7 +330,7 @@ public class TaskDetailActivity extends TakePhotoActivity implements View.OnClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent in = new Intent(this, ShowPhotoActivity.class);
+        Intent in = new Intent(this, ShowZoomPhotoActivity.class);
         in.putStringArrayListExtra("listPath", listPath);
         startActivity(in);
     }
