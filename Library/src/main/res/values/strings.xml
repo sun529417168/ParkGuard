@@ -10,6 +10,7 @@
     <string name="pull_quit_close">"确定"</string>
     <string name="close">"关闭"</string>
     <string name="title_net">"网络不给力，请检查网络设置。"</string>
+    <string name="scan_failed">扫描失败</string>
 
     <!--登陆界面start-->
     <string name="username">"请输入帐号"</string>
