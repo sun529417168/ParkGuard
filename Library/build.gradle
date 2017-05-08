@@ -3,10 +3,11 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
-
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -43,4 +44,6 @@ dependencies {
     compile 'com.github.mzule.activityrouter:activityrouter:1.2.2'
     compile 'com.alibaba:fastjson:1.2.31'
     compile files('libs/systembartint-1.0.4.jar')
+    compile 'com.uwetrottmann.photoview:library:1.2.4'
+    compile 'com.google.zxing:core:3.2.1'
 }
