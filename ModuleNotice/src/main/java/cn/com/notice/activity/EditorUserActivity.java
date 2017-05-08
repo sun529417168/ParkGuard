@@ -18,8 +18,8 @@ import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import cn.com.notice.R;
-import cn.com.notice.Utils.DialogUtils;
-import cn.com.notice.Utils.MyRequest;
+import cn.com.notice.utils.DialogUtils;
+import cn.com.notice.utils.MyRequest;
 import cn.com.notice.bean.PersonBean;
 import cn.com.notice.interfaces.PersonInfoInterface;
 import cn.com.notice.interfaces.SexChooseInterface;
@@ -124,7 +124,7 @@ public class EditorUserActivity extends BaseActivity implements View.OnClickList
             newPasswrod = inputNewPassword.getText().toString().trim();
             newPasswrodAgain = inputNewPasswordAgain.getText().toString().trim();
             if (isEmpty(name, sex, phone, oldPasword, newPasswrod, newPasswrodAgain)) {
-                MyRequest.uodatePersonInfoRequest(this, name, sex, userID, phone, oldPasword, newPasswrod);
+                MyRequest.uodatePersonInfoRequest(this, name, sex, userID, phone, oldPasword, newPasswrod,username);
             }
 
         } else if (i == R.id.editor_user_sex_layout) {

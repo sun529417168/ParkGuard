@@ -1,7 +1,6 @@
 package cn.com.notice.activity;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,21 +9,19 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.utils.DownloadUtil;
 import com.linked.erfli.library.utils.MyUtils;
-import com.linked.erfli.library.utils.StatusBarUtils;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import cn.com.notice.R;
-import cn.com.notice.Utils.MyRequest;
+import cn.com.notice.utils.MyRequest;
 import cn.com.notice.adapter.NoticeDetalPhotoAdapter;
 import cn.com.notice.bean.NoticeDetailBean;
 import cn.com.notice.interfaces.NoticeDetailInterface;

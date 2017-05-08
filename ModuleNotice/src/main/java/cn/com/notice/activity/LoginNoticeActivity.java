@@ -1,6 +1,5 @@
 package cn.com.notice.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,7 +14,7 @@ import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import cn.com.notice.R;
-import cn.com.notice.Utils.MyRequest;
+import cn.com.notice.utils.MyRequest;
 import cn.com.notice.bean.UserBean;
 import cn.com.notice.interfaces.LoginInterface;
 
@@ -110,7 +109,7 @@ public class LoginNoticeActivity extends BaseActivity implements View.OnClickLis
             this.finish();
         }
         if (1 == userBean.getUserType()) {
-            SharedUtil.setBoolean(this, "isLogin", true);
+            SharedUtil.setString(this, "userName", username);
             Intent intent = new Intent(this, NoticeActivity.class);
             startActivity(intent);
             this.finish();
