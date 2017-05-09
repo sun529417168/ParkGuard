@@ -68,7 +68,6 @@ public class MyRequest {
                     ToastUtil.show(activity, "帐号不存在");
                 } else {
                     UserBean userBean = JSON.parseObject(response, UserBean.class);
-                    SharedUtil.setString(activity, "userName", username);
                     SharedUtil.setString(activity, "passWord", password);
                     SharedUtil.setString(activity, "PersonID", userBean.getPersonId() + "");
                     SharedUtil.setString(activity, "LoginName", userBean.getLoginName());
@@ -236,7 +235,7 @@ public class MyRequest {
      * 参    数：Activity activity String... strings
      * 返回值：无
      */
-    public static void uodatePersonInfoRequest(final Activity activity, String... strings) {
+    public static void uodatePersonInfoRequest(final Activity activity, final String... strings) {
         final Dialog progDialog = DialogUtils.showWaitDialog(activity);
         Map<String, Object> params = new HashMap<>();
         try {
@@ -254,7 +253,7 @@ public class MyRequest {
             @Override
             public void onResponse(String response, int id) {
                 if ("true".equals(response)) {
-                    SharedUtil.setBoolean(activity, "isLogin", true);
+                    SharedUtil.setString(activity, "userName", strings[6]);
                     Intent intent = new Intent(activity, NoticeActivity.class);
                     activity.startActivity(intent);
                     activity.finish();
