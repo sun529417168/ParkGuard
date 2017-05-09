@@ -6,7 +6,21 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true">
-        <activity android:name=".WatchManActivity" />
+        <!--登陆界面-->
+        <activity
+            android:name=".activity.WatchManLoginActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--完善信息界面-->
+        <activity
+            android:name=".activity.WatchManEditorUserActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--主界面-->
+        <activity
+            android:name=".activity.WatchMainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

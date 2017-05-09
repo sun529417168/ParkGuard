@@ -1,4 +1,4 @@
-package cn.com.watchman;
+package cn.com.watchman.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.widget.ImageView;
 
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.utils.SharedUtil;
+import com.linked.erfli.library.utils.StatusBarUtils;
+
+import cn.com.watchman.R;
 
 /**
  * Created by 志强 on 2017.5.3.
@@ -28,7 +31,7 @@ public class WatchManWelcomeActivity extends BaseActivity {
     @Override
     protected void setDate(Bundle savedInstanceState) {
         userName = SharedUtil.getString(mContext, "userName");//获取用户名
-
+        StatusBarUtils.ff(mContext, R.color.transparent);
     }
 
     @Override
@@ -60,7 +63,7 @@ public class WatchManWelcomeActivity extends BaseActivity {
                     startActivity(new Intent(mContext, WatchManLoginActivity.class));
                 } else {
                     //跳转到主页面
-                    startActivity(new Intent(mContext, WatchManActivity.class));
+                    startActivity(new Intent(mContext, WatchMainActivity.class));
                 }
                 finish();
             }

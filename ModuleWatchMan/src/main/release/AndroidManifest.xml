@@ -4,26 +4,34 @@
 
     <application
         android:allowBackup="true"
-        android:supportsRtl="true">
-        <activity
-            android:name=".WatchManActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
+        android:icon="@mipmap/watch_logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".WatchManLoginActivity" />
-        <activity android:name=".WatchManWelcomeActivity">
+        <activity android:name=".activity.WatchManWelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--登陆界面-->
         <activity
-            android:name=".WatchManEditorUserActivity"
-            android:theme="@style/AppTheme" />
+            android:name=".activity.WatchManLoginActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--完善信息界面-->
+        <activity
+            android:name=".activity.WatchManEditorUserActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--主界面-->
+        <activity
+            android:name=".activity.WatchMainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

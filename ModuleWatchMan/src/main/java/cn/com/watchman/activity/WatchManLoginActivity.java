@@ -1,4 +1,4 @@
-package cn.com.watchman;
+package cn.com.watchman.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.StatusBarUtils;
 import com.linked.erfli.library.utils.ToastUtil;
 
+import cn.com.watchman.R;
 import cn.com.watchman.bean.UserBean;
 import cn.com.watchman.interfaces.WatchManLoginInterface;
 import cn.com.watchman.networkrequest.WatchManRequest;
@@ -97,15 +98,14 @@ public class WatchManLoginActivity extends BaseActivity implements View.OnClickL
             return;
         }
         if (0 == userBean.getUserType()) {
-            SharedUtil.setBoolean(this, "isLogin", true);
             Intent intent = new Intent(this, WatchManEditorUserActivity.class);
             intent.putExtra("username", userName);
             startActivity(intent);
             this.finish();
         }
         if (1 == userBean.getUserType()) {
-            SharedUtil.setBoolean(this, "isLogin", true);
-            Intent intent = new Intent(this, WatchManActivity.class);
+            SharedUtil.setString(this, "userName", userName);
+            Intent intent = new Intent(this, WatchMainActivity.class);
             startActivity(intent);
             this.finish();
         }
