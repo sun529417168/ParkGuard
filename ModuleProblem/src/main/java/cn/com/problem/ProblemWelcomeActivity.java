@@ -9,37 +9,36 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
+import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.utils.SharedUtil;
+import com.linked.erfli.library.utils.StatusBarUtils;
 
 /**
  * zzq on 2017.5.2.
  */
 
-public class ProblemWelcomeActivity extends AppCompatActivity {
+public class ProblemWelcomeActivity extends BaseActivity {
 
     private ImageView img_Show_WelcomeImage;
-    private String userName;
+    private boolean isLogin;
     private Context mContext;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setView() {
         setContentView(R.layout.problem_activity_welcome);
+    }
+
+    @Override
+    protected void setDate(Bundle savedInstanceState) {
         mContext = this;
-        setData();
-        initControl();
-        initView();
+        isLogin = SharedUtil.getBoolean(this, "isLogin", false);
+        StatusBarUtils.ff(mContext, R.color.transparent);
     }
 
-    private void setData() {
-        userName = SharedUtil.getString(mContext, "userName");//获取用户名
-    }
-
-    private void initControl() {
+    @Override
+    protected void init() {
         img_Show_WelcomeImage = (ImageView) findViewById(R.id.img_Show_WelcomeImage);
-    }
-
-    private void initView() {
         ScaleAnimation scaleAnimation = new ScaleAnimation(1.0f, 1.1f, 1.0f, 1.1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setFillAfter(true);
         scaleAnimation.setDuration(5000);
@@ -54,12 +53,12 @@ public class ProblemWelcomeActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (userName == null || "".equals(userName)) {
-                    //userName为null 跳转到登录页面
-                    startActivity(new Intent(mContext, ProblemLoginActivity.class));
-                } else {
+                if (isLogin) {
                     //跳转到主页面
                     startActivity(new Intent(mContext, ProblemActivity.class));
+                } else {
+                    //userName为null 跳转到登录页面
+                    startActivity(new Intent(mContext, ProblemLoginActivity.class));
                 }
                 finish();
             }
@@ -70,4 +69,5 @@ public class ProblemWelcomeActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.linked.erfli.library.base.BaseActivity;
+import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
@@ -26,7 +27,6 @@ public class ProblemLoginActivity extends BaseActivity implements View.OnClickLi
     private TextView problem_login_forget_password;//忘记密码
     private EditText problem_login_username;//用户名
     private EditText problem_login_password;//密码
-    private TextView title_name;
     private String userName, passWord;
 
     @Override
@@ -37,7 +37,7 @@ public class ProblemLoginActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
-
+        MyTitle.getInstance().setTitle(this, "登陆", PGApp, false);
     }
 
     @Override
@@ -46,10 +46,14 @@ public class ProblemLoginActivity extends BaseActivity implements View.OnClickLi
         problem_login_forget_password = (TextView) findViewById(R.id.problem_login_forget_password);
         problem_login_username = (EditText) findViewById(R.id.problem_login_username);
         problem_login_password = (EditText) findViewById(R.id.problem_login_password);
-        title_name = (TextView) findViewById(R.id.title_name);
-        title_name.setText("登陆");
         problem_login_button.setOnClickListener(this);
         problem_login_forget_password.setOnClickListener(this);
+    }
+
+    @Override
+    public void onNetChange(int netMobile) {
+        super.onNetChange(netMobile);
+        MyTitle.getInstance().setNetText(this, netMobile);
     }
 
     private boolean isEmpt() {
@@ -89,11 +93,10 @@ public class ProblemLoginActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         if (0 == userBean.getUserType()) {
-//            SharedUtil.setBoolean(this, "isLogin", true);
-//            Intent intent = new Intent(this, TaskEditorUserActivity.class);
-//            intent.putExtra("username", userName);
-//            startActivity(intent);
-//            this.finish();
+            Intent intent = new Intent(this, TaskEditorUserActivity.class);
+            intent.putExtra("username", userName);
+            startActivity(intent);
+            this.finish();
         }
         if (1 == userBean.getUserType()) {
             SharedUtil.setBoolean(this, "isLogin", true);

@@ -5,64 +5,50 @@
     <application
         android:name=".app.ProblemApplication"
         android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/ProblemAppTheme">
-        <activity
-            android:name="cn.com.problem.ProblemActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ProblemWelcomeActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/AppTheme">
+        <activity android:name=".ProblemWelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="cn.com.problem.ProblemActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ProblemLoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".AddProblemActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ProblemDetailActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TaskEditorUserActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".InputTextActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.linked.erfli.library.ShowZoomPhotoActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

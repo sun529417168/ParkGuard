@@ -108,7 +108,6 @@ public class TaskLoginActivity extends BaseActivity implements View.OnClickListe
             return;
         }
         if (0 == userBean.getUserType()) {
-            SharedUtil.setBoolean(this, "isLogin", true);
             Intent intent = new Intent(this, TaskEditorUserActivity.class);
             intent.putExtra("username", userName);
             startActivity(intent);

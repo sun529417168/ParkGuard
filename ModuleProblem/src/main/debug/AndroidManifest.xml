@@ -8,51 +8,36 @@
         android:supportsRtl="true">
         <activity
             android:name="cn.com.problem.ProblemActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ProblemLoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".AddProblemActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ProblemDetailActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TaskEditorUserActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".InputTextActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.linked.erfli.library.ShowZoomPhotoActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package cn.com.task;
+package cn.com.problem;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,17 +17,17 @@ import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
-import cn.com.task.bean.PersonBean;
-import cn.com.task.interfaces.PersonInfoInterface;
-import cn.com.task.interfaces.SexChooseInterface;
-import cn.com.task.networkrequest.TaskReuest;
-import cn.com.task.utils.DialogUtils;
+import cn.com.problem.bean.PersonBean;
+import cn.com.problem.interfaces.PersonInfoInterface;
+import cn.com.problem.interfaces.SexChooseInterface;
+import cn.com.problem.networkrequest.ProblemRequest;
+import cn.com.problem.utils.DialogUtils;
 
 /**
  * 文件名：EditorUserActivity
  * 描    述：完善自己资料的类
  * 作    者：stt
- * 时    间：2017.5.8
+ * 时    间：2017.01.04
  * 版    本：V1.0.0
  */
 
@@ -58,7 +58,7 @@ public class TaskEditorUserActivity extends BaseActivity implements View.OnClick
     protected void setDate(Bundle savedInstanceState) {
         username = getIntent().getStringExtra("username");
         context = this;
-        TaskReuest.personInfoRequest(this, SharedUtil.getString(this, "PersonID"));
+        ProblemRequest.personInfoRequest(this, SharedUtil.getString(this, "PersonID"));
     }
 
     @Override
@@ -80,11 +80,11 @@ public class TaskEditorUserActivity extends BaseActivity implements View.OnClick
         usernameText.setText(username);
         workNumberText = (TextView) findViewById(R.id.editor_workNumber);
         inputOldPassword.addTextChangedListener(watcher);
-        inputOldPassword.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+        inputOldPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    TaskReuest.isCheckPassWordRequest(TaskEditorUserActivity.this, oldPasword);
+                    ProblemRequest.isCheckPassWordRequest(TaskEditorUserActivity.this, oldPasword);
                 }
             }
         });
@@ -122,7 +122,7 @@ public class TaskEditorUserActivity extends BaseActivity implements View.OnClick
             newPasswrod = inputNewPassword.getText().toString().trim();
             newPasswrodAgain = inputNewPasswordAgain.getText().toString().trim();
             if (isEmpty(name, sex, phone, oldPasword, newPasswrod, newPasswrodAgain)) {
-                TaskReuest.uodatePersonInfoRequest(this, name, sex, userID, phone, oldPasword, newPasswrod);
+                ProblemRequest.uodatePersonInfoRequest(this, name, sex, userID, phone, oldPasword, newPasswrod);
             }
 
         } else if (i == R.id.editor_user_sex_layout) {
@@ -189,7 +189,6 @@ public class TaskEditorUserActivity extends BaseActivity implements View.OnClick
             return true;
         }
     }
-
 
     @Override
     public void getPersonInfo(PersonBean personBean) {

@@ -34,6 +34,8 @@ public abstract class BaseActivity extends BaseCheckPermissionActivity implement
      * Notification管理
      */
     public NotificationManager mNotificationManager;
+    public long exitTime;//上一次按退出键时间
+    public static final long TIME = 2000;//双击回退键间隔时间
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -21,7 +21,7 @@ public class TaskWelcomeActivity extends BaseActivity {
 
     private ImageView splash;//欢迎图片,这里固定设置,可动态设置
     private Context mContext;
-    private String userName;
+    private boolean isLogin;
 
     @Override
     protected void setView() {
@@ -35,8 +35,7 @@ public class TaskWelcomeActivity extends BaseActivity {
      */
     @Override
     protected void setDate(Bundle savedInstanceState) {
-        userName = SharedUtil.getString(mContext, "userName");//获取用户名
-        Log.i("", "userName=" + userName);
+        isLogin = SharedUtil.getBoolean(this, "isLogin", false);
 
     }
 
@@ -68,12 +67,12 @@ public class TaskWelcomeActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (userName == null || "".equals(userName)) {
-                    //userName为null 跳转到登录页面
-                    startActivity(new Intent(mContext, TaskLoginActivity.class));
-                } else {
+                if (isLogin) {
                     //跳转到主页面
                     startActivity(new Intent(mContext, TaskActivity.class));
+                } else {
+                    //userName为null 跳转到登录页面
+                    startActivity(new Intent(mContext, TaskLoginActivity.class));
                 }
                 finish();
             }

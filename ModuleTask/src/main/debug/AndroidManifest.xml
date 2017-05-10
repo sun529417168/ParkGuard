@@ -8,36 +8,36 @@
         android:supportsRtl="true">
         <activity
             android:name=".TaskActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TaskEditorUserActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AddTaskActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TaskDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TaskSearchActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".InputTextActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TaskChoosePersonActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.linked.erfli.library.ShowZoomPhotoActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import cn.com.notice.R;
-import cn.com.notice.utils.MyRequest;
+import cn.com.notice.Utils.MyRequest;
 import cn.com.notice.adapter.NoticeDetalPhotoAdapter;
 import cn.com.notice.bean.NoticeDetailBean;
 import cn.com.notice.interfaces.NoticeDetailInterface;

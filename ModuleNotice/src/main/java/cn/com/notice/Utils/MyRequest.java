@@ -68,6 +68,7 @@ public class MyRequest {
                     ToastUtil.show(activity, "帐号不存在");
                 } else {
                     UserBean userBean = JSON.parseObject(response, UserBean.class);
+                    SharedUtil.setString(activity, "userName", username);
                     SharedUtil.setString(activity, "passWord", password);
                     SharedUtil.setString(activity, "PersonID", userBean.getPersonId() + "");
                     SharedUtil.setString(activity, "LoginName", userBean.getLoginName());
@@ -253,7 +254,7 @@ public class MyRequest {
             @Override
             public void onResponse(String response, int id) {
                 if ("true".equals(response)) {
-                    SharedUtil.setString(activity, "userName", strings[6]);
+                    SharedUtil.setBoolean(activity, "isLogin", true);
                     Intent intent = new Intent(activity, NoticeActivity.class);
                     activity.startActivity(intent);
                     activity.finish();
