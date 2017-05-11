@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.linked.erfli.library.okhttps.OkHttpUtils;
 import com.linked.erfli.library.service.NetBroadcastReceiver;
 import com.linked.erfli.library.utils.NetWorkUtils;
 import com.linked.erfli.library.utils.PGActivityUtil;
@@ -132,5 +133,18 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
                     handleResult(f, requestCode, resultCode, data);
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        evevt = this;
+        inspectNet();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        OkHttpUtils.getInstance().cancelTag(this);
     }
 }

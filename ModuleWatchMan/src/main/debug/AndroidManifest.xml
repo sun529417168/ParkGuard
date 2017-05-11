@@ -21,6 +21,11 @@
             android:name=".activity.WatchMainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <!--事件上报界面-->
+        <activity
+            android:name=".activity.EventReportActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
