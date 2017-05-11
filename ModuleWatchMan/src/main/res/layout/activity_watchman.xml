@@ -6,7 +6,7 @@
 
     <include layout="@layout/title" />
 
-    <TextView
+    <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
         android:textColor="@color/colorWhite" />
@@ -24,7 +24,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/main_scan_text"
+                android:id="@+id/watchMan_scan_text"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:background="@drawable/my_scanning"
@@ -34,7 +34,7 @@
                 android:visibility="gone" />
 
             <cn.com.watchman.weight.RadarView
-                android:id="@+id/main_scan_radar"
+                android:id="@+id/watchMan_scan_radar"
                 android:layout_width="80dp"
                 android:layout_height="80dp" />
 
@@ -84,7 +84,7 @@
                 android:textColor="@color/colorWhite" />
 
             <TextView
-                android:id="@+id/tv_content_Address"
+                android:id="@+id/watchMan_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tv_Title_Altitude"
@@ -95,50 +95,54 @@
                 android:textColor="@color/colorWhite" />
 
             <TextView
-                android:id="@+id/tv_content_Longitude"
+                android:id="@+id/watchMan_Longitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/tv_Title_Longitude"
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/tv_Title_Longitude"
                 android:layout_toRightOf="@+id/tv_Title_Longitude"
+                android:text="00.000000"
                 android:textColor="@color/colorWhite" />
 
             <TextView
-                android:id="@+id/tv_content_Latitude"
+                android:id="@+id/watchMan_Latitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/tv_Title_Latitude"
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/tv_Title_Latitude"
                 android:layout_toRightOf="@+id/tv_Title_Latitude"
+                android:text="00.000000"
                 android:textColor="@color/colorWhite" />
-
+            <!--精度-->
             <TextView
-                android:id="@+id/tv_content_Accuracy"
+                android:id="@+id/watchMan_accuracy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/tv_Title_Accuracy"
                 android:layout_alignBottom="@+id/tv_Title_Accuracy"
                 android:layout_toRightOf="@+id/tv_Title_Accuracy"
+                android:text="00.0"
                 android:textColor="@color/colorWhite" />
-
+            <!--海拔-->
             <TextView
-                android:id="@+id/tv_content_Altitude"
+                android:id="@+id/watchMan_altitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/tv_content_Address"
-                android:layout_alignLeft="@+id/tv_content_Latitude"
-                android:layout_alignStart="@+id/tv_content_Latitude"
+                android:layout_above="@+id/watchMan_address"
+                android:layout_alignLeft="@+id/watchMan_Latitude"
+                android:layout_alignStart="@+id/watchMan_Latitude"
+                android:text="0"
                 android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/tv_Title_Accuracy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/tv_content_Address"
-                android:layout_toEndOf="@+id/tv_content_Latitude"
-                android:layout_toRightOf="@+id/tv_content_Latitude"
+                android:layout_above="@+id/watchMan_address"
+                android:layout_toEndOf="@+id/watchMan_Latitude"
+                android:layout_toRightOf="@+id/watchMan_Latitude"
                 android:text="@string/tv_Title_Accuracy"
                 android:textColor="@color/colorWhite" />
         </RelativeLayout>
@@ -174,37 +178,38 @@
             android:textColor="@color/colorWhite" />
 
         <TextView
-            android:id="@+id/tv_content_StatelliteNum"
+            android:id="@+id/watchMan_find_satelliteNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_Title_StatelliteNum"
             android:layout_alignBottom="@+id/tv_Title_StatelliteNum"
             android:layout_toEndOf="@+id/tv_Title_StatelliteNum"
             android:layout_toRightOf="@+id/tv_Title_StatelliteNum"
+            android:text="0"
             android:textColor="@color/colorWhite" />
 
         <TextView
             android:id="@+id/tv_Title_calibration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tv_content_StatelliteNum"
-            android:layout_alignBottom="@+id/tv_content_StatelliteNum"
+            android:layout_alignBaseline="@+id/watchMan_find_satelliteNum"
+            android:layout_alignBottom="@+id/watchMan_find_satelliteNum"
             android:layout_marginLeft="85dp"
             android:layout_marginStart="85dp"
-            android:layout_toEndOf="@+id/tv_content_StatelliteNum"
-            android:layout_toRightOf="@+id/tv_content_StatelliteNum"
+            android:layout_toEndOf="@+id/watchMan_find_satelliteNum"
+            android:layout_toRightOf="@+id/watchMan_find_satelliteNum"
             android:text="已  校  准:"
             android:textColor="@color/colorWhite" />
 
         <TextView
-            android:id="@+id/tv_content_calibration"
+            android:id="@+id/watchMan_calibration_satelliteNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_Title_calibration"
             android:layout_alignBottom="@+id/tv_Title_calibration"
-            android:layout_marginLeft="10dp"
             android:layout_toEndOf="@+id/tv_Title_calibration"
             android:layout_toRightOf="@+id/tv_Title_calibration"
+            android:text="0"
             android:textColor="@color/colorWhite" />
 
 
@@ -217,17 +222,18 @@
             android:layout_marginLeft="84dp"
             android:layout_marginStart="84dp"
             android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/tv_content_StatelliteNum"
-            android:layout_toRightOf="@+id/tv_content_StatelliteNum"
+            android:layout_toEndOf="@+id/watchMan_find_satelliteNum"
+            android:layout_toRightOf="@+id/watchMan_find_satelliteNum"
             android:text="上传次数:"
             android:textColor="@color/colorWhite" />
 
         <TextView
-            android:id="@+id/new_main_sendCount"
+            android:id="@+id/watchMan_sendCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/new_main_ciShu"
+            android:text="0"
             android:textColor="@color/colorWhite" />
     </RelativeLayout>
 
@@ -240,97 +246,103 @@
             android:layout_height="240dp"
             android:layout_centerInParent="true"
             android:background="@drawable/activity_main_menu">
-
-            <ImageButton
-                android:id="@+id/imgBtn_EventReport"
-                android:layout_width="wrap_content"
+            <!--事件上报start-->
+            <LinearLayout
+                android:id="@+id/watchMan_EventReport"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/activity_main_top" />
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/imgBtn_Geography_Positioin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/imgBtn_EventReport"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="19dp"
-                android:background="@drawable/activity_main_right" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/activity_main_top" />
 
-            <ImageButton
-                android:id="@+id/imgBtn_QECode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imgBtn_Geography_Positioin"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/activity_main_left" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="时间上报"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+            <!--事件上报end-->
+            <!--地理位置start-->
+            <LinearLayout
+                android:id="@+id/watchMan_map"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/watchMan_center"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/imgBtn_Statistics"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="37dp"
-                android:background="@drawable/activity_main_bottom" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/activity_main_right" />
 
-            <TextView
-                android:id="@+id/tv_EventReport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imgBtn_EventReport"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="事件上报"
-                android:textColor="@color/colorWhite" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地理位置"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+            <!--地理位置end-->
 
-            <TextView
-                android:id="@+id/tv_QECode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/imgBtn_QECode"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="5dp"
-                android:text="二维码巡更"
-                android:textColor="@color/colorWhite" />
-
-            <TextView
-                android:id="@+id/tv_Geography_Positioin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/imgBtn_Geography_Positioin"
+            <!--地理位置start-->
+            <LinearLayout
+                android:id="@+id/watchMan_code"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:text="地理位置"
-                android:textColor="@color/colorWhite" />
+                android:layout_toLeftOf="@+id/watchMan_center"
+                android:gravity="center"
+                android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/activity_main_left" />
 
-            <TextView
-                android:id="@+id/tv_Statistics"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="二维码巡更"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+            <!--地理位置end-->
+
+            <!--巡更统计start-->
+            <LinearLayout
+                android:id="@+id/watchMan_statistics"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tv_EventReport"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/tv_EventReport"
-                android:layout_marginBottom="14dp"
-                android:text="巡更统计"
-                android:textColor="@color/colorWhite" />
+                android:layout_below="@+id/watchMan_center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/activity_main_bottom" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="巡更统计"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+            <!--巡更统计end-->
 
 
             <ImageButton
-                android:id="@+id/rl_startOrstop_image"
+                android:id="@+id/watchMan_center"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_centerInParent="true"

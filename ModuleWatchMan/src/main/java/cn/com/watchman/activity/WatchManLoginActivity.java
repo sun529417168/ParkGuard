@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.linked.erfli.library.base.BaseActivity;
+import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.StatusBarUtils;
 import com.linked.erfli.library.utils.ToastUtil;
@@ -39,7 +40,7 @@ public class WatchManLoginActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
-
+        MyTitle.getInstance().setTitle(this, "登陆", PGApp, false);
     }
 
     @Override
@@ -52,6 +53,12 @@ public class WatchManLoginActivity extends BaseActivity implements View.OnClickL
         login_button.setOnClickListener(this);
         login_forget_password = (TextView) findViewById(R.id.login_forget_password);
         login_forget_password.setOnClickListener(this);
+    }
+
+    @Override
+    public void onNetChange(int netMobile) {
+        super.onNetChange(netMobile);
+        MyTitle.getInstance().setNetText(this, netMobile);
     }
 
     private String userName, passWord;
@@ -104,7 +111,7 @@ public class WatchManLoginActivity extends BaseActivity implements View.OnClickL
             this.finish();
         }
         if (1 == userBean.getUserType()) {
-            SharedUtil.setString(this, "userName", userName);
+            SharedUtil.setBoolean(this, "isLogin", true);
             Intent intent = new Intent(this, WatchMainActivity.class);
             startActivity(intent);
             this.finish();

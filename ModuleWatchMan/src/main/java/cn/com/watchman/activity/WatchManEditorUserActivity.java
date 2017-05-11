@@ -124,7 +124,7 @@ public class WatchManEditorUserActivity extends BaseActivity implements View.OnC
             newPasswrod = inputNewPassword.getText().toString().trim();
             newPasswrodAgain = inputNewPasswordAgain.getText().toString().trim();
             if (isEmpty(name, sex, phone, oldPasword, newPasswrod, newPasswrodAgain)) {
-                MyRequest.uodatePersonInfoRequest(this, name, sex, userID, phone, oldPasword, newPasswrod, username);
+                MyRequest.uodatePersonInfoRequest(this, name, sex, userID, phone, oldPasword, newPasswrod);
             }
 
         } else if (i == R.id.editor_user_sex_layout) {

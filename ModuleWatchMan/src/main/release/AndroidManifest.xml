@@ -3,12 +3,29 @@
     package="cn.com.watchman">
 
     <application
+        android:name=".application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/watch_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2"></action>
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="IGE9YdZYFOka4zutunPI3ojuVAUMrqBb" />
 
+        <receiver android:name="com.linked.erfli.library.service.NetBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
         <activity android:name=".activity.WatchManWelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +49,12 @@
             android:name=".activity.WatchMainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <!--事件上报界面-->
+        <activity
+            android:name=".activity.EventReportActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

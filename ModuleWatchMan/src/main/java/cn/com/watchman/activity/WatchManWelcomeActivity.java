@@ -20,7 +20,7 @@ public class WatchManWelcomeActivity extends BaseActivity {
 
     private WatchManWelcomeActivity mContext;
     private ImageView watchman_welcome_image;
-    private String userName;
+    private boolean isLogin;
 
     @Override
     protected void setView() {
@@ -30,7 +30,7 @@ public class WatchManWelcomeActivity extends BaseActivity {
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
-        userName = SharedUtil.getString(mContext, "userName");//获取用户名
+        isLogin = SharedUtil.getBoolean(this, "isLogin", false);
         StatusBarUtils.ff(mContext, R.color.transparent);
     }
 
@@ -58,12 +58,12 @@ public class WatchManWelcomeActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (userName == null || "".equals(userName)) {
-                    //userName为null 跳转到登录页面
-                    startActivity(new Intent(mContext, WatchManLoginActivity.class));
-                } else {
+                if (isLogin) {
                     //跳转到主页面
                     startActivity(new Intent(mContext, WatchMainActivity.class));
+                } else {
+                    //userName为null 跳转到登录页面
+                    startActivity(new Intent(mContext, WatchManLoginActivity.class));
                 }
                 finish();
             }

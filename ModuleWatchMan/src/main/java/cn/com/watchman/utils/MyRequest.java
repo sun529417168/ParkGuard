@@ -122,7 +122,7 @@ public class MyRequest {
             @Override
             public void onResponse(String response, int id) {
                 if ("true".equals(response)) {
-                    SharedUtil.setString(activity, "userName", strings[6]);
+                    SharedUtil.setBoolean(activity, "isLogin", true);
                     Intent intent = new Intent(activity, WatchMainActivity.class);
                     activity.startActivity(intent);
                     activity.finish();
