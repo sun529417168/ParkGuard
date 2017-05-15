@@ -1,10 +1,12 @@
 package cn.com.watchman.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -19,12 +21,16 @@ import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import cn.com.watchman.R;
-import cn.com.watchman.application.MyApplication;
+import cn.com.watchman.application.WMApplication;
 import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.interfaces.GPSInfoInterface;
 import cn.com.watchman.service.LocationService;
 import cn.com.watchman.service.MsgReceiver;
+import cn.com.watchman.utils.DialogUtils;
+import cn.com.watchman.utils.Distance;
 import cn.com.watchman.utils.MyLocationListener;
+import cn.com.watchman.utils.MyRequest;
+import cn.com.watchman.utils.WMyUtils;
 import cn.com.watchman.weight.RadarView;
 
 
@@ -36,7 +42,7 @@ import cn.com.watchman.weight.RadarView;
  * 版    本：V1.0.0
  */
 @Router("watchman")
-public class WatchMainActivity extends BaseActivity implements View.OnClickListener,GPSInfoInterface {
+public class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface {
 
     /**
      * 经度,纬度,海拔,精度,地址
@@ -55,10 +61,12 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     private ImageButton suspendBtn;
     boolean isStart = true;
     private LocationService locationService;
-    private BDLocationListener mListener ;
+    private BDLocationListener mListener;
     private MsgReceiver msgReceiver;
     private RadarView scan_radar;
     private TextView scan_text;
+    private GPSBean gpsBean;
+    private boolean isThread = true;
 
     @Override
     protected void setView() {
@@ -69,7 +77,11 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     protected void setDate(Bundle savedInstanceState) {
         MyTitle.getInstance().setTitle(this, "主页", PGApp, false);
         mListener = new MyLocationListener(this);
-        locationService = ((MyApplication) getApplication()).locationService;
+        if (SharedUtil.getBoolean(this, "isWatchMan", false)) {
+            locationService = new LocationService(getApplicationContext());
+        } else {
+            locationService = ((WMApplication) getApplication()).locationService;
+        }
         //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
         locationService.registerListener(mListener);
         //注册监听
@@ -115,41 +127,84 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.watchMan_center://开始暂停
-                if (isStart) {
-                    suspendBtn.setBackgroundResource(R.drawable.activity_main_stop);
-                    isStart = false;
-                    scan_radar.setSearching(true);//开始扫描
-                    locationService.start();
-                    msgReceiver = new MsgReceiver();
-                    IntentFilter intentFilter = new IntentFilter();
-                    intentFilter.addAction(MyLocationListener.GPSTYPE);
-                    registerReceiver(msgReceiver, intentFilter);
-                } else {
-                    suspendBtn.setBackgroundResource(R.drawable.activity_main_start);
-                    isStart = true;
-                    locationService.stop();
-                    scan_radar.setSearching(false);//开始扫描
+        int i = v.getId();
+        if (i == R.id.watchMan_center) {
+            if (!WMyUtils.isOpen(this)) {
+                DialogUtils.showGPSDialog(this);
+                return;
+            }
+            if (isStart) {
+                MyRequest.typeRequest(this, 1);
+                suspendBtn.setBackgroundResource(R.drawable.activity_main_stop);
+                isStart = false;
+                scan_radar.setSearching(true);//开始扫描
+                locationService.start();
+                msgReceiver = new MsgReceiver();
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(MyLocationListener.GPSTYPE);
+                registerReceiver(msgReceiver, intentFilter);
+                new MyThread().start();
+            } else {
+                MyRequest.typeRequest(this, -1);
+                suspendBtn.setBackgroundResource(R.drawable.activity_main_start);
+                isStart = true;
+                locationService.stop();
+                scan_radar.setSearching(false);//停止扫描
+                isThread = false;
+            }
+
+        } else if (i == R.id.watchMan_EventReport) {
+            startActivity(new Intent(this, EventReportActivity.class));
+
+        } else if (i == R.id.watchMan_map) {
+        } else if (i == R.id.watchMan_statistics) {
+        } else if (i == R.id.watchMan_code) {
+        }
+    }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                ToastUtil.show(WatchMainActivity.this, "大于10米");
+            }
+            if (msg.what == 1) {
+                ToastUtil.show(WatchMainActivity.this, "小于10米");
+            }
+        }
+    };
+
+    public class MyThread extends Thread {
+        public void run() {
+            while (isThread) {
+                if (gpsBean != null) {
+                    Log.i("gpsInfo", gpsBean.toString());
+                    if (Distance.isCompare(WatchMainActivity.this, gpsBean)) {
+                        MyRequest.gpsRequest(WatchMainActivity.this, gpsBean);
+                        Message msg = mHandler.obtainMessage();
+                        msg.what = 0;
+                        mHandler.sendMessage(msg);
+                    } else {
+                        Message msg = mHandler.obtainMessage();
+                        msg.what = 1;
+                        mHandler.sendMessage(msg);
+                    }
+                    SharedUtil.setString(WatchMainActivity.this, "longitude", String.valueOf(gpsBean.getLongitude()));
+                    SharedUtil.setString(WatchMainActivity.this, "latitude", String.valueOf(gpsBean.getLatitude()));
                 }
-                break;
-            case R.id.watchMan_EventReport://事件上报
-                startActivity(new Intent(this, EventReportActivity.class));
-                break;
-            case R.id.watchMan_map://地理位置
-
-                break;
-            case R.id.watchMan_statistics://巡更统计
-
-                break;
-            case R.id.watchMan_code://二维码巡更
-
-                break;
+                try {
+                    Thread.sleep(1000 * 60);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     @Override
-    public void getGPSInfo(GPSBean gpsBean) {
+    public void getGPSInfo(final GPSBean gpsBean) {
+        this.gpsBean = gpsBean;
+        Log.i("gpsRequest", gpsBean.toString());
         if ("网络定位成功".equals(gpsBean.getDescribe())) {
             scan_radar.setSearching(false);//停止扫描
             scan_radar.setVisibility(View.GONE);
@@ -173,9 +228,9 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         }
         tv_longitude.setText(String.valueOf(gpsBean.getLongitude()));
         tv_latitude.setText(String.valueOf(gpsBean.getLatitude()));
-        tv_altitude.setText(String.valueOf(gpsBean.getAltitude()));
+        tv_altitude.setText(String.valueOf(gpsBean.getAltitude())+"米");
         tv_accuracy.setText(String.valueOf(gpsBean.getAccuracy()));
-        tv_address.setText(String.valueOf(gpsBean.getAddress()));
+        tv_address.setText(TextUtils.isEmpty(gpsBean.getAddress()) ? "" : gpsBean.getAddress());
         tv_findsatelliteNum.setText(String.valueOf(gpsBean.getFindSatellite()));
         tv_satelliteNum.setText(String.valueOf(gpsBean.getSatellite()));
         tv_describe.setText(gpsBean.getDescribe());
@@ -207,6 +262,8 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         unregisterReceiver(msgReceiver);//注销广播
         locationService.unregisterListener(mListener); //注销掉监听
         locationService.stop(); //停止定位服务
+        isThread = false;
+        MyRequest.typeRequest(this, -1);
         super.onDestroy();
     }
 }

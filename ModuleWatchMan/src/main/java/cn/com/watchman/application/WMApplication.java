@@ -23,7 +23,7 @@ import cn.com.watchman.service.LocationService;
  * 时    间：2016.12.30
  * 版    本：V1.0.0
  */
-public class MyApplication extends Application {
+public class WMApplication extends Application {
     private static final String TAG = "Init";
     public static ImageLoader imageLoader = ImageLoader.getInstance();
     public LocationService locationService;
