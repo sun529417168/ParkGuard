@@ -5,12 +5,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.linked.erfli.library.config.UrlConfig;
 import com.linked.erfli.library.okhttps.OkHttpUtils;
 import com.linked.erfli.library.okhttps.callback.GenericsCallback;
 import com.linked.erfli.library.okhttps.utils.JsonGenericsSerializator;
+import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.DialogUtils;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
@@ -19,7 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.watchman.activity.WatchMainActivity;
+import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.bean.PersonBean;
+import cn.com.watchman.config.WMUrlConfig;
 import cn.com.watchman.interfaces.PersonInfoInterface;
 import okhttp3.Call;
 
@@ -143,4 +147,88 @@ public class MyRequest {
             }
         });
     }
+
+
+    /**
+     * 方法名：gpsRequest
+     * 功    能：上传gps点位
+     * 参    数：Activity activity String... strings
+     * 返回值：无
+     */
+    public static void gpsRequest(final Activity activity, final GPSBean gpsBean) {
+        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("DeviceGUID", new DeviceUuidFactory(activity).getDeviceUuid().toString());
+        map.put("Longitude", gpsBean.getLongitude());//经度
+        map.put("Latitude", gpsBean.getLatitude());//纬度
+        map.put("Speed", "");//速度
+        map.put("RecvGpsTime", System.currentTimeMillis());//GPS接收时间
+        map.put("HappenTime", System.currentTimeMillis());//发生时间
+        map.put("ActiveFlag", -1);//
+        map.put("Direction", 0);//方向
+        map.put("Description", "");//备注
+        map.put("GPSType", 0);//GPS类型
+        map.put("patrol_type", 1);//
+        map.put("point_code", -1);//巡更点编号
+        map.put("user_id", SharedUtil.getString(activity, "PersonID"));
+        map.put("recordid", 0);//原数据库编号记录编号，同步数据库数据时用
+        map.put("satellitenum", gpsBean.getSatellite());//卫星数
+        map.put("accuracy", gpsBean.getAccuracy());//精准度
+        try {
+            params.put("subSysType", 10);
+            params.put("dataType", 2);
+            params.put("mark", "patrolphone");
+            params.put("data", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.post().url(WMUrlConfig.URL).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onResponse(String response, int id) {
+//                ToastUtil.show(activity, "success" + response);
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.i("gpsError", e.getMessage().toString());
+//                ToastUtil.show(activity, "error" + e.getMessage().toString());
+            }
+        });
+    }
+
+
+    /**
+     * 方法名：typeRequest
+     * 功    能：上传手机状态
+     * 参    数：Activity activity String... strings
+     * 返回值：无
+     */
+    public static void typeRequest(final Activity activity, final int status) {
+        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("DeviceGUID", new DeviceUuidFactory(activity).getDeviceUuid().toString());
+        map.put("status", status);//状态
+        try {
+            params.put("subSysType", 10);
+            params.put("dataType", 4);
+            params.put("mark", "patrolphone");
+            params.put("data", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.post().url(WMUrlConfig.URL).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onResponse(String response, int id) {
+//                ToastUtil.show(activity, "success" + response);
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.i("gpsError", e.getMessage().toString());
+//                ToastUtil.show(activity, "error" + e.getMessage().toString());
+            }
+        });
+    }
+
+
 }

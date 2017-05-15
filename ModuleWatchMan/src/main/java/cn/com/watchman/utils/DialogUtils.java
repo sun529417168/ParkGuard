@@ -186,4 +186,33 @@ public class DialogUtils {
                 });
         dialog.show();
     }
+
+
+    /**
+     * 方法名：showGPSDialog
+     * 功    能：打开GPS的dialog
+     * 参    数：Context context, final TextView textView
+     * 返回值：无
+     */
+    public static void showGPSDialog(final Context context) {
+        AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
+        normalDialog.setTitle("提示！");
+        normalDialog.setMessage("是否打开GPS？");
+        normalDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent();
+                intent.setAction(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                context.startActivity(intent);
+            }
+        });
+        normalDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //...To-do
+            }
+        });
+        // 显示
+        normalDialog.show();
+    }
 }
