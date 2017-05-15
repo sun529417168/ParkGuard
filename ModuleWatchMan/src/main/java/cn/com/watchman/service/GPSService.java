@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import cn.com.watchman.application.MyApplication;
+import cn.com.watchman.application.WMApplication;
 import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.interfaces.GPSInfoInterface;
 
@@ -46,7 +46,7 @@ public class GPSService extends Service implements GPSInfoInterface{
     @Override
     public void onCreate() {
         super.onCreate();
-        locationService = ((MyApplication) getApplication()).locationService;
+        locationService = ((WMApplication) getApplication()).locationService;
         //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
         locationService.registerListener(mListener);
         //注册监听
