@@ -1,7 +1,7 @@
 package cn.com.watchman.activity;
 
 import android.Manifest;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -15,46 +15,43 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.baidu.location.BDLocationListener;
-import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.function.takephoto.app.TakePhotoActivity;
-import com.linked.erfli.library.function.takephoto.app.TakePhotoFragmentActivity;
 import com.linked.erfli.library.function.takephoto.compress.CompressConfig;
 import com.linked.erfli.library.function.takephoto.model.CropOptions;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.linked.erfli.library.utils.DeviceUuidFactory;
+import com.linked.erfli.library.utils.SharedUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.com.watchman.R;
+import cn.com.watchman.adapter.PhotoGridViewAdapter;
 import cn.com.watchman.application.MyApplication;
 import cn.com.watchman.bean.GPSBean;
+import cn.com.watchman.interfaces.EventReportDataInterface;
 import cn.com.watchman.interfaces.GPSInfoInterface;
+import cn.com.watchman.interfaces.GridViewDelPhotoInterface;
+import cn.com.watchman.networkrequest.WatchManRequest;
 import cn.com.watchman.service.LocationService;
 import cn.com.watchman.service.MsgReceiver;
 import cn.com.watchman.utils.MyLocationListener;
+
+import static java.lang.System.currentTimeMillis;
 
 
 /**
@@ -65,7 +62,7 @@ import cn.com.watchman.utils.MyLocationListener;
  * 版    本：V1.0.0
  */
 
-public class EventReportActivity extends TakePhotoActivity implements AdapterView.OnItemClickListener, View.OnClickListener, GPSInfoInterface {
+public class EventReportActivity extends TakePhotoActivity implements OnItemClickListener, View.OnClickListener, GPSInfoInterface, GridViewDelPhotoInterface, EventReportDataInterface {
     private GridView picGridview;
     private boolean withOwnCrop;
     private TextView tv_content_Position, tv_wd, tv_con_wd, tv_con_altitude;//地址  纬度  经度 海拔
@@ -76,7 +73,11 @@ public class EventReportActivity extends TakePhotoActivity implements AdapterVie
     private LocationService locationService;
     private BDLocationListener mListener;
     private MsgReceiver msgReceiver;
-
+    private PhotoGridViewAdapter photoGridViewAdapter;
+    private Activity mActivity;
+    private Map<String, File> fileMap = new HashMap<>();//存放图片file集合
+    public List<Bitmap> bmp = new ArrayList<Bitmap>();
+    ArrayList<File> fileArray = new ArrayList<File>();
 
     @Override
     protected void setView() {
@@ -85,6 +86,7 @@ public class EventReportActivity extends TakePhotoActivity implements AdapterVie
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
+        mActivity = this;
         MyTitle.getInstance().setTitle(this, "事件上报", PGApp, true);
         mListener = new MyLocationListener(this);
         locationService = ((MyApplication) getApplication()).locationService;
@@ -118,38 +120,73 @@ public class EventReportActivity extends TakePhotoActivity implements AdapterVie
         tv_con_altitude = (TextView) findViewById(R.id.tv_con_altitude);
         picGridview = (GridView) findViewById(R.id.picGridview);
         picGridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
+
+        gridviewInit();
     }
 
-
-    public List<Bitmap> bmp = new ArrayList<Bitmap>();
-
-
-    ArrayList<File> fileArray = new ArrayList<File>();
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_EventReportButton:
-                //true表示为null false表示不为null
-                boolean bool = edt_describe_editext.getText().toString().trim().isEmpty();
-                //判断文本框是否为空
-                if (bool) {
-                    Toast.makeText(this, "请输入详细的信息描述!", Toast.LENGTH_SHORT).show();
-                    return;
+        int i1 = v.getId();
+        //信息提交方法
+        if (i1 == R.id.btn_EventReportButton) {//true表示为null false表示不为null
+            boolean bool = edt_describe_editext.getText().toString().trim().isEmpty();
+            //判断文本框是否为空
+            if (bool) {
+                Toast.makeText(this, "请输入详细的信息描述!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            //判断是否选择上传的图片
+            if (list.size() <= 0) {
+                Toast.makeText(this, "请选择要上传的图片", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                for (int i = 0; i < list.size(); i++) {
+                    fileArray.add(new File(list.get(i)));
                 }
-                //判断是否选择上传的图片
-                if (list.size() <= 0) {
-                    Toast.makeText(this, "请选择要上传的图片", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    for (int i = 0; i < list.size(); i++) {
-                        fileArray.add(new File(list.get(i)));
-                    }
-                }
-                break;
+                //上传数据和图片
+                sendEventReportData();
+            }
         }
     }
 
+    /**
+     * 上传数据
+     */
+    private void sendEventReportData() {
+        /**
+         * 上传数据
+         *
+         * @param mActivity
+         * @param dataType:手机预警       1
+         * @param userId:用户id
+         * @param alarmtext:告警描述信息
+         * @param alarmtime:告警时间
+         * @param alarmtype:告警类型  1：长时间未移动
+        2：指定时间未巡更（手机可不提供）
+        3：人工上报告警信息
+        4：人工上报普通信息
+        5: 巡更点位异常（如：二维码损坏）
+         * @param deviceguid:巡更设备唯一编号
+         * @param Longitude:经度
+         */
+        String userId = SharedUtil.getString(mActivity, "PersonID");
+        String alarmtext = edt_describe_editext.getText().toString().trim();
+        String deviceguid = new DeviceUuidFactory(mActivity).getDeviceUuid().toString();
+        String latitude = tv_con_wd.getText().toString();
+        WatchManRequest.dataRequest(EventReportActivity.this, 1, userId, alarmtext, getTime(), 4, deviceguid, latitude);
+    }
+
+    /**
+     * 获取十位数时间戳
+     *
+     * @return 返回时间戳
+     */
+    public String getTime() {
+        long time = System.currentTimeMillis() / 1000;//获取系统时间的10位的时间戳
+        String str = String.valueOf(time);
+        return str;
+    }
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -164,7 +201,7 @@ public class EventReportActivity extends TakePhotoActivity implements AdapterVie
                     //申请WRITE_EXTERNAL_STORAGE权限
                     ActivityCompat.requestPermissions(EventReportActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 }
-                File file = new File(Environment.getExternalStorageDirectory(), "/mytemp/" + System.currentTimeMillis() + ".png");
+                File file = new File(Environment.getExternalStorageDirectory(), "/mytemp/" + currentTimeMillis() + ".png");
                 if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
                 Uri imageUri = Uri.fromFile(file);
                 CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();
@@ -192,16 +229,32 @@ public class EventReportActivity extends TakePhotoActivity implements AdapterVie
 
     Bitmap bim;
     ArrayList<String> list = new ArrayList<>();
-    ArrayList<String> imgPathList = new ArrayList<>();
+    private File imageFile;
 
+    /**
+     * 拍照返回结果
+     *
+     * @param imagePath:保存图片sd卡路径
+     */
     @Override
     public void takeSuccess(String imagePath) {
         super.takeSuccess(imagePath);
+        Log.i("", "takeSuccess图片返回路径:" + imagePath);
         list.add(imagePath);
         bim = showImg(imagePath);
         bmp.add(bim);
+        imageFile = new File(imagePath);
+        fileMap.put(imagePath, imageFile);
+        gridviewInit();
+
     }
 
+    /**
+     * 本地图片转换bitmap
+     *
+     * @param imagePath:图片路径
+     * @return
+     */
     private Bitmap showImg(String imagePath) {
         BitmapFactory.Options option = new BitmapFactory.Options();
         option.inSampleSize = 2;
@@ -223,5 +276,41 @@ public class EventReportActivity extends TakePhotoActivity implements AdapterVie
         locationService.unregisterListener(mListener); //注销掉监听
         locationService.stop(); //停止定位服务
         super.onDestroy();
+    }
+
+    @Override
+    public void deleteItemPhoto(int position) {
+        File fileS = new File(list.get(position));
+        if (fileS.exists()) {
+            fileS.delete();
+        } else {
+            Toast.makeText(EventReportActivity.this, "没有找到文件", Toast.LENGTH_SHORT).show();
+        }
+        fileMap.remove(list.get(position));//删除map里存放的file文件
+        bmp.remove(position);//删除bmp集合里存放的bitmao
+        list.remove(position);//删除list结合存放的图片路径
+        photoGridViewAdapter.notifyDataSetInvalidated();
+//        Toast.makeText(EventReportActivity.this, "" + list.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 实例化GridView适配器
+     */
+    public void gridviewInit() {
+        photoGridViewAdapter = new PhotoGridViewAdapter(EventReportActivity.this, bmp, this);
+        photoGridViewAdapter.setSelectedPosition(0);
+        picGridview.setAdapter(photoGridViewAdapter);
+        picGridview.setOnItemClickListener(this);
+    }
+
+    /**
+     * 数据上传成功后回调方法
+     *
+     * @param result
+     */
+    @Override
+    public void getERDinterface(String result) {
+        int alarmid = 0;//告警关联id
+        WatchManRequest.sendImageRequest(mActivity, 6, fileMap, alarmid);
     }
 }
