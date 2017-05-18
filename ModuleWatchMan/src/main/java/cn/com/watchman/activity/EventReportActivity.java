@@ -26,10 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocationListener;
+import com.linked.erfli.library.application.LibApplication;
 import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.function.takephoto.app.TakePhotoActivity;
 import com.linked.erfli.library.function.takephoto.compress.CompressConfig;
 import com.linked.erfli.library.function.takephoto.model.CropOptions;
+import com.linked.erfli.library.service.LocationService;
 import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.SharedUtil;
 
@@ -41,13 +43,11 @@ import java.util.Map;
 
 import cn.com.watchman.R;
 import cn.com.watchman.adapter.PhotoGridViewAdapter;
-import cn.com.watchman.application.WMApplication;
 import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.interfaces.EventReportDataInterface;
 import cn.com.watchman.interfaces.GPSInfoInterface;
 import cn.com.watchman.interfaces.GridViewDelPhotoInterface;
 import cn.com.watchman.networkrequest.WatchManRequest;
-import cn.com.watchman.service.LocationService;
 import cn.com.watchman.service.MsgReceiver;
 import cn.com.watchman.utils.MyLocationListener;
 
@@ -89,7 +89,7 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
         mActivity = this;
         MyTitle.getInstance().setTitle(this, "事件上报", PGApp, true);
         mListener = new MyLocationListener(this);
-        locationService = ((WMApplication) getApplication()).locationService;
+        locationService = ((LibApplication) getApplication()).locationService;
         //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
         locationService.registerListener(mListener);
         //注册监听
