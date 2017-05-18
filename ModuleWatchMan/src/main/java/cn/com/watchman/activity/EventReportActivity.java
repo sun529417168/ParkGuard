@@ -41,7 +41,7 @@ import java.util.Map;
 
 import cn.com.watchman.R;
 import cn.com.watchman.adapter.PhotoGridViewAdapter;
-import cn.com.watchman.application.MyApplication;
+import cn.com.watchman.application.WMApplication;
 import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.interfaces.EventReportDataInterface;
 import cn.com.watchman.interfaces.GPSInfoInterface;
@@ -89,7 +89,7 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
         mActivity = this;
         MyTitle.getInstance().setTitle(this, "事件上报", PGApp, true);
         mListener = new MyLocationListener(this);
-        locationService = ((MyApplication) getApplication()).locationService;
+        locationService = ((WMApplication) getApplication()).locationService;
         //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
         locationService.registerListener(mListener);
         //注册监听
@@ -150,6 +150,7 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
         }
     }
 
+
     /**
      * 上传数据
      */
@@ -170,17 +171,25 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
          * @param deviceguid:巡更设备唯一编号
          * @param Longitude:经度
          */
-        String userId = SharedUtil.getString(mActivity, "PersonID");
+        int userId = Integer.parseInt(SharedUtil.getString(mActivity, "PersonID"));
         String alarmtext = edt_describe_editext.getText().toString().trim();
         String deviceguid = new DeviceUuidFactory(mActivity).getDeviceUuid().toString();
-        String latitude = tv_con_wd.getText().toString();
-        WatchManRequest.dataRequest(EventReportActivity.this, 1, userId, alarmtext, getTime(), 4, deviceguid, latitude);
+        String Latitude = tv_con_wd.getText().toString();//纬度
+        String Longitude = tv_wd.getText().toString();//经度
+        if ("4.9E-324".equals(Longitude) || "".equals(Longitude)) {
+            Longitude = "-1";
+        }
+        if ("4.9E-324".equals(Latitude) || "".equals(Latitude)) {
+            Latitude = "-1";
+        }
+        String mark = "patrolphone";//驱动标识
+        WatchManRequest.dataRequest(EventReportActivity.this, 10, 1, mark, userId, alarmtext, getTime(), 1, deviceguid, Latitude, Longitude);
     }
 
     /**
      * 获取十位数时间戳
      *
-     * @return 返回时间戳
+     * @return 返回时间戳 pass
      */
     public String getTime() {
         long time = System.currentTimeMillis() / 1000;//获取系统时间的10位的时间戳
@@ -310,7 +319,9 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
      */
     @Override
     public void getERDinterface(String result) {
-        int alarmid = 0;//告警关联id
-        WatchManRequest.sendImageRequest(mActivity, 6, fileMap, alarmid);
+        int alarmid = 1;//告警关联id
+        for (int i = 0; i < fileMap.size(); i++) {
+            WatchManRequest.sendImageRequest(mActivity, 6, fileMap.get(list.get(i)), fileMap.get(list.get(i)).getName(), alarmid, fileMap.size(), i + 1);
+        }
     }
 }
