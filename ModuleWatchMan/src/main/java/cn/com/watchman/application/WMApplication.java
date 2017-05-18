@@ -13,7 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import cn.com.watchman.R;
-import cn.com.watchman.service.LocationService;
+import com.linked.erfli.library.service.LocationService;
 
 
 /**

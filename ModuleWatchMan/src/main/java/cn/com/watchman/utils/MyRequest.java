@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.linked.erfli.library.config.UrlConfig;
 import com.linked.erfli.library.okhttps.OkHttpUtils;
 import com.linked.erfli.library.okhttps.callback.GenericsCallback;
@@ -17,6 +20,7 @@ import com.linked.erfli.library.utils.DialogUtils;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +30,11 @@ import cn.com.watchman.bean.PersonBean;
 import cn.com.watchman.config.WMUrlConfig;
 import cn.com.watchman.interfaces.PersonInfoInterface;
 import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * 文件名：MyRequest
@@ -159,21 +168,21 @@ public class MyRequest {
         Map<String, Object> params = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
         map.put("DeviceGUID", new DeviceUuidFactory(activity).getDeviceUuid().toString());
-        map.put("Longitude", gpsBean.getLongitude());//经度
-        map.put("Latitude", gpsBean.getLatitude());//纬度
+        map.put("Longitude", gpsBean.getLongitude() + "");//经度
+        map.put("Latitude", gpsBean.getLatitude() + "");//纬度
         map.put("Speed", "");//速度
-        map.put("RecvGpsTime", System.currentTimeMillis());//GPS接收时间
-        map.put("HappenTime", System.currentTimeMillis());//发生时间
+        map.put("RecvGpsTime", System.currentTimeMillis() / 1000 + "");//GPS接收时间
+        map.put("HappenTime", System.currentTimeMillis() / 1000 + "");//发生时间
         map.put("ActiveFlag", -1);//
         map.put("Direction", 0);//方向
         map.put("Description", "");//备注
-        map.put("GPSType", 0);//GPS类型
+        map.put("GPSType", 1);//GPS类型
         map.put("patrol_type", 1);//
-        map.put("point_code", -1);//巡更点编号
-        map.put("user_id", SharedUtil.getString(activity, "PersonID"));
+        map.put("point_code", "-1");//巡更点编号
+        map.put("user_id", Integer.parseInt(SharedUtil.getString(activity, "PersonID")));
         map.put("recordid", 0);//原数据库编号记录编号，同步数据库数据时用
         map.put("satellitenum", gpsBean.getSatellite());//卫星数
-        map.put("accuracy", gpsBean.getAccuracy());//精准度
+        map.put("accuracy", (int) gpsBean.getAccuracy());//精准度
         try {
             params.put("subSysType", 10);
             params.put("dataType", 2);
@@ -182,16 +191,24 @@ public class MyRequest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        OkHttpUtils.post().url(WMUrlConfig.URL).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        Log.i("gpsJson", JSON.toJSONString(params));
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(JSON.toJSONString(params)).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onResponse(String response, int id) {
-//                ToastUtil.show(activity, "success" + response);
+                JSONObject jsonObject = JSONObject.parseObject(response);
+                int code = jsonObject.getInteger("d");
+                if (code == 1) {
+                    ToastUtil.show(activity, "上传成功");
+                } else {
+                    ToastUtil.show(activity, "上传失败");
+                }
+                Log.i("gpsResponse", response);
             }
 
             @Override
             public void onError(Call call, Exception e, int id) {
                 Log.i("gpsError", e.getMessage().toString());
-//                ToastUtil.show(activity, "error" + e.getMessage().toString());
+                ToastUtil.show(activity, "error" + e.getMessage().toString());
             }
         });
     }
@@ -208,6 +225,7 @@ public class MyRequest {
         Map<String, Object> map = new HashMap<>();
         map.put("DeviceGUID", new DeviceUuidFactory(activity).getDeviceUuid().toString());
         map.put("status", status);//状态
+        map.put("userId", Integer.parseInt(SharedUtil.getString(activity, "PersonID")));//状态
         try {
             params.put("subSysType", 10);
             params.put("dataType", 4);
@@ -216,19 +234,18 @@ public class MyRequest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        OkHttpUtils.post().url(WMUrlConfig.URL).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(JSON.toJSONString(params)).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onResponse(String response, int id) {
-//                ToastUtil.show(activity, "success" + response);
+                ToastUtil.show(activity, "success" + response);
             }
 
             @Override
             public void onError(Call call, Exception e, int id) {
                 Log.i("gpsError", e.getMessage().toString());
-//                ToastUtil.show(activity, "error" + e.getMessage().toString());
+                ToastUtil.show(activity, "error" + e.getMessage().toString());
             }
         });
     }
-
 
 }

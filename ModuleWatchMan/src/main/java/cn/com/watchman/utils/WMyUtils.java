@@ -3,6 +3,8 @@ package cn.com.watchman.utils;
 import android.content.Context;
 import android.location.LocationManager;
 
+import com.linked.erfli.library.utils.SharedUtil;
+
 /**
  * 文件名：WMyUtils
  * 描    述：工具类
@@ -29,5 +31,15 @@ public class WMyUtils {
         }
 
         return false;
+    }
+
+    public static final String runTime(Context context) {
+        long now = System.currentTimeMillis() / 1000;
+        long yes = SharedUtil.getLong(context, "runTime", 0);
+        long time = now - yes;
+        int h = (int) ((time / 3600));
+        int m = (int) ((time % 3600) / 60);
+        int s = (int) ((time % 3600) % 60);
+        return Integer.toString(h) + "h" + Integer.toString(m) + "m" + Integer.toString(s) + "s";
     }
 }

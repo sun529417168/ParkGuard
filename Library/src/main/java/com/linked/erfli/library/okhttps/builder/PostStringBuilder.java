@@ -1,8 +1,12 @@
 package com.linked.erfli.library.okhttps.builder;
 
 
+import com.linked.erfli.library.application.LibApplication;
 import com.linked.erfli.library.okhttps.request.PostStringRequest;
 import com.linked.erfli.library.okhttps.request.RequestCall;
+import com.linked.erfli.library.utils.MyUtils;
+import com.linked.erfli.library.utils.NetWorkUtils;
+import com.linked.erfli.library.utils.SharedUtil;
 
 import okhttp3.MediaType;
 
@@ -15,6 +19,12 @@ public class PostStringBuilder extends OkHttpRequestBuilder<PostStringBuilder> {
 
 
     public PostStringBuilder content(String content) {
+        if (NetWorkUtils.getNetWorkState(LibApplication.getContent()) == 0) {
+            int obj = content.getBytes().length;
+            int size = SharedUtil.getInteger(LibApplication.getContent(), "WMSize", 0) + obj;
+            SharedUtil.setInteger(LibApplication.getContent(), "WMSize", size);
+            SharedUtil.setString(LibApplication.getContent(), "traffic", MyUtils.getFormatSize(size));
+        }
         this.content = content;
         return this;
     }

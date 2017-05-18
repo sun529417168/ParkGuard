@@ -109,8 +109,9 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
 
                 break;
             case 108:
-                SharedUtil.setBoolean(this, "isMonitor", true);
-                Routers.open(HomeActivity.this, Uri.parse("modularization://monitor"));
+                ToastUtil.show(this,"正在开发中");
+//                SharedUtil.setBoolean(this, "isMonitor", true);
+//                Routers.open(HomeActivity.this, Uri.parse("modularization://monitor"));
                 break;
         }
     }

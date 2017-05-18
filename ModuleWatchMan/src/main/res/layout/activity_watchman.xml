@@ -162,7 +162,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:text=""
+            android:text="连接状态：未连接"
             android:textColor="@color/colorWhite" />
 
         <TextView
@@ -175,7 +175,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
             android:text="已发现卫星数量:"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/watchMan_find_satelliteNum"
@@ -185,7 +186,6 @@
             android:layout_alignBottom="@+id/tv_Title_StatelliteNum"
             android:layout_toEndOf="@+id/tv_Title_StatelliteNum"
             android:layout_toRightOf="@+id/tv_Title_StatelliteNum"
-            android:text="0"
             android:textColor="@color/colorWhite" />
 
         <TextView
@@ -199,7 +199,8 @@
             android:layout_toEndOf="@+id/watchMan_find_satelliteNum"
             android:layout_toRightOf="@+id/watchMan_find_satelliteNum"
             android:text="已  校  准:"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/watchMan_calibration_satelliteNum"
@@ -209,7 +210,6 @@
             android:layout_alignBottom="@+id/tv_Title_calibration"
             android:layout_toEndOf="@+id/tv_Title_calibration"
             android:layout_toRightOf="@+id/tv_Title_calibration"
-            android:text="0"
             android:textColor="@color/colorWhite" />
 
 
@@ -233,7 +233,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/new_main_ciShu"
-            android:text="0"
             android:textColor="@color/colorWhite" />
     </RelativeLayout>
 

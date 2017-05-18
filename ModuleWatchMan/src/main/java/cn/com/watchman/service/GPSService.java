@@ -14,6 +14,7 @@ import android.os.IBinder;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.Poi;
+import com.linked.erfli.library.service.LocationService;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import java.util.ArrayList;
