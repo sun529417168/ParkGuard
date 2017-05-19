@@ -13,11 +13,22 @@ public class UrlConfig {
     //public static final String BaseUrl = "http://192.168.0.90:8001";// 测试
     public static final String BaseUrl = "http://nwpu-ism.dlax.com.cn";// 正式域名
 
-
+    //周丽杰本机ip
+    public static final String BaseRrl2 = "http://192.168.0.150:12321/Service";
+    public static final String BaseRrl3 = "http://dlaxsps.dlax.com.cn/Service";
     /**
      * 登陆接口返回token的
      */
     public static final String URL_LOGIN = BaseUrl + "/API/Login/LoginbySSO";
+
+    /**
+     * 事件上报.数据提交
+     */
+    public static final String URL_WMReport = BaseRrl3 + "/PatrolDataService.asmx/PhonePatrolData";
+    /**
+     * 事件上报.数据提交
+     */
+    public static final String URL_SENDIMAGE = BaseRrl3 + "/PatrolDataService.asmx/PhonePatrolData";
     /**
      * 返回人员基本信息
      */

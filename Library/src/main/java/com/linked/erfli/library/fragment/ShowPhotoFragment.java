@@ -176,11 +176,14 @@ public class ShowPhotoFragment extends PhotoBaseFragment implements ViewPager.On
 
     @Override
     public void onPageSelected(int position) {
-        
+
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        view.animate().rotation(0);
+        //大于等于1表示 之前触发旋转操作,viewpage滑动 旋转复位操作
+        if (numbers >= 1) {
+            view.animate().rotation(0);
+        }
     }
 }
