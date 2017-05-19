@@ -19,7 +19,7 @@
         </service>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="IGE9YdZYFOka4zutunPI3ojuVAUMrqBb" />
+            android:value="LQAbe4TK4qQAKAUpVSFzxwFAQyq2ilDl" />
 
         <receiver android:name="com.linked.erfli.library.service.NetBroadcastReceiver">
             <intent-filter>

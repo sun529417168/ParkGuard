@@ -176,7 +176,7 @@ public class WatchManRequest {
                     if (d > 1) {
                         Log.i("事件上报数据上传返回结果:", "" + response);
 //                            Toast.makeText(mActivity, "" + times(alarmtime), Toast.LENGTH_SHORT).show();
-                        eventReportDataInterface.getERDinterface(response);
+                        eventReportDataInterface.getERDinterface(d);
                     } else {
                         Toast.makeText(mActivity, "数据上传有误", Toast.LENGTH_SHORT).show();
                     }
@@ -229,7 +229,7 @@ public class WatchManRequest {
                         Toast.makeText(mActivity, "第" + i + "张图片上传失败!", Toast.LENGTH_SHORT).show();
                     }
                     if (i == mapSize) {
-                        Toast.makeText(mActivity, "图片上产成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, "上传成功", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

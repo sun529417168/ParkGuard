@@ -8,5 +8,5 @@ public interface EventReportDataInterface {
     /**
      * 实际返回实体,这里返回json
      */
-    void getERDinterface(String result);
+    void getERDinterface(int result);
 }

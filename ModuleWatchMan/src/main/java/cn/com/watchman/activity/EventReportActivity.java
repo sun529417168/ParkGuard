@@ -318,10 +318,10 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
      * @param result
      */
     @Override
-    public void getERDinterface(String result) {
-        int alarmid = 1;//告警关联id
+    public void getERDinterface(int result) {
+//        int alarmid = 1;//告警关联id
         for (int i = 0; i < fileMap.size(); i++) {
-            WatchManRequest.sendImageRequest(mActivity, 6, fileMap.get(list.get(i)), fileMap.get(list.get(i)).getName(), alarmid, fileMap.size(), i + 1);
+            WatchManRequest.sendImageRequest(mActivity, 6, fileMap.get(list.get(i)), fileMap.get(list.get(i)).getName(), result, fileMap.size(), i + 1);
         }
     }
 }
