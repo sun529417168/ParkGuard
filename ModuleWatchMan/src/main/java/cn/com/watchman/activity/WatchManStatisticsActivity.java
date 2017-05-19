@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
+import com.linked.erfli.library.utils.DataCleanManager;
+import com.linked.erfli.library.utils.DialogUtils;
 import com.linked.erfli.library.utils.SharedUtil;
 
 import java.io.File;
@@ -72,8 +74,11 @@ public class WatchManStatisticsActivity extends BaseActivity implements View.OnC
         rl_cache_layout = (RelativeLayout) findViewById(R.id.rl_cache_layout);
         rl_cache_layout.setOnClickListener(this);
         tv_Cache = (TextView) findViewById(R.id.tv_Cache);
-        String fileSize = FileSizeUtils.getAutoFileOrFilesSize(url);
-        tv_Cache.setText(fileSize);
+        try {
+            tv_Cache.setText(DataCleanManager.getTotalCacheSize(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         tv_flow = (TextView) findViewById(R.id.tv_flow);
         tv_flow.setText(TextUtils.isEmpty(SharedUtil.getString(this, "traffic")) ? "" : SharedUtil.getString(this, "traffic"));
     }
@@ -96,7 +101,7 @@ public class WatchManStatisticsActivity extends BaseActivity implements View.OnC
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.rl_cache_layout) {
-            showRemoveCacheDialog();
+            DialogUtils.clearData(this, tv_Cache);
         }
     }
 

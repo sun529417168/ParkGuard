@@ -10,4 +10,5 @@ package cn.com.problem.interfaces;
 
 public interface ProblemTypeInterface {
     void getProblemType(int type, String typeName);
+    void clearColor();
 }

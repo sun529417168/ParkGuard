@@ -81,7 +81,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="精确坐标(纬度,经度,精度)"
+                    android:text="精确坐标(经度,纬度,精度)"
                     android:textColor="#A9ACB1"
                     android:textSize="18sp" />
             </RelativeLayout>

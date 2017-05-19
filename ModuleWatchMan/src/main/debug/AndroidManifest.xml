@@ -34,6 +34,21 @@
             android:name=".activity.WatchManStatisticsActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <!--扫一扫界面-->
+        <activity
+            android:name=".activity.WatchManQRcodeActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--扫一扫界面-->
+        <activity
+            android:name=".activity.QRcodeShowActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--地图界面-->
+        <activity
+            android:name=".activity.WatchManLocationActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

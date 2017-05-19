@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.base.BaseActivity;
+import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.refresh.PullToRefreshBase;
 import com.linked.erfli.library.refresh.PullToRefreshListView;
 import com.linked.erfli.library.utils.SharedUtil;
@@ -44,14 +45,12 @@ import cn.com.problem.utils.PopWindowUtils;
  * 版    本：V1.0.0
  */
 @Router("problem_list")
-public class ProblemActivity extends BaseActivity
-        implements View.OnClickListener,
+public class ProblemActivity extends BaseActivity implements View.OnClickListener,
         ProblemTypeInterface,
         ProblemListInterface,
         ProblemTypeLeftInterface,
         ProblemTypeRightInterface {
 
-    private TextView titleName;//标题名称
     //刷新控件
     private PullToRefreshListView mPullRefreshListView;
     private ProblemBean problemBean = new ProblemBean();
@@ -78,7 +77,6 @@ public class ProblemActivity extends BaseActivity
     private int ViewHight = 0;
     private long exitTime;//上一次按退出键时间
     private static final long TIME = 2000;//双击回退键间隔时间
-    private LinearLayout title_back;
 
     @Override
     protected void setView() {
@@ -88,7 +86,7 @@ public class ProblemActivity extends BaseActivity
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
-
+        MyTitle.getInstance().setTitle(this, "问题上报", PGApp, true);
     }
 
     private void requestData(int pageindex, int searchState, String searchProblemType, int searchDate) {
@@ -97,13 +95,6 @@ public class ProblemActivity extends BaseActivity
 
     @Override
     protected void init() {
-        if (SharedUtil.getBoolean(this, "isProblem", false)) {
-            title_back = (LinearLayout) findViewById(R.id.title_back);
-            title_back.setVisibility(View.VISIBLE);
-            title_back.setOnClickListener(this);
-        }
-        titleName = (TextView) findViewById(R.id.title_name);
-        titleName.setText("问题上报");
         mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.problem_refresh_list);
         mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         addProblem = (LinearLayout) findViewById(R.id.problem_addInfo);
@@ -198,10 +189,6 @@ public class ProblemActivity extends BaseActivity
             startActivity(intent);
 
         } else if (i == R.id.problem_layout_type) {//                list = new ArrayList();
-//                list.add("全部");
-//                list.add("部件问题");
-//                list.add("事件问题");
-//                popupWindow = PopWindowUtils.showProblemPop(getActivity(), this, v, list, 0,ViewHight);
             ProblemRequest.getProblemTypeLeft(mContext, this);
             setTextViewColor(typeText);
 
@@ -221,8 +208,6 @@ public class ProblemActivity extends BaseActivity
             list.add("已回复");
             popupWindow = PopWindowUtils.showProblemPop(mContext, this, v, list, 2, ViewHight);
             setTextViewColor(stateText);
-        } else if (i == R.id.title_back) {
-            PGApp.finishTop();
         }
     }
 
@@ -248,7 +233,7 @@ public class ProblemActivity extends BaseActivity
     @Override
     public void getTypeRight(ProblemTypeRight problemTypeRight) {
         searchProblemType = problemTypeRight.getCode();
-        typeText.setText("类型(" + problemTypeRight.getName() + ")");
+        typeText.setText("类型(" + problemTypeRight.getName().substring(0, problemTypeRight.getName().length() - 2) + ")");
         setTextViewColor(null);
         pageindex = 1;
         requestData(pageindex, searchState, searchProblemType, searchDate);
@@ -286,6 +271,14 @@ public class ProblemActivity extends BaseActivity
         if (popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
+    }
+
+    @Override
+    public void clearColor() {
+        if (popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }
+        setTextViewColor(null);
     }
 
     @Override

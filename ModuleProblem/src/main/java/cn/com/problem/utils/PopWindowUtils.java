@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -149,7 +150,7 @@ public class PopWindowUtils {
         WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
-        PopupWindow popupWindow = new PopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
+        final PopupWindow popupWindow = new PopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
         // TODO: 2016/5/17 设置可以获取焦点
         popupWindow.setFocusable(true);
         // TODO: 2016/5/17 设置可以触摸弹出框以外的区域
@@ -162,6 +163,12 @@ public class PopWindowUtils {
         }
         // TODO：更新popupwindow的状态
         popupWindow.update();
+        view.findViewById(R.id.pop_problem_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                problemTypeInterface.clearColor();
+            }
+        });
         return popupWindow;
     }
 
@@ -242,7 +249,7 @@ public class PopWindowUtils {
         WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
-        PopupWindow popupWindow = new PopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
+        final PopupWindow popupWindow = new PopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
         // TODO: 2016/5/17 设置可以获取焦点
         popupWindow.setFocusable(true);
         // TODO: 2016/5/17 设置可以触摸弹出框以外的区域
@@ -255,6 +262,12 @@ public class PopWindowUtils {
         }
         // TODO：更新popupwindow的状态
         popupWindow.update();
+        view.findViewById(R.id.pop_problem_type_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                problemTypeInterface.clearColor();
+            }
+        });
         return popupWindow;
     }
 }

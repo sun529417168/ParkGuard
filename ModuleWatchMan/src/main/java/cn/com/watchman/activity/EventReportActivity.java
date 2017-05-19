@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -120,6 +121,10 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
         tv_con_altitude = (TextView) findViewById(R.id.tv_con_altitude);
         picGridview = (GridView) findViewById(R.id.picGridview);
         picGridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
+        tv_content_Position.setText(TextUtils.isEmpty(getIntent().getStringExtra("address")) ? "" : getIntent().getStringExtra("address"));
+        tv_wd.setText(TextUtils.isEmpty(getIntent().getStringExtra("longitude")) ? "" : getIntent().getStringExtra("longitude"));
+        tv_con_wd.setText(TextUtils.isEmpty(getIntent().getStringExtra("latitude")) ? "" : getIntent().getStringExtra("latitude"));
+        tv_con_altitude.setText(TextUtils.isEmpty(getIntent().getStringExtra("accuracy")) ? "" : getIntent().getStringExtra("accuracy"));
 
         gridviewInit();
     }
@@ -276,7 +281,7 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
         tv_content_Position.setText(gpsBean.getAddress());
         tv_wd.setText(String.valueOf(gpsBean.getLongitude()));
         tv_con_wd.setText(String.valueOf(gpsBean.getLatitude()));
-        tv_con_altitude.setText(String.valueOf(gpsBean.getAltitude()));
+        tv_con_altitude.setText(String.valueOf(gpsBean.getAccuracy()));
     }
 
     @Override

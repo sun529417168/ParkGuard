@@ -75,9 +75,9 @@
     <string name="problem_title_left">"部件问题"</string>
     <string name="problem_title_right">"事件问题"</string>
     <string name="problem_title_add">"添加"</string>
-    <string name="problem_title_type">"类型"</string>
-    <string name="problem_title_time">"时间"</string>
-    <string name="problem_title_state">"状态"</string>
+    <string name="problem_title_type">"类型(全部)"</string>
+    <string name="problem_title_time">"时间(全部)"</string>
+    <string name="problem_title_state">"状态(全部)"</string>
     <!--问题界面end-->
 
     <!--任务详情start-->

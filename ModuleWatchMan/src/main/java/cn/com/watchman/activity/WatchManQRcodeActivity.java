@@ -31,26 +31,12 @@ public class WatchManQRcodeActivity extends CaptureActivity {
         if (TextUtils.isEmpty(resultString)) {
             restartPreview();
         } else {
-            if (mDialog == null) {
-                mDialog = new AlertDialog.Builder(mActivity)
-                        .setMessage(resultString)
-                        .setPositiveButton("确定", null)
-                        .create();
-                mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        Intent intent = new Intent();
-                        intent.putExtra("value", resultString);
-                        intent.setClass(mActivity, QRcodeShowActivity.class);
-                        startActivity(intent);
-                        restartPreview();
-                    }
-                });
-            }
-            if (!mDialog.isShowing()) {
-                mDialog.setMessage(resultString);
-                mDialog.show();
-            }
+            Intent intent = new Intent();
+            intent.putExtra("value", resultString);
+            intent.setClass(mActivity, QRcodeShowActivity.class);
+            startActivity(intent);
+            restartPreview();
         }
     }
 }
+

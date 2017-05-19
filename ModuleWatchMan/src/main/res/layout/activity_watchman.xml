@@ -239,7 +239,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="时间上报"
+                    android:text="事件上报"
                     android:textColor="@color/white" />
             </LinearLayout>
             <!--事件上报end-->
@@ -286,7 +286,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="二维码巡更"
+                    android:text="扫一扫"
                     android:textColor="@color/white" />
             </LinearLayout>
             <!--地理位置end-->
@@ -310,7 +310,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="巡更统计"
+                    android:text="上传统计"
                     android:textColor="@color/white" />
             </LinearLayout>
             <!--巡更统计end-->

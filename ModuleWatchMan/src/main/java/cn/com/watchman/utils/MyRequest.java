@@ -239,9 +239,9 @@ public class MyRequest {
                 JSONObject jsonObject = JSONObject.parseObject(response);
                 int code = jsonObject.getInteger("d");
                 if (code == 1) {
-                    ToastUtil.show(activity, "上传手机状态成功");
+                    Log.i("手机状态", "上传手机状态成功");
                 } else {
-                    ToastUtil.show(activity, "上传手机状态失败");
+                    Log.i("手机状态", "上传手机状态失败");
                 }
             }
 

@@ -1,19 +1,19 @@
 [
     {
         "id": 101,
-        "name": "任务",
+        "name": "任务管理",
         "isTrue": true,
         "imageView": 0
     },
     {
         "id": 102,
-        "name": "通知",
+        "name": "通知公告",
         "isTrue": true,
         "imageView": 0
     },
     {
         "id": 103,
-        "name": "问题",
+        "name": "问题管理",
         "isTrue": true,
         "imageView": 0
     },
@@ -25,7 +25,7 @@
     },
     {
         "id": 105,
-        "name": "巡更",
+        "name": "实时巡更",
         "isTrue": true,
         "imageView": 0
     },
@@ -44,7 +44,7 @@
      {
         "id": 108,
         "name": "视频监控",
-        "isTrue": true,
+        "isTrue": false,
         "imageView": 0
       }
 ]

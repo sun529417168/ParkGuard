@@ -57,7 +57,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     /**
      * 发现卫星数量,上传次数,定位描述
      */
-    private TextView tv_findsatelliteNum, tv_sendCount,  tv_describe;
+    private TextView tv_findsatelliteNum, tv_sendCount, tv_describe;
 
     /**
      * 事件上报,地理位置,巡更统计,二维码巡更
@@ -70,7 +70,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     private MsgReceiver msgReceiver;
     private RadarView scan_radar;
     private TextView scan_text;
-    private GPSBean gpsBean;
+    private GPSBean gpsBean = new GPSBean();
     private boolean isThread = true;
     private int count = 0;
 
@@ -158,14 +158,21 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             }
 
         } else if (i == R.id.watchMan_EventReport) {
-            startActivity(new Intent(this, EventReportActivity.class));
+            Intent in = new Intent(this, EventReportActivity.class);
+            in.putExtra("longitude", String.valueOf(gpsBean.getLongitude()));
+            in.putExtra("latitude", String.valueOf(gpsBean.getLatitude()));
+            in.putExtra("accuracy", String.valueOf(gpsBean.getAccuracy()));
+            in.putExtra("address", gpsBean.getAddress());
+            startActivity(in);
 
         } else if (i == R.id.watchMan_map) {
+            startActivity(new Intent(this, WatchManLocationActivity.class));
         } else if (i == R.id.watchMan_statistics) {
             Intent intent = new Intent(this, WatchManStatisticsActivity.class);
             intent.putExtra("count", count);
             startActivity(intent);
         } else if (i == R.id.watchMan_code) {
+            startActivity(new Intent(this, WatchManQRcodeActivity.class));
         }
     }
 
@@ -177,7 +184,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                 tv_sendCount.setText(Integer.toString(count));
             }
             if (msg.what == 1) {
-                ToastUtil.show(WatchMainActivity.this, "小于10米");
+                Log.i("发送的距离", "小于10米");
             }
         }
     };
