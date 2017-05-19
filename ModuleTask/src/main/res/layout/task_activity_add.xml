@@ -223,10 +223,12 @@
                     android:id="@+id/add_problem_detail_photoText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text="@string/add_task_image"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:layout_alignBottom="@+id/add_task_takePhoto"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
                 <ImageView
                     android:id="@+id/add_task_takePhoto"

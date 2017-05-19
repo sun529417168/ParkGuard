@@ -308,6 +308,7 @@ public class AddTaskActivity extends TakePhotoActivity implements View.OnClickLi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent in = new Intent(this, ShowZoomPhotoActivity.class);
         in.putStringArrayListExtra("listPath", listPath);
+        in.putExtra("current", position);
         startActivity(in);
     }
 

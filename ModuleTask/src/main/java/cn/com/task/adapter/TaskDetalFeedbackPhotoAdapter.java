@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.linked.erfli.library.ShowPhotoActivity;
+import com.linked.erfli.library.ShowZoomPhotoActivity;
 import com.linked.erfli.library.base.MyBaseAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -43,7 +43,7 @@ public class TaskDetalFeedbackPhotoAdapter extends MyBaseAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(context, ShowPhotoActivity.class);
+                Intent in = new Intent(context, ShowZoomPhotoActivity.class);
                 in.putExtra("type", 1);
                 in.putStringArrayListExtra("listPath", list);
                 context.startActivity(in);
