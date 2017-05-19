@@ -88,8 +88,8 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
                 Routers.open(HomeActivity.this, Uri.parse("modularization://task_list"));
                 break;
             case 102:
-                SharedUtil.setBoolean(this, "isNotice", true);
-                Routers.open(HomeActivity.this, Uri.parse("modularization://notice_list"));
+//                SharedUtil.setBoolean(this, "isNotice", true);
+//                Routers.open(HomeActivity.this, Uri.parse("modularization://notice_list"));
                 break;
             case 103:
                 SharedUtil.setBoolean(this, "isProblem", true);

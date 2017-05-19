@@ -39,7 +39,6 @@ public class MyLocationListener implements BDLocationListener {
 
             @Override
             public void onLocationChanged(Location location) {
-
             }
 
             @Override

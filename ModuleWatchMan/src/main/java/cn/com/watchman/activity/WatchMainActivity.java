@@ -1,7 +1,9 @@
 package cn.com.watchman.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -53,9 +55,9 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_longitude, tv_latitude, tv_altitude, tv_accuracy, tv_address;
 
     /**
-     * 发现卫星数量,上传次数,校准数,定位描述
+     * 发现卫星数量,上传次数,定位描述
      */
-    private TextView tv_findsatelliteNum, tv_sendCount, tv_satelliteNum, tv_describe;
+    private TextView tv_findsatelliteNum, tv_sendCount,  tv_describe;
 
     /**
      * 事件上报,地理位置,巡更统计,二维码巡更
@@ -110,7 +112,6 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         tv_address = (TextView) findViewById(R.id.watchMan_address);
         tv_findsatelliteNum = (TextView) findViewById(R.id.watchMan_find_satelliteNum);
         tv_sendCount = (TextView) findViewById(R.id.watchMan_sendCount);
-        tv_satelliteNum = (TextView) findViewById(R.id.watchMan_calibration_satelliteNum);
         tv_describe = (TextView) findViewById(R.id.tv_content_GPS);
         eventLayout = (LinearLayout) findViewById(R.id.watchMan_EventReport);
         mapLayout = (LinearLayout) findViewById(R.id.watchMan_map);
@@ -146,6 +147,8 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                 registerReceiver(msgReceiver, intentFilter);
                 new MyThread().start();
             } else {
+                scan_radar.setVisibility(View.VISIBLE);
+                scan_text.setVisibility(View.GONE);
                 MyRequest.typeRequest(this, -1);
                 suspendBtn.setBackgroundResource(R.drawable.activity_main_start);
                 isStart = true;
@@ -172,7 +175,6 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             if (msg.what == 0) {
                 count++;
                 tv_sendCount.setText(Integer.toString(count));
-                ToastUtil.show(WatchMainActivity.this, "大于10米");
             }
             if (msg.what == 1) {
                 ToastUtil.show(WatchMainActivity.this, "小于10米");
@@ -199,7 +201,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                     SharedUtil.setString(WatchMainActivity.this, "latitude", String.valueOf(gpsBean.getLatitude()));
                 }
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(1000 * 60);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -210,24 +212,20 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void getGPSInfo(final GPSBean gpsBean) {
         this.gpsBean = gpsBean;
-        MyRequest.gpsRequest(WatchMainActivity.this, gpsBean);
         Log.i("gpsRequest", gpsBean.toString());
         if ("网络定位成功".equals(gpsBean.getDescribe())) {
             scan_radar.setSearching(false);//停止扫描
             scan_radar.setVisibility(View.GONE);
             scan_text.setVisibility(View.VISIBLE);
-            tv_satelliteNum.setVisibility(View.INVISIBLE);
             tv_findsatelliteNum.setVisibility(View.INVISIBLE);
             findViewById(R.id.tv_Title_StatelliteNum).setVisibility(View.INVISIBLE);
-            findViewById(R.id.tv_Title_calibration).setVisibility(View.INVISIBLE);
         } else if ("gps定位成功".equals(gpsBean.getDescribe())) {
             scan_radar.setSearching(false);//停止扫描
             scan_radar.setVisibility(View.GONE);
             scan_text.setVisibility(View.VISIBLE);
-            tv_satelliteNum.setVisibility(View.INVISIBLE);
-            tv_findsatelliteNum.setVisibility(View.INVISIBLE);
+            tv_findsatelliteNum.setVisibility(View.VISIBLE);
             findViewById(R.id.tv_Title_StatelliteNum).setVisibility(View.VISIBLE);
-            findViewById(R.id.tv_Title_calibration).setVisibility(View.VISIBLE);
+            tv_findsatelliteNum.setText(String.valueOf(gpsBean.getSatellite()));
         } else {
             scan_radar.setVisibility(View.VISIBLE);
             scan_text.setVisibility(View.GONE);
@@ -238,8 +236,6 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         tv_altitude.setText(String.valueOf(gpsBean.getAltitude()) + "米");
         tv_accuracy.setText(String.valueOf(gpsBean.getAccuracy()));
         tv_address.setText(TextUtils.isEmpty(gpsBean.getAddress()) ? "" : gpsBean.getAddress());
-        tv_findsatelliteNum.setText(String.valueOf(gpsBean.getFindSatellite()));
-        tv_satelliteNum.setText(String.valueOf(gpsBean.getSatellite()));
         tv_describe.setText(gpsBean.getDescribe());
     }
 

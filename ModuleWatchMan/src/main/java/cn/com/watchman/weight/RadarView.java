@@ -89,9 +89,7 @@ public class RadarView extends View {
 			final int minimumHeight = getSuggestedMinimumHeight();
 			mWidth = resolveMeasured(widthMeasureSpec, minimumWidth);
 			mHeight = resolveMeasured(heightMeasureSpec, minimumHeight);
-			mScanBmp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-					mContext.getResources(), R.drawable.radar_scan_img), mWidth
-					- mOutWidth, mWidth - mOutWidth, false);
+			mScanBmp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.radar_scan_img), mWidth- mOutWidth, mWidth - mOutWidth, false);
 
 			// 获取x/y轴中心点
 			mCx = mWidth / 2;

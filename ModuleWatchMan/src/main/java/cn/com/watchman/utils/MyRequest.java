@@ -198,17 +198,15 @@ public class MyRequest {
                 JSONObject jsonObject = JSONObject.parseObject(response);
                 int code = jsonObject.getInteger("d");
                 if (code == 1) {
-                    ToastUtil.show(activity, "上传成功");
+                    ToastUtil.show(activity, "上传点位成功");
                 } else {
-                    ToastUtil.show(activity, "上传失败");
+                    ToastUtil.show(activity, "上传点位失败");
                 }
-                Log.i("gpsResponse", response);
             }
 
             @Override
             public void onError(Call call, Exception e, int id) {
-                Log.i("gpsError", e.getMessage().toString());
-                ToastUtil.show(activity, "error" + e.getMessage().toString());
+                ToastUtil.show(activity, "上传点位发生错误");
             }
         });
     }
@@ -234,16 +232,22 @@ public class MyRequest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Log.i("phoneType", JSON.toJSONString(params));
         OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(JSON.toJSONString(params)).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onResponse(String response, int id) {
-                ToastUtil.show(activity, "success" + response);
+                JSONObject jsonObject = JSONObject.parseObject(response);
+                int code = jsonObject.getInteger("d");
+                if (code == 1) {
+                    ToastUtil.show(activity, "上传手机状态成功");
+                } else {
+                    ToastUtil.show(activity, "上传手机状态失败");
+                }
             }
 
             @Override
             public void onError(Call call, Exception e, int id) {
-                Log.i("gpsError", e.getMessage().toString());
-                ToastUtil.show(activity, "error" + e.getMessage().toString());
+                ToastUtil.show(activity, "上传手机状态发生错误");
             }
         });
     }

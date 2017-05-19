@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.watchman.bean.UserBean;
+import cn.com.watchman.config.WMUrlConfig;
 import cn.com.watchman.interfaces.EventReportDataInterface;
 import cn.com.watchman.interfaces.WatchManLoginInterface;
 import cn.com.watchman.utils.FileToByteUtils;
@@ -155,7 +156,7 @@ public class WatchManRequest {
         }
         String json = JSON.toJSONString(params);
         Log.i("", "数据请求返回json:" + json);
-        OkHttpUtils.postString().url(UrlConfig.URL_WMReport).mediaType(MediaType.parse("application/json; charset=utf-8")).content(json).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(json).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
                 ToastUtil.show(mActivity, "服务器有错误，请稍候再试" + e.toString());
@@ -210,7 +211,7 @@ public class WatchManRequest {
         params.put("data", map);
         String sendImage = JSON.toJSONString(params);
         Log.i("事件上报图片上传返回结果:", "" + sendImage);
-        OkHttpUtils.postString().url(UrlConfig.URL_SENDIMAGE).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendImage).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendImage).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
                 ToastUtil.show(mActivity, "错误代码" + e.getMessage().toString());
