@@ -114,7 +114,7 @@ public class ProblemRequest {
             params.put("pageindex", strings[0]);
             params.put("SearchState", strings[1]);
             params.put("SearchProblemType", strings[2]);
-            params.put("SearchDate", strings[3]);
+            params.put("SearchDateNumber", strings[3]);
             params.put("pagesize", "5");//每页条数
             params.put("PersonID", SharedUtil.getString(activity, "PersonID"));
         } catch (Exception e) {
