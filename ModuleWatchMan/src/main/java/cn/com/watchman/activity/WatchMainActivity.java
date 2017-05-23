@@ -1,5 +1,7 @@
 package cn.com.watchman.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -20,6 +22,7 @@ import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.application.LibApplication;
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
+import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
@@ -73,6 +76,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     private GPSBean gpsBean = new GPSBean();
     private boolean isThread = true;
     private int count = 0;
+    private TextView deviceID, copyText;
 
     @Override
     protected void setView() {
@@ -81,7 +85,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
-        MyTitle.getInstance().setTitle(this, "主页", PGApp, false);
+        MyTitle.getInstance().setTitle(this, "实时巡更", PGApp, false);
         SharedUtil.setLong(this, "runTime", System.currentTimeMillis() / 1000);
         msgReceiver = new MsgReceiver();
         mListener = new MyLocationListener(this);
@@ -125,7 +129,10 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         suspendBtn.setOnClickListener(this);
         scan_radar = (RadarView) findViewById(R.id.watchMan_scan_radar);
         scan_text = (TextView) findViewById(R.id.watchMan_scan_text);
-
+        deviceID = (TextView) findViewById(R.id.watchMan_deviceId);
+        deviceID.setText("设备号:" + new DeviceUuidFactory(this).getDeviceUuid().toString().substring(0, 4) + "*****" + new DeviceUuidFactory(this).getDeviceUuid().toString().substring(new DeviceUuidFactory(this).getDeviceUuid().toString().length() - 4));
+        copyText = (TextView) findViewById(R.id.watchMan_copy);
+        copyText.setOnClickListener(this);
     }
 
     @Override
@@ -172,7 +179,15 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             intent.putExtra("count", count);
             startActivity(intent);
         } else if (i == R.id.watchMan_code) {
-            startActivity(new Intent(this, WatchManQRcodeActivity.class));
+            Intent intent = new Intent(this, WatchManQRcodeActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("gpsBean", gpsBean);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (i == R.id.watchMan_copy) {
+            ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            cmb.setPrimaryClip(ClipData.newPlainText(null, "设备号:" + new DeviceUuidFactory(this).getDeviceUuid().toString())); //将内容放入粘贴管理器,在别的地方长按选择"粘贴"即可
+            ToastUtil.show(this, "复制成功,去粘贴吧");
         }
     }
 

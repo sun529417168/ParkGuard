@@ -223,7 +223,7 @@ public class MyRequest {
         Map<String, Object> map = new HashMap<>();
         map.put("DeviceGUID", new DeviceUuidFactory(activity).getDeviceUuid().toString());
         map.put("status", status);//状态
-        map.put("userId", Integer.parseInt(SharedUtil.getString(activity, "PersonID")));//状态
+        map.put("user_id", Integer.parseInt(SharedUtil.getString(activity, "PersonID")));//状态
         try {
             params.put("subSysType", 10);
             params.put("dataType", 4);
@@ -242,6 +242,63 @@ public class MyRequest {
                     Log.i("手机状态", "上传手机状态成功");
                 } else {
                     Log.i("手机状态", "上传手机状态失败");
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                ToastUtil.show(activity, "上传手机状态发生错误");
+            }
+        });
+    }
+
+
+    /**
+     * 方法名：codeRequest
+     * 功    能：扫描结果上传
+     * 参    数：Activity activity String... strings
+     * 返回值：无
+     */
+    public static void codeRequest(final Activity activity, final GPSBean gpsBean, final String resultString) {
+        JSONObject jsonObject = JSONObject.parseObject(resultString);
+        String code = jsonObject.getString("point_code");
+        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("DeviceGUID", new DeviceUuidFactory(activity).getDeviceUuid().toString());
+        map.put("Longitude", gpsBean.getLongitude() + "");//经度
+        map.put("Latitude", gpsBean.getLatitude() + "");//纬度
+        map.put("Speed", "");//速度
+        map.put("RecvGpsTime", System.currentTimeMillis() / 1000 + "");//GPS接收时间
+        map.put("HappenTime", System.currentTimeMillis() / 1000 + "");//发生时间
+        map.put("ActiveFlag", -1);//
+        map.put("Direction", 0);//方向
+        map.put("Description", "");//备注
+        map.put("GPSType", 1);//GPS类型
+        map.put("patrol_type", 2);//固定巡更
+        map.put("point_code", code);//二维码编号必填
+        map.put("user_id", Integer.parseInt(SharedUtil.getString(activity, "PersonID")));//状态
+        map.put("recordid", 0);//原数据库编号记录编号，同步数据库数据时用
+        map.put("satellitenum", gpsBean.getSatellite());//卫星数
+        map.put("accuracy", (int) gpsBean.getAccuracy());//精准度
+        try {
+            params.put("subSysType", 10);
+            params.put("dataType", 5);
+            params.put("mark", "patrolphone");
+            params.put("data", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.i("phoneType", JSON.toJSONString(params));
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(JSON.toJSONString(params)).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onResponse(String response, int id) {
+                JSONObject jsonObject = JSONObject.parseObject(response);
+                int code = jsonObject.getInteger("d");
+                if (code == 1) {
+                    ToastUtil.show(activity, "上传成功");
+                    activity.finish();
+                } else {
+                    ToastUtil.show(activity, "上传失败");
                 }
             }
 

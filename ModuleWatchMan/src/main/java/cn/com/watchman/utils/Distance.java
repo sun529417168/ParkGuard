@@ -5,6 +5,7 @@ import android.renderscript.Double2;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
 import com.linked.erfli.library.utils.SharedUtil;
 
 import cn.com.watchman.bean.GPSBean;
@@ -52,9 +53,6 @@ public class Distance {
         double compare2 = 10;
         Double double1 = new Double(String.valueOf(compare1));
         Double double2 = new Double(String.valueOf(compare2));
-        Log.i("实际距离", "距离1==" + compare1 + "距离2==" + compare2 + "///" + double1 + "---------" + double2);
-        Log.i("实际距离2", gpsBean.toString());
-        Log.i("实际距离3", SharedUtil.getString(activity, "longitude") + "-----" + SharedUtil.getString(activity, "latitude"));
         int retval = double1.compareTo(double2);
         if (retval > 0) {
             Log.i("看看距离", "大于10米");
@@ -65,6 +63,30 @@ public class Distance {
         } else {
             Log.i("看看距离", "等于10米");
             return true;
+        }
+    }
+
+    /**
+     * 方法名：isCompare
+     * 功    能：判断是否大于80米
+     * 参    数：Activity activity, GPSBean gpsBean
+     * 返回值：boolean
+     */
+    public static boolean isCompare(Activity activity, GPSBean gpsBean, String resultString) {
+        JSONObject jsonObject = JSONObject.parseObject(resultString);
+        double longitude = jsonObject.getDouble("Longitude");
+        double latitude = jsonObject.getDouble("Latitude");
+        double compare1 = getDistance(gpsBean.getLongitude(), gpsBean.getLatitude(), longitude, latitude);
+        double compare2 = 80;
+        Double double1 = new Double(String.valueOf(compare1));
+        Double double2 = new Double(String.valueOf(compare2));
+        Log.i("实际距离", "距离1==" + compare1 + "距离2==" + compare2 + "///" + double1 + "---------" + double2);
+        Log.i("实际距离2", gpsBean.toString());
+        int retval = double1.compareTo(double2);
+        if (retval < 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -160,9 +160,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/watchMan_deviceId"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:text="连接状态：未连接"
             android:textColor="@color/colorWhite" />
 
@@ -210,6 +211,26 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/new_main_ciShu"
             android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/watchMan_deviceId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_content_GPS"
+            android:layout_alignStart="@+id/tv_content_GPS"
+            android:layout_alignTop="@+id/watchMan_sendCount"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/watchMan_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/watchMan_sendCount"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/watchMan_deviceId"
+            android:text="点击复制设备号"
+            android:textColor="@color/gray" />
+
     </RelativeLayout>
 
     <RelativeLayout
