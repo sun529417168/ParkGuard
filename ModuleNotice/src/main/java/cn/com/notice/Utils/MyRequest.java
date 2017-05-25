@@ -107,6 +107,8 @@ public class MyRequest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        String json = JSON.toJSONString(params);
+        Log.i("", "asdfasdfasdf:" + json);
         OkHttpUtils.post().url(UrlConfig.URL_GETINFORMISSUEDINFO).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onResponse(String response, int id) {
