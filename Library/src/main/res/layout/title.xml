@@ -41,12 +41,30 @@
             android:layout_centerInParent="true"
             android:textColor="@android:color/white"
             android:textSize="26sp" />
+        <!--分享-->
+        <LinearLayout
+            android:id="@+id/title_share"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_Share_ImageView"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/share" />
+        </LinearLayout>
         <!--搜索start-->
         <LinearLayout
             android:id="@+id/title_search"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
+            android:layout_below="@+id/problem_addInfo"
+            android:layout_toLeftOf="@+id/title_share"
+            android:layout_toStartOf="@+id/title_share"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="invisible">

@@ -47,8 +47,9 @@ public class DownloadUtil {
 
     /* 更新进度条 */
     private ProgressBar mProgress;
-    private Dialog mDownloadDialog;
-    private TextView textView;
+    public Dialog mDownloadDialog;
+    public TextView textView;
+    public boolean flag = false;
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -61,6 +62,8 @@ public class DownloadUtil {
                     // 成功
                     Toast.makeText(mContext, "下载成功", Toast.LENGTH_LONG).show();
                     textView.setText("打开");
+                    flag = true;
+//                    DialogLstViewAdapter
                     break;
                 default:
                     break;
