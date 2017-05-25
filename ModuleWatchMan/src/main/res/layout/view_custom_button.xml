@@ -39,8 +39,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="5dip"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="5dip"
         android:layout_marginTop="5dip"
         android:layout_toLeftOf="@id/ll_custom_button"

@@ -61,7 +61,6 @@ public class NotifyUtils {
         mRemoteViews.setImageViewResource(R.id.custom_song_icon, R.mipmap.watch_logo);
         //API3.0 以上的时候显示按钮，否则消失
         mRemoteViews.setTextViewText(R.id.tv_custom_song_singer, "独立巡更");
-        mRemoteViews.setTextViewText(R.id.tv_custom_song_name, "上传数据");
         //如果版本号低于（3。0），那么不显示按钮
         if (getSystemVersion() <= 9) {
             mRemoteViews.setViewVisibility(R.id.ll_custom_button, View.GONE);
@@ -77,11 +76,6 @@ public class NotifyUtils {
 
         //点击的事件处理
         Intent buttonIntent = new Intent(ACTION_BUTTON);
-        /* 上一首按钮 */
-        buttonIntent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PREV_ID);
-        //这里加了广播，所及INTENT的必须用getBroadcast方法
-        PendingIntent intent_prev = PendingIntent.getBroadcast(activity, 1, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mRemoteViews.setOnClickPendingIntent(R.id.btn_custom_prev, intent_prev);
         /* 播放/暂停  按钮 */
         buttonIntent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PALY_ID);
         PendingIntent intent_paly = PendingIntent.getBroadcast(activity, 2, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -93,7 +87,7 @@ public class NotifyUtils {
         mBuilder.setContent(mRemoteViews)
                 .setContentIntent(getDefalutIntent(Notification.FLAG_ONGOING_EVENT))
                 .setWhen(System.currentTimeMillis())// 通知产生的时间，会在通知信息里显示
-                .setTicker("正在播放")
+                .setTicker("开始上传")
                 .setPriority(Notification.PRIORITY_DEFAULT)// 设置该通知优先级
                 .setOngoing(true)
                 .setDefaults(Notification.DEFAULT_VIBRATE)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：
