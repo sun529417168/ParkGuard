@@ -230,6 +230,7 @@ public class WatchManRequest {
                     }
                     if (i == mapSize) {
                         Toast.makeText(mActivity, "上传成功", Toast.LENGTH_SHORT).show();
+                        mActivity.finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -39,7 +39,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:text="具体位置"
-                    android:textColor="#A9ACB1"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
             </RelativeLayout>
 
@@ -60,7 +60,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="#A9ACB1"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
             </RelativeLayout>
 
@@ -68,7 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorWhite">
+                android:background="@color/colorWhite"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_coordinate"
@@ -90,7 +91,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:background="@color/colorWhite">
+                android:background="@color/colorWhite"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_con_wd"
@@ -130,6 +132,39 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/colorWhite">
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="30dp"
+
+                    android:layout_marginRight="30dp"
+                    android:entries="@array/eventType" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/spinner"
+                    android:layout_alignBottom="@+id/spinner"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:text="事件类型"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/colorWhite">
@@ -146,27 +181,25 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:text="事件描述"
-                    android:textColor="#A9ACB1"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorWhite"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:background="@color/colorWhite">
 
                 <EditText
                     android:id="@+id/edt_describe_editext"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginRight="20dp"
                     android:background="@null"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:hint="请输入详细的描述信息"
                     android:imeOptions="actionDone"
                     android:inputType="textMultiLine"
@@ -174,6 +207,7 @@
                     android:paddingTop="3dp"
                     android:textCursorDrawable="@drawable/my_editext_shape"
                     android:textSize="18sp" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -194,7 +228,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:text="拍照"
-                    android:textColor="#A9ACB1"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
             </RelativeLayout>
 

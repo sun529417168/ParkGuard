@@ -23,6 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +80,8 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
     private Map<String, File> fileMap = new HashMap<>();//存放图片file集合
     public List<Bitmap> bmp = new ArrayList<Bitmap>();
     ArrayList<File> fileArray = new ArrayList<File>();
+    private Spinner spinner;
+    private int alarmtype = 3;//告警类型
 
     @Override
     protected void setView() {
@@ -125,7 +128,21 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
         tv_wd.setText(TextUtils.isEmpty(getIntent().getStringExtra("longitude")) ? "" : getIntent().getStringExtra("longitude"));
         tv_con_wd.setText(TextUtils.isEmpty(getIntent().getStringExtra("latitude")) ? "" : getIntent().getStringExtra("latitude"));
         tv_con_altitude.setText(TextUtils.isEmpty(getIntent().getStringExtra("accuracy")) ? "" : getIntent().getStringExtra("accuracy"));
+        //下拉列表选项
+        spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] languages = getResources().getStringArray(R.array.eventType);
+                alarmtype = alarmtype + position;
+//                Toast.makeText(mActivity, "" + alarmtype, Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         gridviewInit();
     }
 
@@ -137,10 +154,10 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
         if (i1 == R.id.btn_EventReportButton) {//true表示为null false表示不为null
             boolean bool = edt_describe_editext.getText().toString().trim().isEmpty();
             //判断文本框是否为空
-            if (bool) {
-                Toast.makeText(this, "请输入详细的信息描述!", Toast.LENGTH_SHORT).show();
-                return;
-            }
+//            if (bool) {
+//                Toast.makeText(this, "请输入详细的信息描述!", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
             //判断是否选择上传的图片
             if (list.size() <= 0) {
                 Toast.makeText(this, "请选择要上传的图片", Toast.LENGTH_SHORT).show();
@@ -188,7 +205,7 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
             Latitude = "-1";
         }
         String mark = "patrolphone";//驱动标识
-        WatchManRequest.dataRequest(EventReportActivity.this, 10, 1, mark, userId, alarmtext, getTime(), 1, deviceguid, Latitude, Longitude);
+        WatchManRequest.dataRequest(EventReportActivity.this, 10, 1, mark, userId, alarmtext, getTime(), alarmtype, deviceguid, Latitude, Longitude);
     }
 
     /**
@@ -260,7 +277,6 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
         imageFile = new File(imagePath);
         fileMap.put(imagePath, imageFile);
         gridviewInit();
-
     }
 
     /**
@@ -278,7 +294,9 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
 
     @Override
     public void getGPSInfo(GPSBean gpsBean) {
-        tv_content_Position.setText(gpsBean.getAddress());
+        if (!gpsBean.getAddress().isEmpty()) {
+            tv_content_Position.setText(gpsBean.getAddress());
+        }
         tv_wd.setText(String.valueOf(gpsBean.getLongitude()));
         tv_con_wd.setText(String.valueOf(gpsBean.getLatitude()));
         tv_con_altitude.setText(String.valueOf(gpsBean.getAccuracy()));

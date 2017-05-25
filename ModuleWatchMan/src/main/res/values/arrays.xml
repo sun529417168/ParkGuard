@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="eventType">
+        <item>人工上报告警信息</item>
+        <item>人工上报普通信息</item>
+        <item>巡更点位异常</item>
+    </string-array>
+</resources>
