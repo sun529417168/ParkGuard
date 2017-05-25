@@ -1,6 +1,7 @@
 package cn.com.watchman.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.renderscript.Double2;
 import android.text.TextUtils;
 import android.util.Log;
@@ -48,7 +49,7 @@ public class Distance {
      * 参    数：Activity activity, GPSBean gpsBean
      * 返回值：boolean
      */
-    public static boolean isCompare(Activity activity, GPSBean gpsBean) {
+    public static boolean isCompare(Context activity, GPSBean gpsBean) {
         double compare1 = getDistance(gpsBean.getLongitude(), gpsBean.getLatitude(), TextUtils.isEmpty(SharedUtil.getString(activity, "longitude")) ? gpsBean.getLongitude() : Double.parseDouble(SharedUtil.getString(activity, "longitude")), TextUtils.isEmpty(SharedUtil.getString(activity, "latitude")) ? gpsBean.getLatitude() : Double.parseDouble(SharedUtil.getString(activity, "latitude")));
         double compare2 = 10;
         Double double1 = new Double(String.valueOf(compare1));

@@ -19,19 +19,30 @@ public class GPSBean implements Serializable {
     private String describe;//定位描述
     private int satellite;//连接卫星
     private String findSatellite;//发现卫星
+    private float speed;//速度
 
     public GPSBean() {
     }
 
-    public GPSBean(double longitude, double latitude, String address, float radius, double altitude, String describe, int satellite, String findSatellite) {
+
+    public GPSBean(double longitude, double latitude, String address, float accuracy, double altitude, String describe, int satellite, String findSatellite, float speed) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.address = address;
-        this.accuracy = radius;
+        this.accuracy = accuracy;
         this.altitude = altitude;
         this.describe = describe;
         this.satellite = satellite;
         this.findSatellite = findSatellite;
+        this.speed = speed;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 
     public double getLongitude() {
@@ -104,11 +115,12 @@ public class GPSBean implements Serializable {
                 "longitude=" + longitude +
                 ", latitude=" + latitude +
                 ", address='" + address + '\'' +
-                ", radius=" + accuracy +
+                ", accuracy=" + accuracy +
                 ", altitude=" + altitude +
                 ", describe='" + describe + '\'' +
                 ", satellite=" + satellite +
                 ", findSatellite='" + findSatellite + '\'' +
+                ", speed=" + speed +
                 '}';
     }
 }

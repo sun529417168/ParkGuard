@@ -75,6 +75,9 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
 
+        <!--gps后台服务-->
+        <service android:name=".service.GPSService" />
+
     </application>
 
 </manifest>

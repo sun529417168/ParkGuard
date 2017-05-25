@@ -164,7 +164,7 @@ public class MyRequest {
      * 参    数：Activity activity String... strings
      * 返回值：无
      */
-    public static void gpsRequest(final Activity activity, final GPSBean gpsBean) {
+    public static void gpsRequest(final Context activity, final GPSBean gpsBean) {
         Map<String, Object> params = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
         map.put("DeviceGUID", new DeviceUuidFactory(activity).getDeviceUuid().toString());
