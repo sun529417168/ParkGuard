@@ -11,6 +11,7 @@ import android.view.WindowManager;
 
 import com.linked.erfli.library.okhttps.OkHttpUtils;
 import com.linked.erfli.library.service.NetBroadcastReceiver;
+import com.linked.erfli.library.utils.ActivityCollector;
 import com.linked.erfli.library.utils.NetWorkUtils;
 import com.linked.erfli.library.utils.PGActivityUtil;
 
@@ -40,6 +41,7 @@ public abstract class BaseActivity extends BaseCheckPermissionActivity implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this, getClass());
         PGApp = PGActivityUtil.getInstance();
         PGApp.addActivity(this);
         evevt = this;
@@ -174,5 +176,6 @@ public abstract class BaseActivity extends BaseCheckPermissionActivity implement
     protected void onDestroy() {
         super.onDestroy();
         OkHttpUtils.getInstance().cancelTag(this);
+        ActivityCollector.removeActivity(this);
     }
 }

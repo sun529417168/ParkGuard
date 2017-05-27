@@ -5,12 +5,15 @@ android {
     buildToolsVersion "25.0.2"
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
+
+
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 22
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -18,6 +21,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
 }
 
 dependencies {
@@ -46,4 +55,6 @@ dependencies {
     compile files('libs/systembartint-1.0.4.jar')
     compile 'com.uwetrottmann.photoview:library:1.2.4'
     compile 'com.google.zxing:core:3.2.1'
+    compile files('libs/BaiduLBS_Android.jar')
+    compile 'org.robolectric:shadows-multidex:3.3.1'
 }

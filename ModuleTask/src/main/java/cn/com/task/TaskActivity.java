@@ -50,7 +50,6 @@ public class TaskActivity extends BaseFragmentActivity {
 
     @Override
     public void init() {
-    
         activity_main_viewpager = (ViewPager) findViewById(R.id.activity_main_viewpager);
         fragmentList.add(new TaskFragment());
 
@@ -92,4 +91,5 @@ public class TaskActivity extends BaseFragmentActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

@@ -1,7 +1,9 @@
 package cn.com.parkguard.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -67,6 +69,12 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
         homeAdapter = new HomeAdapter(this, homeArrayList);
         gridView.setAdapter(homeAdapter);
         gridView.setOnItemClickListener(this);
+        netText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settings.ACTION_SETTINGS));
+            }
+        });
     }
 
     @Override
@@ -129,5 +137,11 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
             return false;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        findViewById(R.id.home_sendMessage).setVisibility(SharedUtil.getBoolean(this, "serviceFlag", true) ? View.INVISIBLE : View.VISIBLE);
     }
 }

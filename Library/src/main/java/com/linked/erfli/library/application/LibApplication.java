@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.Service;
 import android.content.Context;
 import android.os.Vibrator;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.alibaba.sdk.android.push.CloudPushService;
@@ -102,5 +103,11 @@ public class LibApplication extends Application {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void logActivityCreate(EventPool.ActivityNotify activityNotify) {
         Log.d("ActivityCreate", activityNotify.activityName);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

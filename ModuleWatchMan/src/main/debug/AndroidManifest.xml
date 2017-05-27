@@ -49,6 +49,11 @@
             android:name=".activity.WatchManLocationActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <!--地图轨迹设计界面-->
+        <activity
+            android:name=".activity.RecordShowActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <!--gps后台服务-->
         <service android:name=".service.GPSService" />
     </application>
