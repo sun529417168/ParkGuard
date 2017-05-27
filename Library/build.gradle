@@ -2,7 +2,7 @@
 apply plugin: 'com.android.library'
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '25.0.2'
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
     defaultConfig {
@@ -11,11 +11,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
 }
@@ -46,4 +52,5 @@ dependencies {
     compile files('libs/systembartint-1.0.4.jar')
     compile 'com.uwetrottmann.photoview:library:1.2.4'
     compile 'com.google.zxing:core:3.2.1'
+    compile 'com.android.support:multidex:1.0.1'
 }
