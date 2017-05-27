@@ -83,7 +83,6 @@ public class GPSService extends Service{
                     intent.putExtra("totalCount",totalCount);
                     sendBroadcast(intent);
                 }
-                Log.i("serviceGPS", gpsBean.toString());
             }
         }
 

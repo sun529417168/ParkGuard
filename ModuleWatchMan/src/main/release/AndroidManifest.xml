@@ -102,6 +102,14 @@
             android:name=".activity.RecordShowActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RecordActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LocationActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <!--gps后台服务-->
         <service android:name=".service.GPSService" />
