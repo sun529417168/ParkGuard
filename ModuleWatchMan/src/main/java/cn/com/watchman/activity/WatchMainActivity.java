@@ -1,11 +1,15 @@
 package cn.com.watchman.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,7 +20,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.trace.LBSTraceClient;
+import com.amap.api.trace.TraceListener;
+import com.amap.api.trace.TraceOverlay;
 import com.baidu.location.BDLocationListener;
 import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.application.LibApplication;
@@ -29,9 +40,17 @@ import com.linked.erfli.library.utils.ToastUtil;
 import cn.com.watchman.R;
 import cn.com.watchman.application.WMApplication;
 import cn.com.watchman.bean.GPSBean;
+import cn.com.watchman.bean.PathRecord;
+import cn.com.watchman.database.DbAdapter;
 import cn.com.watchman.interfaces.GPSInfoInterface;
 
 import com.linked.erfli.library.service.LocationService;
+
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import cn.com.watchman.service.GPSService;
 import cn.com.watchman.service.MsgReceiver;
@@ -40,6 +59,7 @@ import cn.com.watchman.utils.Distance;
 import cn.com.watchman.utils.MyLocationListener;
 import cn.com.watchman.utils.MyRequest;
 import cn.com.watchman.utils.NotifyUtils;
+import cn.com.watchman.utils.Util;
 import cn.com.watchman.utils.WMyUtils;
 import cn.com.watchman.weight.RadarView;
 
@@ -79,6 +99,12 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     private int count = 0;
     private TextView deviceID, copyText;
     private NotifyUtils notifyUtils;
+    private PathRecord record;
+    private long mStartTime;
+    private long mEndTime;
+    private List<TraceOverlay> mOverlayList = new ArrayList<>();
+    private TraceOverlay mTraceoverlay;
+    private DbAdapter DbHepler;
 
     @Override
     protected void setView() {
@@ -158,7 +184,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent intent ;
+        Intent intent;
         int i = v.getId();
         if (i == R.id.watchMan_center) {
             if (!WMyUtils.isOpen(this)) {
@@ -166,6 +192,13 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                 return;
             }
             if (isStart) {
+                if (record != null) {
+                    record = null;
+                }
+                record = new PathRecord();
+                mStartTime = System.currentTimeMillis();
+                record.setDate(getcueDate(mStartTime));
+
                 notifyUtils.showButtonNotify();
                 intent = new Intent(this, GPSService.class);
                 startService(intent);
@@ -188,6 +221,12 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                 isStart = true;
                 locationService.stop();
                 scan_radar.setSearching(false);//停止扫描
+                //高德
+                mEndTime = System.currentTimeMillis();
+                DecimalFormat decimalFormat = new DecimalFormat("0.0");
+                LBSTraceClient mTraceClient = new LBSTraceClient(getApplicationContext());
+                mTraceClient.queryProcessedTrace(2, Util.parseTraceLocationList(record.getPathline()), LBSTraceClient.TYPE_AMAP, (TraceListener) WatchMainActivity.this);
+                saveRecord(record.getPathline(), record.getDate());
             }
 
         } else if (i == R.id.watchMan_EventReport) {
@@ -199,7 +238,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             startActivity(intent);
 
         } else if (i == R.id.watchMan_map) {
-            startActivity(new Intent(this, WatchManLocationActivity.class));
+            startActivity(new Intent(this, WatchManStatisticsActivity.class));
         } else if (i == R.id.watchMan_statistics) {
             intent = new Intent(this, WatchManStatisticsActivity.class);
             intent.putExtra("count", count);
@@ -215,6 +254,90 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             cmb.setPrimaryClip(ClipData.newPlainText(null, "设备号:" + new DeviceUuidFactory(this).getDeviceUuid().toString())); //将内容放入粘贴管理器,在别的地方长按选择"粘贴"即可
             ToastUtil.show(this, "复制成功,去粘贴吧");
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private String getcueDate(long time) {
+        SimpleDateFormat formatter = new SimpleDateFormat(
+                "yyyy-MM-dd  HH:mm:ss ");
+        Date curDate = new Date(time);
+        String date = formatter.format(curDate);
+        return date;
+    }
+
+    protected void saveRecord(List<AMapLocation> list, String time) {
+        if (list != null && list.size() > 0) {
+            DbHepler = new DbAdapter(this);
+            DbHepler.open();
+            String duration = getDuration();
+            float distance = getDistance(list);
+            String average = getAverage(distance);
+            String pathlineSring = getPathLineString(list);
+            AMapLocation firstLocaiton = list.get(0);
+            AMapLocation lastLocaiton = list.get(list.size() - 1);
+            String stratpoint = amapLocationToString(firstLocaiton);
+            String endpoint = amapLocationToString(lastLocaiton);
+            DbHepler.createrecord(String.valueOf(distance), duration, average,
+                    pathlineSring, stratpoint, endpoint, time);
+            DbHepler.close();
+        } else {
+            Toast.makeText(WatchMainActivity.this, "没有记录到路径", Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+    private String getDuration() {
+        return String.valueOf((mEndTime - mStartTime) / 1000f);
+    }
+
+    private String getAverage(float distance) {
+        return String.valueOf(distance / (float) (mEndTime - mStartTime));
+    }
+
+    private float getDistance(List<AMapLocation> list) {
+        float distance = 0;
+        if (list == null || list.size() == 0) {
+            return distance;
+        }
+        for (int i = 0; i < list.size() - 1; i++) {
+            AMapLocation firstpoint = list.get(i);
+            AMapLocation secondpoint = list.get(i + 1);
+            LatLng firstLatLng = new LatLng(firstpoint.getLatitude(),
+                    firstpoint.getLongitude());
+            LatLng secondLatLng = new LatLng(secondpoint.getLatitude(),
+                    secondpoint.getLongitude());
+            double betweenDis = AMapUtils.calculateLineDistance(firstLatLng,
+                    secondLatLng);
+            distance = (float) (distance + betweenDis);
+        }
+        return distance;
+    }
+
+    private String getPathLineString(List<AMapLocation> list) {
+        if (list == null || list.size() == 0) {
+            return "";
+        }
+        StringBuffer pathline = new StringBuffer();
+        for (int i = 0; i < list.size(); i++) {
+            AMapLocation location = list.get(i);
+            String locString = amapLocationToString(location);
+            pathline.append(locString).append(";");
+        }
+        String pathLineString = pathline.toString();
+        pathLineString = pathLineString.substring(0,
+                pathLineString.length() - 1);
+        return pathLineString;
+    }
+
+    private String amapLocationToString(AMapLocation location) {
+        StringBuffer locString = new StringBuffer();
+        locString.append(location.getLatitude()).append(",");
+        locString.append(location.getLongitude()).append(",");
+        locString.append(location.getProvider()).append(",");
+        locString.append(location.getTime()).append(",");
+        locString.append(location.getSpeed()).append(",");
+        locString.append(location.getBearing());
+        return locString.toString();
     }
 
     @Override
@@ -281,5 +404,30 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         SharedUtil.setBoolean(this, "serviceFlag", true);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // 适配android M，检查权限
+        List<String> permissions = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && isNeedRequestPermissions(permissions)) {
+            requestPermissions(permissions.toArray(new String[permissions.size()]), 0);
+        }
+    }
 
+    private boolean isNeedRequestPermissions(List<String> permissions) {
+        // 定位精确位置
+        addPermission(permissions, Manifest.permission.ACCESS_FINE_LOCATION);
+        // 存储权限
+        addPermission(permissions, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        // 读取手机状态
+        addPermission(permissions, Manifest.permission.READ_PHONE_STATE);
+        return permissions.size() > 0;
+    }
+
+    private void addPermission(List<String> permissionsList, String permission) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+            permissionsList.add(permission);
+        }
+    }
 }

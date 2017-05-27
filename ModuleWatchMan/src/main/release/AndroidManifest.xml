@@ -2,6 +2,22 @@
 
     package="cn.com.watchman">
 
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <application
         android:name="com.linked.erfli.library.application.LibApplication"
         android:allowBackup="true"
@@ -14,12 +30,18 @@
             android:enabled="true"
             android:process=":remote">
             <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"></action>
+                <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
         </service>
+        <!--百度地图-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="IGE9YdZYFOka4zutunPI3ojuVAUMrqBb" />
+
+        <!--高德地图-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="502e5833623fe1a3ddf0e3b9d988ba8f" />
 
         <receiver android:name="com.linked.erfli.library.service.NetBroadcastReceiver">
             <intent-filter>
@@ -74,10 +96,16 @@
             android:name=".activity.WatchManLocationActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <!--地图轨迹设计界面-->
+        <activity
+            android:name=".activity.RecordShowActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <!--gps后台服务-->
         <service android:name=".service.GPSService" />
-
+        <!--高德地图的服务-->
+        <service android:name="com.amap.api.location.APSService" />
     </application>
 
 </manifest>

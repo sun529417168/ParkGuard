@@ -24,6 +24,15 @@
         android:layout_centerHorizontal="true"
         android:background="@mipmap/home_title" />
 
+    <TextView
+        android:id="@+id/home_sendMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/home_sendMessage"
+        android:textColor="@color/black" />
+
     <GridView
         android:id="@+id/home_gridView"
         android:layout_width="match_parent"

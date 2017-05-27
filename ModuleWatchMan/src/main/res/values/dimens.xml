@@ -6,4 +6,10 @@
     <dimen name="text_size_big">60px</dimen>
     <dimen name="activity_vertical_margin_big">25dp</dimen>
     <dimen name="dp">10dp</dimen>
+
+    <dimen name="item_height">80dp</dimen>
+    <dimen name="item_margin_left">15dp</dimen>
+    <dimen name="item_margin_right">15dp</dimen>
+    <dimen name="activity_title_size">18sp</dimen>
+    <dimen name="activity_title_height">40dp</dimen>
 </resources>

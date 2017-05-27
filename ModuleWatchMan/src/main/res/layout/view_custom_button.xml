@@ -33,6 +33,7 @@
         <ImageView
             android:id="@+id/btn_custom_next"
             style="@style/btn_custom_style"
+            android:layout_marginRight="20dp"
             android:background="@drawable/watch_man_close" />
     </LinearLayout>
 

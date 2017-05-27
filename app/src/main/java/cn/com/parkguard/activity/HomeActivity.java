@@ -1,5 +1,6 @@
 package cn.com.parkguard.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -129,5 +130,11 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
             return false;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        findViewById(R.id.home_sendMessage).setVisibility(SharedUtil.getBoolean(this, "serviceFlag", true) ? View.INVISIBLE : View.VISIBLE);
     }
 }
