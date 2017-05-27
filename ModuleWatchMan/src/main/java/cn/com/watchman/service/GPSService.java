@@ -1,14 +1,7 @@
 package cn.com.watchman.service;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.location.GpsSatellite;
-import android.location.GpsStatus;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -16,20 +9,11 @@ import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
-import com.baidu.location.Poi;
 import com.linked.erfli.library.application.LibApplication;
 import com.linked.erfli.library.service.LocationService;
 import com.linked.erfli.library.utils.SharedUtil;
-import com.linked.erfli.library.utils.ToastUtil;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import cn.com.watchman.activity.WatchMainActivity;
-import cn.com.watchman.application.WMApplication;
 import cn.com.watchman.bean.GPSBean;
-import cn.com.watchman.interfaces.GPSInfoInterface;
 import cn.com.watchman.utils.Distance;
 import cn.com.watchman.utils.MyRequest;
 
@@ -40,14 +24,14 @@ import cn.com.watchman.utils.MyRequest;
  * 时    间：2017.5.9
  * 版    本：V1.0.0
  */
-public class GPSService extends Service {
+public class GPSService extends Service{
     private LocationService locationService;
     private int type;
     private String describe = "";
     private boolean isThread = true;
     private GPSBean gpsBean;
-    private int count = 0;
-
+    private int currentCount = 0,totalCount;
+    private Intent intent;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -62,6 +46,7 @@ public class GPSService extends Service {
         }
         locationService.start();// 定位SDK
         SharedUtil.setBoolean(this, "serviceFlag", false);
+        intent=new Intent("cn.com.watchman.count");
         new MyThread().start();
     }
 
@@ -91,6 +76,12 @@ public class GPSService extends Service {
                 if (location.getSpeed() > 10) {
                     //实时上传
                     MyRequest.gpsRequest(GPSService.this, gpsBean);
+                    currentCount++;
+                    totalCount=SharedUtil.getInteger(getApplicationContext(),"totalCount",0)+1;
+                    SharedUtil.setInteger(getApplicationContext(),"totalCount",totalCount);
+                    intent.putExtra("currentCount",currentCount);
+                    intent.putExtra("totalCount",totalCount);
+                    sendBroadcast(intent);
                 }
                 Log.i("serviceGPS", gpsBean.toString());
             }
@@ -103,8 +94,14 @@ public class GPSService extends Service {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
-                count++;
-                Log.i("上传次数", count + "");
+                MyRequest.gpsRequest(GPSService.this, gpsBean);
+                currentCount++;
+                totalCount=SharedUtil.getInteger(getApplicationContext(),"totalCount",0)+1;
+                SharedUtil.setInteger(getApplicationContext(),"totalCount",totalCount);
+                Log.i("上传次数", currentCount + "");
+                intent.putExtra("currentCount",currentCount);
+                intent.putExtra("totalCount",totalCount);
+                sendBroadcast(intent);
             }
             if (msg.what == 1) {
                 Log.i("发送的距离", "小于10米");
@@ -131,7 +128,7 @@ public class GPSService extends Service {
                     SharedUtil.setString(GPSService.this, "latitude", String.valueOf(gpsBean.getLatitude()));
                 }
                 try {
-                    Thread.sleep(1000 * 60);
+                    Thread.sleep(1000*30 );
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -139,9 +136,13 @@ public class GPSService extends Service {
         }
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        currentCount=0;
+        SharedUtil.setInteger(this,"totalCount",totalCount);
+        isThread=false;
         SharedUtil.setBoolean(this, "serviceFlag", true);
     }
 }

@@ -209,8 +209,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/new_main_ciShu"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:layout_alignBottom="@+id/new_main_ciShu"
+            android:layout_marginLeft="10dp"
+            android:text="0"
+            android:layout_toEndOf="@+id/new_main_ciShu"
+            android:layout_toRightOf="@+id/new_main_ciShu" />
 
         <TextView
             android:id="@+id/watchMan_deviceId"
@@ -218,14 +222,12 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_content_GPS"
             android:layout_alignStart="@+id/tv_content_GPS"
-            android:layout_alignTop="@+id/watchMan_sendCount"
             android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/watchMan_copy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/watchMan_sendCount"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/watchMan_deviceId"
             android:text="点击复制设备号"

@@ -1,5 +1,6 @@
 package cn.com.watchman.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -25,9 +26,12 @@ import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
+import java.util.Calendar;
+
 import cn.com.watchman.R;
 import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.interfaces.GPSInfoInterface;
+import cn.com.watchman.interfaces.UploadCountInterface;
 import cn.com.watchman.interfaces.MyNotifyBroadcastClickInterface;
 import cn.com.watchman.service.GPSService;
 import cn.com.watchman.service.MsgReceiver;
@@ -49,7 +53,7 @@ import static cn.com.watchman.R.id.watchMan_address;
  * 版    本：V1.0.0
  */
 @Router("watchman")
-public class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface, MyNotifyBroadcastClickInterface {
+public class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface,UploadCountInterface{
 
     /**
      * 经度,纬度,海拔,精度,地址
@@ -70,12 +74,26 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     private LocationService locationService;
     private BDLocationListener mListener;
     private MsgReceiver msgReceiver;
+    private CountReceiver countReceiver;
     private RadarView scan_radar;
     private TextView scan_text;
     private GPSBean gpsBean = new GPSBean();
     private int count = 0;
     private TextView deviceID, copyText;
     private NotifyUtils notifyUtils;
+    /*
+    当前上传次数，总上传次数
+     */
+    private int currentCount=0,totalCount=0;
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what==1)
+            {
+                tv_sendCount.setText(""+msg.arg1);
+            }
+        }
+    };
     private LinearLayout title_share;//分享按钮父布局
     private ImageView iv_Share_ImageView;//分享按钮
 
@@ -90,6 +108,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         isStart = SharedUtil.getBoolean(this, "serviceFlag", true);
         SharedUtil.setLong(this, "runTime", System.currentTimeMillis() / 1000);
         msgReceiver = new MsgReceiver();
+        countReceiver=new CountReceiver();
         mListener = new MyLocationListener(this);
         locationService = ((LibApplication) getApplication()).locationService;
         //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
@@ -101,7 +120,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         } else if (type == 1) {
             locationService.setLocationOption(locationService.getOption());
         }
-        notifyUtils = new NotifyUtils(this, WatchMainActivity.this);
+        notifyUtils = new NotifyUtils(this);
 
     }
 
@@ -160,17 +179,40 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             suspendBtn.setBackgroundResource(R.drawable.activity_main_stop);
             scan_radar.setSearching(true);//开始扫描
             locationService.start();
+            tv_sendCount.setText(""+SharedUtil.getInteger(this,"currentCount",0));
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(MyLocationListener.GPSTYPE);
             registerReceiver(msgReceiver, intentFilter);
-        }
-    }
+            IntentFilter intentFilter1=new IntentFilter();
+            intentFilter.addAction("cn.com.watchman.count");
+            registerReceiver(countReceiver,intentFilter1);
 
-    Intent intent;
+
+        }
+        Calendar calendar=Calendar.getInstance();
+        String currentTime=""+calendar.get(Calendar.YEAR)+(calendar.get(Calendar.MONTH)+1)+calendar.get(Calendar.DAY_OF_MONTH);
+        String lastTime=SharedUtil.getString(this,"lastTime","");
+        if(!TextUtils.isEmpty(lastTime))
+        {
+            if(Integer.parseInt(currentTime)>Integer.parseInt(lastTime))
+            {
+                SharedUtil.setInteger(this,"totalCount",0);
+                SharedUtil.setInteger(LibApplication.getContent(), "WMSize", 0);
+                SharedUtil.setString(LibApplication.getContent(), "traffic", "");
+            }
+        }
+        if(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)).equals("1"))
+        {
+            SharedUtil.setInteger(LibApplication.getContent(), "monthWMSize",0);
+            SharedUtil.setString(LibApplication.getContent(), "monthTraffic", "");
+        }
+        SharedUtil.setString(this,"lastTime",currentTime);
+
+    }
 
     @Override
     public void onClick(View v) {
-
+        Intent intent ;
         int i = v.getId();
         if (i == R.id.watchMan_center) {
             if (!WMyUtils.isOpen(this)) {
@@ -181,6 +223,20 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                 SharedUtil.setBoolean(this, "serviceFlag", false);
                 notifyUtils.showButtonNotify();
                 watchActivityStartService();
+                intent = new Intent(this, GPSService.class);
+                startService(intent);
+                MyRequest.typeRequest(this, 1);
+                suspendBtn.setBackgroundResource(R.drawable.activity_main_stop);
+                isStart = false;
+                scan_radar.setSearching(true);//开始扫描
+                locationService.start();
+                tv_sendCount.setText("0");
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(MyLocationListener.GPSTYPE);
+                registerReceiver(msgReceiver, intentFilter);
+                IntentFilter intentFilter1=new IntentFilter();
+                intentFilter1.addAction("cn.com.watchman.count");
+                registerReceiver(countReceiver,intentFilter1);
             } else {
                 SharedUtil.setBoolean(this, "serviceFlag", true);
                 notifyUtils.clearAllNotify();
@@ -199,7 +255,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             startActivity(new Intent(this, WatchManLocationActivity.class));
         } else if (i == R.id.watchMan_statistics) {
             intent = new Intent(this, WatchManStatisticsActivity.class);
-            intent.putExtra("count", count);
+            intent.putExtra("currentCount", currentCount);
             startActivity(intent);
         } else if (i == R.id.watchMan_code) {
             intent = new Intent(this, WatchManQRcodeActivity.class);
@@ -266,6 +322,27 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         tv_address.setText(TextUtils.isEmpty(gpsBean.getAddress()) ? "" : gpsBean.getAddress());
         tv_describe.setText(gpsBean.getDescribe());
     }
+    //获取当前上传次数
+    @Override
+    public void getCurrentCount(final int count) {
+
+        currentCount=count;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message message=new Message();
+                message.what=1;
+                message.arg1=count;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
+    //获取总上传次数
+    @Override
+    public void getTotalCount(int count) {
+        totalCount=count;
+    }
+
 
 
     @Override
@@ -293,14 +370,27 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         super.onDestroy();
         if (msgReceiver.isOrderedBroadcast())
             unregisterReceiver(msgReceiver);//注销广播
+        unregisterReceiver(countReceiver);
         locationService.unregisterListener(mListener); //注销掉监听
         locationService.stop(); //停止定位服务
         MyRequest.typeRequest(this, -1);
         SharedUtil.isValue(this, "longitude");
         SharedUtil.isValue(this, "latitude");
         SharedUtil.setBoolean(this, "serviceFlag", true);
+        SharedUtil.setInteger(this,"currentCount",currentCount);
     }
+    public class CountReceiver extends BroadcastReceiver{
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            Log.i("test",""+intent.getIntExtra("currentCount",0));
+            UploadCountInterface uploadCount=(UploadCountInterface)WatchMainActivity.this;
+            uploadCount.getCurrentCount(intent.getIntExtra("currentCount",0));
+            uploadCount.getTotalCount(intent.getIntExtra("totalCount",0));
+
+        }
+    }
 
     @Override
     public void startServiceInterface() {

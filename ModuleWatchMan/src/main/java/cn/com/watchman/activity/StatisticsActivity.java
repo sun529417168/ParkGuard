@@ -24,7 +24,7 @@ import cn.com.watchman.R;
 public class StatisticsActivity extends BaseActivity {
 
 
-    private TextView tv_statisicsNum, tv_FunctionTime, tv_flow;//上传次数 运行时间 流量统计
+    private TextView tv_statisicsCurrNum, tv_statisicsTotalNum,tv_day_flow,tv_month_flow,tv_FunctionTime, tv_flow;//上传次数 运行时间 流量统计
     private RelativeLayout rl_cache_layout;//缓存文本父布局
     private TextView tv_Cache;//缓存大小
     //    private SharePreferenceUtils sp;
@@ -44,8 +44,10 @@ public class StatisticsActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        tv_statisicsNum = (TextView) findViewById(R.id.tv_statisicsNum);
-        tv_FunctionTime = (TextView) findViewById(R.id.tv_FunctionTime);
+        tv_statisicsCurrNum = (TextView) findViewById(R.id.tv_statisicsCurrNum);
+        tv_statisicsTotalNum=(TextView)findViewById(R.id.tv_statisicsTotalNum);
+        tv_day_flow=(TextView)findViewById(R.id.tv_day_flow);
+        tv_month_flow=(TextView)findViewById(R.id.tv_month_flow);
         rl_cache_layout = (RelativeLayout) findViewById(R.id.rl_cache_layout);
         tv_Cache = (TextView) findViewById(R.id.tv_Cache);
     }

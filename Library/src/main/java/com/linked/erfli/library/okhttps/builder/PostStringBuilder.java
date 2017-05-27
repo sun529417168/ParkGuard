@@ -24,6 +24,9 @@ public class PostStringBuilder extends OkHttpRequestBuilder<PostStringBuilder> {
             int size = SharedUtil.getInteger(LibApplication.getContent(), "WMSize", 0) + obj;
             SharedUtil.setInteger(LibApplication.getContent(), "WMSize", size);
             SharedUtil.setString(LibApplication.getContent(), "traffic", MyUtils.getFormatSize(size));
+            int monthSize=SharedUtil.getInteger(LibApplication.getContent(), "monthWMSize", 0) + obj;
+            SharedUtil.setInteger(LibApplication.getContent(), "monthWMSize", monthSize);
+            SharedUtil.setString(LibApplication.getContent(), "monthTraffic", MyUtils.getFormatSize(monthSize));
         }
         this.content = content;
         return this;

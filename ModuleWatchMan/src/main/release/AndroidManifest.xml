@@ -48,6 +48,7 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".activity.WatchMainActivity$CountReceiver"/>
         <activity android:name=".activity.WatchManWelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

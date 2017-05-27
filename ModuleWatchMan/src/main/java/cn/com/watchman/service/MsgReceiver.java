@@ -17,12 +17,12 @@ import cn.com.watchman.interfaces.GPSInfoInterface;
 
 public class MsgReceiver extends BroadcastReceiver implements GPSInfoInterface {
     private GPSInfoInterface gpsInfoInterface;
-
     @Override
     public void onReceive(Context context, Intent intent) {
         GPSBean gpsBean = (GPSBean) intent.getSerializableExtra("gpsBean");
         gpsInfoInterface = (GPSInfoInterface) context;
         gpsInfoInterface.getGPSInfo(gpsBean);
+
     }
 
     @Override
