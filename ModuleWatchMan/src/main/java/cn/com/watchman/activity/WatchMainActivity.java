@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -31,8 +33,8 @@ import java.util.Calendar;
 import cn.com.watchman.R;
 import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.interfaces.GPSInfoInterface;
-import cn.com.watchman.interfaces.UploadCountInterface;
 import cn.com.watchman.interfaces.MyNotifyBroadcastClickInterface;
+import cn.com.watchman.interfaces.UploadCountInterface;
 import cn.com.watchman.service.GPSService;
 import cn.com.watchman.service.MsgReceiver;
 import cn.com.watchman.utils.DialogUtils;
@@ -53,7 +55,7 @@ import static cn.com.watchman.R.id.watchMan_address;
  * 版    本：V1.0.0
  */
 @Router("watchman")
-public class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface,UploadCountInterface{
+public class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface,UploadCountInterface,MyNotifyBroadcastClickInterface{
 
     /**
      * 经度,纬度,海拔,精度,地址
@@ -120,7 +122,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         } else if (type == 1) {
             locationService.setLocationOption(locationService.getOption());
         }
-        notifyUtils = new NotifyUtils(this);
+        notifyUtils = new NotifyUtils(this,this);
 
     }
 
@@ -252,7 +254,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             startActivity(intent);
 
         } else if (i == R.id.watchMan_map) {
-            startActivity(new Intent(this, WatchManLocationActivity.class));
+            startActivity(new Intent(this, RecordShowActivity.class));
         } else if (i == R.id.watchMan_statistics) {
             intent = new Intent(this, WatchManStatisticsActivity.class);
             intent.putExtra("currentCount", currentCount);
@@ -344,7 +346,6 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     }
 
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -412,7 +413,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         notifyUtils.clearAllNotify();
         watchActivityStopService();
     }
-
+    Intent intent;
     private void watchActivityStartService() {
         intent = new Intent(this, GPSService.class);
         startService(intent);
