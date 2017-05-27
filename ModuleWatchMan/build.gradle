@@ -15,11 +15,19 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        signingConfig signingConfigs.debug
+        multiDexEnabled true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
     lintOptions {
@@ -37,8 +45,10 @@ android {
             }
         }
     }
-    dexOptions {
-        preDexLibraries = false
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
 }
 

@@ -294,8 +294,12 @@ public class EventReportActivity extends TakePhotoActivity implements OnItemClic
 
     @Override
     public void getGPSInfo(GPSBean gpsBean) {
-        if (!gpsBean.getAddress().isEmpty()) {
-            tv_content_Position.setText(gpsBean.getAddress());
+        try {
+            if (!gpsBean.getAddress().isEmpty()) {
+                tv_content_Position.setText(gpsBean.getAddress());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         tv_wd.setText(String.valueOf(gpsBean.getLongitude()));
         tv_con_wd.setText(String.valueOf(gpsBean.getLatitude()));

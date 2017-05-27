@@ -1,7 +1,6 @@
 package com.linked.erfli.library.base;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
@@ -95,7 +94,7 @@ public class MyTitle implements View.OnClickListener {
             PGApp.finishTop();
         }
         if (i == R.id.title_net) {
-            Intent intent = new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS);
+            Intent intent = new Intent(Settings.ACTION_SETTINGS);
             context.startActivity(intent);
         }
     }

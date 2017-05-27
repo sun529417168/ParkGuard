@@ -14,9 +14,13 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.Toast;
+
+import com.linked.erfli.library.utils.ActivityCollector;
+import com.linked.erfli.library.utils.SharedUtil;
 
 import cn.com.watchman.R;
+import cn.com.watchman.activity.WatchMainActivity;
+import cn.com.watchman.interfaces.MyNotifyBroadcastClickInterface;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.alibaba.sdk.android.ams.common.global.AmsGlobalHolder.getPackageName;
@@ -48,9 +52,11 @@ public class NotifyUtils {
      * Notification管理
      */
     public NotificationManager mNotificationManager;
+    public MyNotifyBroadcastClickInterface myNotifyBroadcastClickInterface;
 
-    public NotifyUtils(Activity activity) {
+    public NotifyUtils(Activity activity, MyNotifyBroadcastClickInterface notifyBroadcastClickInterface) {
         this.activity = activity;
+        this.myNotifyBroadcastClickInterface = notifyBroadcastClickInterface;
         mNotificationManager = (NotificationManager) activity.getSystemService(NOTIFICATION_SERVICE);
         initButtonReceiver();
     }
@@ -67,7 +73,8 @@ public class NotifyUtils {
         } else {
             mRemoteViews.setViewVisibility(R.id.ll_custom_button, View.VISIBLE);
             //
-            if (isPlay) {
+            Log.i("", "服务状态打印:" + SharedUtil.getBoolean(activity, "serviceFlag", true));
+            if (!SharedUtil.getBoolean(activity, "serviceFlag", true)) {
                 mRemoteViews.setImageViewResource(R.id.btn_custom_play, R.drawable.btn_pause);
             } else {
                 mRemoteViews.setImageViewResource(R.id.btn_custom_play, R.drawable.btn_play);
@@ -84,6 +91,10 @@ public class NotifyUtils {
         buttonIntent.putExtra(INTENT_BUTTONID_TAG, BUTTON_NEXT_ID);
         PendingIntent intent_next = PendingIntent.getBroadcast(activity, 3, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.btn_custom_next, intent_next);
+
+//        buttonIntent.putExtra(INTENT_BUTTONID_TAG, RELATIVE_ID);
+//        PendingIntent intent_relative = PendingIntent.getBroadcast(activity, 4, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        mRemoteViews.setOnClickPendingIntent(R.id.rl_intentActivity, intent_relative);
         mBuilder.setContent(mRemoteViews)
                 .setContentIntent(getDefalutIntent(Notification.FLAG_ONGOING_EVENT))
                 .setWhen(System.currentTimeMillis())// 通知产生的时间，会在通知信息里显示
@@ -139,6 +150,8 @@ public class NotifyUtils {
      */
     public final static int BUTTON_NEXT_ID = 3;
 
+    public final static int RELATIVE_ID = 4;
+
     /**
      * 带按钮的通知栏点击广播接收
      */
@@ -154,6 +167,7 @@ public class NotifyUtils {
      */
     public class ButtonBroadcastReceiver extends BroadcastReceiver {
 
+
         @Override
         public void onReceive(Context context, Intent intent) {
             // TODO Auto-generated method stub
@@ -164,23 +178,26 @@ public class NotifyUtils {
                 switch (buttonId) {
                     case BUTTON_PREV_ID:
                         Log.d(TAG, "上一首");
-                        Toast.makeText(activity, "上一首", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(activity, "上一首", Toast.LENGTH_SHORT).show();
                         break;
                     case BUTTON_PALY_ID:
                         String play_status = "";
                         isPlay = !isPlay;
                         if (isPlay) {
                             play_status = "开始播放";
+                            myNotifyBroadcastClickInterface.startServiceInterface();
                         } else {
                             play_status = "已暂停";
+                            myNotifyBroadcastClickInterface.pauseServiceInterface();
                         }
                         showButtonNotify();
                         Log.d(TAG, play_status);
-                        Toast.makeText(activity, play_status, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(activity, play_status, Toast.LENGTH_SHORT).show();
                         break;
                     case BUTTON_NEXT_ID:
                         Log.d(TAG, "下一首");
-                        Toast.makeText(activity, "下一首", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(activity, "下一首", Toast.LENGTH_SHORT).show();
+                        myNotifyBroadcastClickInterface.stopServiceInterface();
                         break;
                     default:
                         break;
@@ -203,7 +220,11 @@ public class NotifyUtils {
      * 点击去除： Notification.FLAG_AUTO_CANCEL
      */
     public PendingIntent getDefalutIntent(int flags) {
-        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 1, new Intent(), flags);
+        Intent notificationIntent = null;
+        if (ActivityCollector.isActivityExist(WatchMainActivity.class)) {
+            ActivityCollector.removeActivity(activity);
+        }
+        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 1, new Intent(activity, WatchMainActivity.class), flags);
         return pendingIntent;
     }
 }

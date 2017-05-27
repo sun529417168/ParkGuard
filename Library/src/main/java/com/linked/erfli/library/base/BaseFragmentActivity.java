@@ -15,6 +15,8 @@ import com.linked.erfli.library.utils.PGActivityUtil;
 
 import java.util.List;
 
+import static com.linked.erfli.library.utils.StatusBarUtils.mContext;
+
 
 /**
  * 文件名：BaseFragmentActivity
@@ -67,6 +69,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
     @Override
     public void onNetChange(int netMobile) {
         this.netMobile = netMobile;
+        MyTitle.getInstance().setNetText((BaseActivity) mContext, netMobile);
         isNetConnect();
     }
 

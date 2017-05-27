@@ -378,14 +378,13 @@ public class RecordShowActivity extends Activity implements
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
-		switch (id) {
-		case R.id.displaybtn:
+		if (id == R.id.displaybtn) {
 			if (mDisplaybtn.isChecked()) {
 				startMove();
 				mDisplaybtn.setClickable(false);
 			}
-			break;
-		case R.id.record_show_activity_grasp_radio_button:
+
+		} else if (id == R.id.record_show_activity_grasp_radio_button) {
 			mGraspChecked = true;
 			mOriginChecked = false;
 			mGraspRadioButton.setChecked(true);
@@ -394,8 +393,8 @@ public class RecordShowActivity extends Activity implements
 			setOriginEnable(false);
 			mDisplaybtn.setChecked(false);
 			resetGraspRole();
-			break;
-		case R.id.record_show_activity_origin_radio_button:
+
+		} else if (id == R.id.record_show_activity_origin_radio_button) {
 			mOriginChecked = true;
 			mGraspChecked = false;
 			mGraspRadioButton.setChecked(false);
@@ -404,7 +403,7 @@ public class RecordShowActivity extends Activity implements
 			setOriginEnable(true);
 			mDisplaybtn.setChecked(false);
 			resetOriginRole();
-			break;
+
 		}
 	}
 }
