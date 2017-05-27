@@ -1,9 +1,7 @@
 package cn.com.watchman.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
@@ -12,7 +10,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
@@ -39,7 +36,7 @@ import cn.com.watchman.utils.WMyUtils;
 public class WatchManStatisticsActivity extends BaseActivity implements View.OnClickListener {
     private ImageButton img_Title_GoBack_ImageButton;
     private TextView tv_Title_TextView;
-    private TextView tv_statisicsNum;//上传次数
+    private TextView tv_statisicsCurrNum, tv_statisicsTotalNum,tv_day_flow,tv_month_flow;//上传次数 运行时间 流量统计
     private TextView tv_FunctionTime;//运行时间
     private RelativeLayout rl_cache_layout;//缓存文本父布局
     private TextView tv_Cache;//缓存大小
@@ -67,20 +64,24 @@ public class WatchManStatisticsActivity extends BaseActivity implements View.OnC
 
     @Override
     protected void init() {
-        tv_statisicsNum = (TextView) findViewById(R.id.tv_statisicsNum);
+        tv_statisicsCurrNum = (TextView) findViewById(R.id.tv_statisicsCurrNum);
+        tv_statisicsTotalNum=(TextView)findViewById(R.id.tv_statisicsTotalNum);
+        tv_day_flow=(TextView)findViewById(R.id.tv_day_flow);
+        tv_month_flow=(TextView)findViewById(R.id.tv_month_flow);
         tv_FunctionTime = (TextView) findViewById(R.id.tv_FunctionTime);
-        tv_statisicsNum.setText(String.valueOf(getIntent().getIntExtra("count", 0)) + "次");
         tv_FunctionTime.setText(WMyUtils.runTime(this));
         rl_cache_layout = (RelativeLayout) findViewById(R.id.rl_cache_layout);
         rl_cache_layout.setOnClickListener(this);
         tv_Cache = (TextView) findViewById(R.id.tv_Cache);
+        tv_statisicsCurrNum.setText(String.valueOf(getIntent().getIntExtra("currentCount",0))+"次");
+        tv_statisicsTotalNum.setText(SharedUtil.getInteger(getApplicationContext(),"totalCount",0)+"次");
         try {
             tv_Cache.setText(DataCleanManager.getTotalCacheSize(this));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        tv_flow = (TextView) findViewById(R.id.tv_flow);
-        tv_flow.setText(TextUtils.isEmpty(SharedUtil.getString(this, "traffic")) ? "" : SharedUtil.getString(this, "traffic"));
+        tv_day_flow.setText(TextUtils.isEmpty(SharedUtil.getString(this, "traffic")) ? "" : SharedUtil.getString(this, "traffic"));
+        tv_month_flow.setText(TextUtils.isEmpty(SharedUtil.getString(this, "monthTraffic")) ? "" : SharedUtil.getString(this, "monthTraffic"));
     }
 
 
