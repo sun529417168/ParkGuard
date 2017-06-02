@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import cn.com.notice.R;
 import cn.com.notice.bean.NoticeDetailBean;
 
+
 /**
  * Created by 志强 on 2017.5.23.
  */

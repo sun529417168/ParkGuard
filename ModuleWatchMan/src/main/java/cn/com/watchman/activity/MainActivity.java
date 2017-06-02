@@ -84,7 +84,11 @@ public class MainActivity extends WatchMainActivity implements LocationSource,
         if (isStart == false) {
             Log.i("还在运行", "shide");
             record = CacheBean.getPathRecord();
-            record.setDate(getcueDate(SharedUtil.getLong(this, "startTime", 0)));
+            try {
+                record.setDate(getcueDate(SharedUtil.getLong(this, "startTime", 0)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -103,12 +107,16 @@ public class MainActivity extends WatchMainActivity implements LocationSource,
 
     @Override
     protected void btnEnd() {
-        CacheBean.setPathRecord(null);
-        mEndTime = System.currentTimeMillis();
-        mOverlayList.add(mTraceoverlay);
-        LBSTraceClient mTraceClient = new LBSTraceClient(getApplicationContext());
-        mTraceClient.queryProcessedTrace(2, Util.parseTraceLocationList(record.getPathline()), LBSTraceClient.TYPE_AMAP, MainActivity.this);
-        saveRecord(record.getPathline(), record.getDate());
+        try {
+            CacheBean.setPathRecord(null);
+            mEndTime = System.currentTimeMillis();
+            mOverlayList.add(mTraceoverlay);
+            LBSTraceClient mTraceClient = new LBSTraceClient(getApplicationContext());
+            mTraceClient.queryProcessedTrace(2, Util.parseTraceLocationList(record.getPathline()), LBSTraceClient.TYPE_AMAP, MainActivity.this);
+            saveRecord(record.getPathline(), record.getDate());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     protected void saveRecord(List<AMapLocation> list, String time) {

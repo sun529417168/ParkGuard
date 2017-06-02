@@ -48,7 +48,6 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".activity.WatchMainActivity$CountReceiver" />
         <receiver
             android:name=".utils.NotificationReceiver"
             android:process=":push" />
@@ -75,7 +74,7 @@
             android:screenOrientation="portrait" />
         <!--主界面-->
         <activity
-            android:name=".activity.WatchMainActivity"
+            android:name=".activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <!--事件上报界面-->

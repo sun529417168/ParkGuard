@@ -108,8 +108,8 @@ public class NoticeDetailActivity extends BaseActivity implements View.OnClickLi
                 if (isAttachment()) {
                     for (NoticeDetailBean.FileListBean fileBean : rowsBean.getFileList()) {
                         if (fileBean.getAttachmentType() == 2) {
-                            if (MyUtils.getVideoFileName(path).size() > 0) {
-                                for (String fileUrl : MyUtils.getVideoFileName(path)) {
+                            if (MySerUtils.getVideoFileName(path).size() > 0) {
+                                for (String fileUrl : MySerUtils.getVideoFileName(path)) {
                                     if (fileUrl.equals(fileBean.getFileName())) {
                                         File files = new File(path + fileUrl);// 这里更改为你的名称
                                         Log.i("fileName", fileUrl + "=======" + files.getPath());
@@ -222,7 +222,7 @@ public class NoticeDetailActivity extends BaseActivity implements View.OnClickLi
 //    public void fileDownLoadOrOpenInterface(int position) {
 ////        String fileName = list.get(position).getFileName();
 ////        path = Environment.getExternalStorageDirectory() + "/ParkGuard/";
-////        MyUtils.getVideoFileName(path);
+////        MySerUtils.getVideoFileName(path);
 //        if (getFileExist(position)) {
 //            File files = new File(path + list.get(position).getFileName());// 这里更改为你的名称
 //            Log.i("fileName", "=======" + files.getPath());

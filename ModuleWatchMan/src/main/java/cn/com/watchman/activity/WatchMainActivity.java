@@ -28,6 +28,8 @@ import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.application.LibApplication;
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
+import com.linked.erfli.library.myserviceutils.MyConstant;
+import com.linked.erfli.library.myserviceutils.MyServiceUtils;
 import com.linked.erfli.library.service.LocationService;
 import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.SharedUtil;
@@ -124,7 +126,7 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
     @Override
     protected void setDate(Bundle savedInstanceState) {
         MyTitle.getInstance().setTitle(this, "实时巡更", PGApp, false);
-        isStart = SharedUtil.getBoolean(this, "serviceFlag", true);
+        isStart = MyServiceUtils.isServiceRunning(MyConstant.GPSSERVICE_CLASSNAME, WatchMainActivity.this);
         SharedUtil.setLong(this, "runTime", System.currentTimeMillis() / 1000);
         msgReceiver = new MsgReceiver();
         countReceiver = new CountReceiver();
@@ -188,7 +190,7 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
         deviceID.setText("设备号:" + new DeviceUuidFactory(this).getDeviceUuid().toString().substring(0, 4) + "*****" + new DeviceUuidFactory(this).getDeviceUuid().toString().substring(new DeviceUuidFactory(this).getDeviceUuid().toString().length() - 4));
         copyText = (TextView) findViewById(R.id.watchMan_copy);
         copyText.setOnClickListener(this);
-        if (isStart) {
+        if (!isStart) {
             scan_radar.setVisibility(View.VISIBLE);
             scan_text.setVisibility(View.GONE);
             MyRequest.typeRequest(this, -1);
@@ -237,15 +239,15 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
                 DialogUtils.showGPSDialog(this);
                 return;
             }
-            if (isStart) {
-                SharedUtil.setBoolean(this, "serviceFlag", false);
+            if (!isStart) {
+//                SharedUtil.setBoolean(this, "serviceFlag", false);
                 notifyUtils.showButtonNotify();
                 watchActivityStartService();
                 intent = new Intent(this, GPSService.class);
                 startService(intent);
                 MyRequest.typeRequest(this, 1);
                 suspendBtn.setBackgroundResource(R.drawable.activity_main_stop);
-                isStart = false;
+                isStart = true;
                 scan_radar.setSearching(true);//开始扫描
                 locationService.start();
                 tv_sendCount.setText("0");
@@ -258,10 +260,11 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
                 btnStart();
 
             } else {
-                SharedUtil.setBoolean(this, "serviceFlag", true);
+//                SharedUtil.setBoolean(this, "serviceFlag", true);
                 notifyUtils.clearAllNotify();
                 watchActivityStopService();
                 btnEnd();
+                isStart = false;
             }
 
         } else if (i == R.id.watchMan_EventReport) {
@@ -391,10 +394,12 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (countReceiver.isOrderedBroadcast())
+        if (countReceiver.isOrderedBroadcast()) {
             unregisterReceiver(countReceiver);
-        if (msgReceiver.isOrderedBroadcast())
+        }
+        if (msgReceiver.isOrderedBroadcast()) {
             unregisterReceiver(msgReceiver);//注销广播
+        }
         locationService.unregisterListener(mListener); //注销掉监听
         locationService.stop(); //停止定位服务
         MyRequest.typeRequest(this, -1);
@@ -417,6 +422,16 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (countReceiver.isOrderedBroadcast()) {
+            unregisterReceiver(countReceiver);
+        }
+        if (msgReceiver.isOrderedBroadcast()) {
+            unregisterReceiver(msgReceiver);//注销广播
+        }
+    }
 
     Intent intent;
 

@@ -7,7 +7,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 
-import com.amap.api.maps.AMap;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.linked.erfli.library.application.LibApplication;
@@ -47,7 +46,7 @@ public class GPSService extends Service{
             locationService.setLocationOption(locationService.getOption());
         }
         locationService.start();// 定位SDK
-        SharedUtil.setBoolean(this, "serviceFlag", false);
+//        SharedUtil.setBoolean(this, "serviceFlag", false);
         intent=new Intent("cn.com.watchman.count");
         new MyThread().start();
     }
@@ -144,6 +143,6 @@ public class GPSService extends Service{
         currentCount=0;
         SharedUtil.setInteger(this,"totalCount",totalCount);
         isThread=false;
-        SharedUtil.setBoolean(this, "serviceFlag", true);
+//        SharedUtil.setBoolean(this, "serviceFlag", false);
     }
 }

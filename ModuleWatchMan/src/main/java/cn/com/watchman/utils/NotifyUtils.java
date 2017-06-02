@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -13,7 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import cn.com.watchman.R;
-import cn.com.watchman.activity.WatchMainActivity;
+import cn.com.watchman.activity.MainActivity;
 import cn.com.watchman.interfaces.PlayingNotification;
 import cn.com.watchman.service.GPSService;
 
@@ -36,7 +37,7 @@ public class NotifyUtils implements PlayingNotification {
     /**
      * 通知栏按钮广播
      */
-//    public ButtonBroadcastReceiver bReceiver;
+    public ButtonBroadcastReceiver bReceiver;
     /**
      * 通知栏按钮点击事件对应的ACTION
      */
@@ -46,11 +47,10 @@ public class NotifyUtils implements PlayingNotification {
      * Notification管理
      */
     public NotificationManager mNotificationManager;
-//    public MyNotifyBroadcastClickInterface myNotifyBroadcastClickInterface;
+    //    public MyNotifyBroadcastClickInterface myNotifyBroadcastClickInterface;
 //    public boolean b;
     public GPSService gpsService;
     public static final String ACTION_NOTIFICATION_REWIND = "action_media_rewind";
-
 
 
     public NotifyUtils(Activity activity) {
@@ -183,54 +183,53 @@ public class NotifyUtils implements PlayingNotification {
      * 带按钮的通知栏点击广播接收
      */
     public void initButtonReceiver() {
-//        bReceiver = new ButtonBroadcastReceiver();
+        bReceiver = new ButtonBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_BUTTON);
-//        activity.registerReceiver(bReceiver, intentFilter);
+        activity.registerReceiver(bReceiver, intentFilter);
     }
 
 
     /**
      * 广播监听按钮点击时间
      */
-//    public class ButtonBroadcastReceiver extends BroadcastReceiver {
-//
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            // TODO Auto-generated method stub
-//            String action = intent.getAction();
-//            if (action.equals(ACTION_BUTTON)) {
-//                //通过传递过来的ID判断按钮点击属性或者通过getResultCode()获得相应点击事件
-//                int buttonId = intent.getIntExtra(INTENT_BUTTONID_TAG, 0);
-//                switch (buttonId) {
-//                    case BUTTON_PREV_ID:
-//                        //  上一首
-//                        break;
-//                    case BUTTON_PALY_ID:
-//                        isPlay = !isPlay;
-//                        if (isPlay) {
-//                            //开始播放
+    public class ButtonBroadcastReceiver extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+            String action = intent.getAction();
+            if (action.equals(ACTION_BUTTON)) {
+                //通过传递过来的ID判断按钮点击属性或者通过getResultCode()获得相应点击事件
+                int buttonId = intent.getIntExtra(INTENT_BUTTONID_TAG, 0);
+                switch (buttonId) {
+                    case BUTTON_PREV_ID:
+                        //  上一首
+                        break;
+                    case BUTTON_PALY_ID:
+                        isPlay = !isPlay;
+                        if (isPlay) {
+                            //开始播放
 //                            myNotifyBroadcastClickInterface.startServiceInterface();
-//                        } else {
-//                            //已暂停
+                        } else {
+                            //已暂停
 //                            myNotifyBroadcastClickInterface.pauseServiceInterface();
-//                        }
-//                        showButtonNotify();
-//                        break;
-//                    case BUTTON_NEXT_ID:
-//                        Log.d(TAG, "下一首");
-////                        Toast.makeText(activity, "下一首", Toast.LENGTH_SHORT).show();
+                        }
+                        showButtonNotify();
+                        break;
+                    case BUTTON_NEXT_ID:
+//                        Toast.makeText(activity, "下一首", Toast.LENGTH_SHORT).show();
 //                        myNotifyBroadcastClickInterface.stopServiceInterface();
 //                        SharedUtil.setBoolean(activity, "serviceFlag", true);
 //                        clearAllNotify();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        }
-//    }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
 
 
     /**
@@ -246,15 +245,24 @@ public class NotifyUtils implements PlayingNotification {
      * 点击去除： Notification.FLAG_AUTO_CANCEL
      */
     public PendingIntent getDefalutIntent(int flags) {
-        Intent broadcastIntent = new Intent(activity, NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 1, new Intent(activity, WatchMainActivity.class), flags);
+//        Intent[] appIntent = null;
+//        appIntent = makeIntentStack(context);//上面有改方法
+//        appIntent[1].setAction(Intent.ACTION_MAIN);
+//        appIntent[1].addCategory(Intent.CATEGORY_LAUNCHER);
+//        appIntent[1].setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);//关键的一步，设置启动模式
+//        PendingIntent contentIntent = PendingIntent.getActivities(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+//        Intent broadcastIntent = new Intent(activity, NotificationReceiver.class);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 1, new Intent(activity, MainActivity.class), flags);
         return pendingIntent;
     }
 
-//    private PendingIntent buildPendingIntent(Context context, final String action, final ComponentName serviceName) {
-//        Intent intent = new Intent(action);
-//        intent.setComponent(serviceName);
-//        return PendingIntent.getService(context, 0, intent, 0);
+//    Intent[] makeIntentStack(Context context) {
+//        Intent[] intents = new Intent[2];
+//        intents[0] = Intent.makeRestartActivityTask(new ComponentName(context, Home.class));
+//        intents[1] = new Intent(context, MainActivity.class);
+//        return intents;
 //    }
 
 }

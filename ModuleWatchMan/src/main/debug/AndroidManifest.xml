@@ -72,6 +72,11 @@
         <service android:name="cn.com.watchman.service.AMapService" />
         <!--高德地图的服务-->
         <!--<service android:name="com.amap.api.location.APSService" />-->
+
+        <receiver
+            android:name=".utils.NotificationReceiver"
+            android:process=":push" />
+        <receiver android:name=".activity.WatchMainActivity$CountReceiver"/>
     </application>
 
 </manifest>
