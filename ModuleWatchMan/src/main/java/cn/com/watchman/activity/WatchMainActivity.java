@@ -1,5 +1,6 @@
 package cn.com.watchman.activity;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -17,10 +18,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.PolylineOptions;
+import com.amap.api.trace.LBSTraceClient;
+import com.amap.api.trace.TraceListener;
 import com.amap.api.trace.TraceLocation;
 import com.amap.api.trace.TraceOverlay;
 import com.baidu.location.BDLocationListener;
@@ -28,15 +40,16 @@ import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.application.LibApplication;
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
-import com.linked.erfli.library.myserviceutils.MyConstant;
-import com.linked.erfli.library.myserviceutils.MyServiceUtils;
 import com.linked.erfli.library.service.LocationService;
 import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import cn.com.watchman.R;
@@ -44,6 +57,7 @@ import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.bean.PathRecord;
 import cn.com.watchman.database.DbAdapter;
 import cn.com.watchman.interfaces.GPSInfoInterface;
+import cn.com.watchman.interfaces.MyNotifyBroadcastClickInterface;
 import cn.com.watchman.interfaces.UploadCountInterface;
 import cn.com.watchman.service.GPSService;
 import cn.com.watchman.service.MsgReceiver;
@@ -51,6 +65,7 @@ import cn.com.watchman.utils.DialogUtils;
 import cn.com.watchman.utils.MyLocationListener;
 import cn.com.watchman.utils.MyRequest;
 import cn.com.watchman.utils.NotifyUtils;
+import cn.com.watchman.utils.Util;
 import cn.com.watchman.utils.WMyUtils;
 import cn.com.watchman.weight.RadarView;
 
@@ -64,8 +79,7 @@ import static cn.com.watchman.R.id.watchMan_address;
  * 时    间：2017.4.25
  * 版    本：V1.0.0
  */
-@Router("watchman")
-public abstract class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface, UploadCountInterface {
+public abstract class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface, UploadCountInterface, MyNotifyBroadcastClickInterface {
 
     /**
      * 经度,纬度,海拔,精度,地址
@@ -76,7 +90,7 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
      * 发现卫星数量,上传次数,定位描述
      */
     private TextView tv_findsatelliteNum, tv_sendCount, tv_describe;
-
+    private TextView personName;
     /**
      * 事件上报,地理位置,巡更统计,二维码巡更
      */
@@ -85,6 +99,8 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
     boolean isStart;
     private LocationService locationService;
     private BDLocationListener mListener;
+    private AMapLocationClient mLocationClient;
+    private AMapLocationClientOption mLocationOption;
     private MsgReceiver msgReceiver;
     private CountReceiver countReceiver;
     private RadarView scan_radar;
@@ -126,7 +142,7 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
     @Override
     protected void setDate(Bundle savedInstanceState) {
         MyTitle.getInstance().setTitle(this, "实时巡更", PGApp, false);
-        isStart = MyServiceUtils.isServiceRunning(MyConstant.GPSSERVICE_CLASSNAME, WatchMainActivity.this);
+        isStart = SharedUtil.getBoolean(this, "serviceFlag", true);
         SharedUtil.setLong(this, "runTime", System.currentTimeMillis() / 1000);
         msgReceiver = new MsgReceiver();
         countReceiver = new CountReceiver();
@@ -141,10 +157,9 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
         } else if (type == 1) {
             locationService.setLocationOption(locationService.getOption());
         }
+        notifyUtils = new NotifyUtils(this, this);
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
-        notifyUtils = new NotifyUtils(this);
-
     }
 
     /**
@@ -172,6 +187,8 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
         tv_findsatelliteNum = (TextView) findViewById(R.id.watchMan_find_satelliteNum);
         tv_sendCount = (TextView) findViewById(R.id.watchMan_sendCount);
         tv_describe = (TextView) findViewById(R.id.tv_content_GPS);
+        personName = (TextView) findViewById(R.id.name);
+        personName.setText(SharedUtil.getString(this,"personName"));
         eventLayout = (LinearLayout) findViewById(R.id.watchMan_EventReport);
         mapLayout = (LinearLayout) findViewById(R.id.watchMan_map);
         statisticsLayout = (LinearLayout) findViewById(R.id.watchMan_statistics);
@@ -190,7 +207,7 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
         deviceID.setText("设备号:" + new DeviceUuidFactory(this).getDeviceUuid().toString().substring(0, 4) + "*****" + new DeviceUuidFactory(this).getDeviceUuid().toString().substring(new DeviceUuidFactory(this).getDeviceUuid().toString().length() - 4));
         copyText = (TextView) findViewById(R.id.watchMan_copy);
         copyText.setOnClickListener(this);
-        if (!isStart) {
+        if (isStart) {
             scan_radar.setVisibility(View.VISIBLE);
             scan_text.setVisibility(View.GONE);
             MyRequest.typeRequest(this, -1);
@@ -311,7 +328,10 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
 //        startActivity(Intent.createChooser(shareIntent, "分享巡更信息到"));
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "位置:" + address + "\n" + "描述:" + "测试数据");
+        String text= "当前位置:"+gpsBean.getAddress()+"\n"
+                +"<a href=\"http://api.map.baidu.com/marker?location="+gpsBean.getLatitude()+","+gpsBean.getLongitude()+"&output=html\">点击查看位置</a>\n"
+                + "描述:" + "经度"+gpsBean.getLongitude()+"纬度"+gpsBean.getLatitude();
+        shareIntent.putExtra(Intent.EXTRA_TEXT,text);
         shareIntent.setType("text/plain");
         //设置分享列表的标题，并且每次都显示分享列表
         startActivity(Intent.createChooser(shareIntent, "分享巡更信息到"));
