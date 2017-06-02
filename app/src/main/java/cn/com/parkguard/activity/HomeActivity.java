@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.github.mzule.activityrouter.router.Routers;
 import com.linked.erfli.library.base.BaseActivity;
+import com.linked.erfli.library.myserviceutils.MyConstant;
+import com.linked.erfli.library.myserviceutils.MyServiceUtils;
 import com.linked.erfli.library.utils.MyUtils;
 import com.linked.erfli.library.utils.NetWorkUtils;
 import com.linked.erfli.library.utils.SharedUtil;
@@ -142,6 +145,8 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
     @Override
     protected void onResume() {
         super.onResume();
-        findViewById(R.id.home_sendMessage).setVisibility(SharedUtil.getBoolean(this, "serviceFlag", true) ? View.INVISIBLE : View.VISIBLE);
+        boolean serviceBool = MyServiceUtils.isServiceRunning(MyConstant.GPSSERVICE_CLASSNAME, HomeActivity.this);
+        Log.i("", "gps上传数据服务:" + serviceBool);
+        findViewById(R.id.home_sendMessage).setVisibility(serviceBool ? View.VISIBLE : View.INVISIBLE);
     }
 }
