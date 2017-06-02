@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
  */
 
 public final class MySerUtils {
+
     @SuppressLint("StaticFieldLeak")
     private static Context context;
 
