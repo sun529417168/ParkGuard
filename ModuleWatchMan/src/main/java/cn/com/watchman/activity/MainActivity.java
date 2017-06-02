@@ -18,7 +18,6 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
@@ -32,7 +31,6 @@ import com.amap.api.trace.TraceOverlay;
 import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.utils.SharedUtil;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,7 +40,6 @@ import cn.com.watchman.R;
 import cn.com.watchman.bean.CacheBean;
 import cn.com.watchman.bean.PathRecord;
 import cn.com.watchman.database.DbAdapter;
-import cn.com.watchman.service.AMapService;
 import cn.com.watchman.utils.Util;
 
 /**

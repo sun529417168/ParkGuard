@@ -178,4 +178,5 @@ public abstract class BaseActivity extends BaseCheckPermissionActivity implement
         OkHttpUtils.getInstance().cancelTag(this);
         ActivityCollector.removeActivity(this);
     }
+
 }

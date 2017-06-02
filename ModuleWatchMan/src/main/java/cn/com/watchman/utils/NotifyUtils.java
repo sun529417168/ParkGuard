@@ -4,27 +4,21 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-import android.view.View;
 import android.widget.RemoteViews;
-
-import com.linked.erfli.library.utils.ActivityCollector;
-import com.linked.erfli.library.utils.SharedUtil;
 
 import cn.com.watchman.R;
 import cn.com.watchman.activity.WatchMainActivity;
-import cn.com.watchman.interfaces.MyNotifyBroadcastClickInterface;
+import cn.com.watchman.interfaces.PlayingNotification;
+import cn.com.watchman.service.GPSService;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.alibaba.sdk.android.ams.common.global.AmsGlobalHolder.getPackageName;
-import static com.linked.erfli.library.okhttps.log.LoggerInterceptor.TAG;
 
 /**
  * 文件名：NotifyUtils
@@ -34,7 +28,7 @@ import static com.linked.erfli.library.okhttps.log.LoggerInterceptor.TAG;
  * 版    本：V1.0.0
  */
 
-public class NotifyUtils {
+public class NotifyUtils implements PlayingNotification {
     /**
      * 是否在播放
      */
@@ -42,7 +36,7 @@ public class NotifyUtils {
     /**
      * 通知栏按钮广播
      */
-    public ButtonBroadcastReceiver bReceiver;
+//    public ButtonBroadcastReceiver bReceiver;
     /**
      * 通知栏按钮点击事件对应的ACTION
      */
@@ -52,45 +46,78 @@ public class NotifyUtils {
      * Notification管理
      */
     public NotificationManager mNotificationManager;
-    public MyNotifyBroadcastClickInterface myNotifyBroadcastClickInterface;
+//    public MyNotifyBroadcastClickInterface myNotifyBroadcastClickInterface;
+//    public boolean b;
+    public GPSService gpsService;
+    public static final String ACTION_NOTIFICATION_REWIND = "action_media_rewind";
 
-    public NotifyUtils(Activity activity, MyNotifyBroadcastClickInterface notifyBroadcastClickInterface) {
+
+
+    public NotifyUtils(Activity activity) {
         this.activity = activity;
-        this.myNotifyBroadcastClickInterface = notifyBroadcastClickInterface;
+//        this.b = b;
+//        this.myNotifyBroadcastClickInterface = notifyBroadcastClickInterface;
         mNotificationManager = (NotificationManager) activity.getSystemService(NOTIFICATION_SERVICE);
-        initButtonReceiver();
+//        initButtonReceiver();
+    }
+
+    RemoteViews mRemoteViews;
+
+    @Override
+    public synchronized void init(GPSService service) {
+        this.gpsService = service;
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void stop() {
+        gpsService.stopForeground(true);
+        clearAllNotify();
     }
 
     public void showButtonNotify() {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity);
-        RemoteViews mRemoteViews = new RemoteViews(getPackageName(), R.layout.view_custom_button);
+        mRemoteViews = new RemoteViews(getPackageName(), R.layout.view_custom_button);
         mRemoteViews.setImageViewResource(R.id.custom_song_icon, R.mipmap.watch_logo);
         //API3.0 以上的时候显示按钮，否则消失
-        mRemoteViews.setTextViewText(R.id.tv_custom_song_singer, "独立巡更");
+        mRemoteViews.setTextViewText(R.id.tv_custom_song_singer, "独立巡更正在上传数据中...");
         //如果版本号低于（3。0），那么不显示按钮
-        if (getSystemVersion() <= 9) {
-            mRemoteViews.setViewVisibility(R.id.ll_custom_button, View.GONE);
-        } else {
-            mRemoteViews.setViewVisibility(R.id.ll_custom_button, View.VISIBLE);
-            //
-            Log.i("", "服务状态打印:" + SharedUtil.getBoolean(activity, "serviceFlag", true));
-            if (!SharedUtil.getBoolean(activity, "serviceFlag", true)) {
-                mRemoteViews.setImageViewResource(R.id.btn_custom_play, R.drawable.btn_pause);
-            } else {
-                mRemoteViews.setImageViewResource(R.id.btn_custom_play, R.drawable.btn_play);
-            }
-        }
+//        if (getSystemVersion() <= 9) {
+//            mRemoteViews.setViewVisibility(R.id.ll_custom_button, View.GONE);
+//        } else {
+//            mRemoteViews.setViewVisibility(R.id.ll_custom_button, View.VISIBLE);
+//            //
+//            Log.i("", "服务状态打印:" + SharedUtil.getBoolean(activity, "serviceFlag", true));
+//            if (!SharedUtil.getBoolean(activity, "serviceFlag", true)) {
+//                mRemoteViews.setImageViewResource(R.id.btn_custom_play, R.drawable.btn_pause);
+//            } else {
+//                mRemoteViews.setImageViewResource(R.id.btn_custom_play, R.drawable.btn_play);
+//            }
+//        }
 
         //点击的事件处理
-        Intent buttonIntent = new Intent(ACTION_BUTTON);
-        /* 播放/暂停  按钮 */
-        buttonIntent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PALY_ID);
-        PendingIntent intent_paly = PendingIntent.getBroadcast(activity, 2, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mRemoteViews.setOnClickPendingIntent(R.id.btn_custom_play, intent_paly);
+//        Intent buttonIntent = new Intent(ACTION_BUTTON);
+//        /* 播放/暂停  按钮 */
+//        buttonIntent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PALY_ID);
+//        PendingIntent intent_paly = PendingIntent.getBroadcast(activity.getApplication(), 2, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        mRemoteViews.setOnClickPendingIntent(R.id.btn_custom_play, intent_paly);
+
+        //=====
+
+//        // Previous track
+//        intent_paly = buildPendingIntent(gpsService, GPSService.ACTION_NOTIFICATION_REWIND, serviceName);
+//        mRemoteViews.setOnClickPendingIntent(R.id.btn_custom_play, intent_paly);
+
+
+
         /* 下一首 按钮  */
-        buttonIntent.putExtra(INTENT_BUTTONID_TAG, BUTTON_NEXT_ID);
-        PendingIntent intent_next = PendingIntent.getBroadcast(activity, 3, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mRemoteViews.setOnClickPendingIntent(R.id.btn_custom_next, intent_next);
+//        buttonIntent.putExtra(INTENT_BUTTONID_TAG, BUTTON_NEXT_ID);
+//        PendingIntent intent_next = PendingIntent.getBroadcast(activity.getApplication(), 3, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        mRemoteViews.setOnClickPendingIntent(R.id.btn_custom_next, intent_next);
 
 //        buttonIntent.putExtra(INTENT_BUTTONID_TAG, RELATIVE_ID);
 //        PendingIntent intent_relative = PendingIntent.getBroadcast(activity, 4, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -156,55 +183,54 @@ public class NotifyUtils {
      * 带按钮的通知栏点击广播接收
      */
     public void initButtonReceiver() {
-        bReceiver = new ButtonBroadcastReceiver();
+//        bReceiver = new ButtonBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_BUTTON);
-        activity.registerReceiver(bReceiver, intentFilter);
+//        activity.registerReceiver(bReceiver, intentFilter);
     }
+
 
     /**
      * 广播监听按钮点击时间
      */
-    public class ButtonBroadcastReceiver extends BroadcastReceiver {
-
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // TODO Auto-generated method stub
-            String action = intent.getAction();
-            if (action.equals(ACTION_BUTTON)) {
-                //通过传递过来的ID判断按钮点击属性或者通过getResultCode()获得相应点击事件
-                int buttonId = intent.getIntExtra(INTENT_BUTTONID_TAG, 0);
-                switch (buttonId) {
-                    case BUTTON_PREV_ID:
-                        Log.d(TAG, "上一首");
-//                        Toast.makeText(activity, "上一首", Toast.LENGTH_SHORT).show();
-                        break;
-                    case BUTTON_PALY_ID:
-                        String play_status = "";
-                        isPlay = !isPlay;
-                        if (isPlay) {
-                            play_status = "开始播放";
-                            myNotifyBroadcastClickInterface.startServiceInterface();
-                        } else {
-                            play_status = "已暂停";
-                            myNotifyBroadcastClickInterface.pauseServiceInterface();
-                        }
-                        showButtonNotify();
-                        Log.d(TAG, play_status);
-//                        Toast.makeText(activity, play_status, Toast.LENGTH_SHORT).show();
-                        break;
-                    case BUTTON_NEXT_ID:
-                        Log.d(TAG, "下一首");
-//                        Toast.makeText(activity, "下一首", Toast.LENGTH_SHORT).show();
-                        myNotifyBroadcastClickInterface.stopServiceInterface();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+//    public class ButtonBroadcastReceiver extends BroadcastReceiver {
+//
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            // TODO Auto-generated method stub
+//            String action = intent.getAction();
+//            if (action.equals(ACTION_BUTTON)) {
+//                //通过传递过来的ID判断按钮点击属性或者通过getResultCode()获得相应点击事件
+//                int buttonId = intent.getIntExtra(INTENT_BUTTONID_TAG, 0);
+//                switch (buttonId) {
+//                    case BUTTON_PREV_ID:
+//                        //  上一首
+//                        break;
+//                    case BUTTON_PALY_ID:
+//                        isPlay = !isPlay;
+//                        if (isPlay) {
+//                            //开始播放
+//                            myNotifyBroadcastClickInterface.startServiceInterface();
+//                        } else {
+//                            //已暂停
+//                            myNotifyBroadcastClickInterface.pauseServiceInterface();
+//                        }
+//                        showButtonNotify();
+//                        break;
+//                    case BUTTON_NEXT_ID:
+//                        Log.d(TAG, "下一首");
+////                        Toast.makeText(activity, "下一首", Toast.LENGTH_SHORT).show();
+//                        myNotifyBroadcastClickInterface.stopServiceInterface();
+//                        SharedUtil.setBoolean(activity, "serviceFlag", true);
+//                        clearAllNotify();
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        }
+//    }
 
 
     /**
@@ -220,11 +246,15 @@ public class NotifyUtils {
      * 点击去除： Notification.FLAG_AUTO_CANCEL
      */
     public PendingIntent getDefalutIntent(int flags) {
-        Intent notificationIntent = null;
-        if (ActivityCollector.isActivityExist(WatchMainActivity.class)) {
-            ActivityCollector.removeActivity(activity);
-        }
+        Intent broadcastIntent = new Intent(activity, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(activity, 1, new Intent(activity, WatchMainActivity.class), flags);
         return pendingIntent;
     }
+
+//    private PendingIntent buildPendingIntent(Context context, final String action, final ComponentName serviceName) {
+//        Intent intent = new Intent(action);
+//        intent.setComponent(serviceName);
+//        return PendingIntent.getService(context, 0, intent, 0);
+//    }
+
 }
