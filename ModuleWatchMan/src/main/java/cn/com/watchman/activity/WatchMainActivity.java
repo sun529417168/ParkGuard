@@ -1,6 +1,5 @@
 package cn.com.watchman.activity;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -18,25 +17,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapUtils;
-import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.PolylineOptions;
-import com.amap.api.trace.LBSTraceClient;
-import com.amap.api.trace.TraceListener;
 import com.amap.api.trace.TraceLocation;
 import com.amap.api.trace.TraceOverlay;
 import com.baidu.location.BDLocationListener;
-import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.application.LibApplication;
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
@@ -45,11 +34,8 @@ import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import cn.com.watchman.R;
@@ -65,7 +51,6 @@ import cn.com.watchman.utils.DialogUtils;
 import cn.com.watchman.utils.MyLocationListener;
 import cn.com.watchman.utils.MyRequest;
 import cn.com.watchman.utils.NotifyUtils;
-import cn.com.watchman.utils.Util;
 import cn.com.watchman.utils.WMyUtils;
 import cn.com.watchman.weight.RadarView;
 
@@ -90,7 +75,7 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
      * 发现卫星数量,上传次数,定位描述
      */
     private TextView tv_findsatelliteNum, tv_sendCount, tv_describe;
-
+    private TextView personName;
     /**
      * 事件上报,地理位置,巡更统计,二维码巡更
      */
@@ -187,6 +172,8 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
         tv_findsatelliteNum = (TextView) findViewById(R.id.watchMan_find_satelliteNum);
         tv_sendCount = (TextView) findViewById(R.id.watchMan_sendCount);
         tv_describe = (TextView) findViewById(R.id.tv_content_GPS);
+        personName = (TextView) findViewById(R.id.name);
+        personName.setText(SharedUtil.getString(this,"personName"));
         eventLayout = (LinearLayout) findViewById(R.id.watchMan_EventReport);
         mapLayout = (LinearLayout) findViewById(R.id.watchMan_map);
         statisticsLayout = (LinearLayout) findViewById(R.id.watchMan_statistics);
@@ -325,7 +312,10 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
 //        startActivity(Intent.createChooser(shareIntent, "分享巡更信息到"));
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "位置:" + address + "\n" + "描述:" + "测试数据");
+        String text= "当前位置:"+gpsBean.getAddress()+"\n"
+                +"<a href=\"http://api.map.baidu.com/marker?location="+gpsBean.getLatitude()+","+gpsBean.getLongitude()+"&output=html\">点击查看位置</a>\n"
+                + "描述:" + "经度"+gpsBean.getLongitude()+"纬度"+gpsBean.getLatitude();
+        shareIntent.putExtra(Intent.EXTRA_TEXT,text);
         shareIntent.setType("text/plain");
         //设置分享列表的标题，并且每次都显示分享列表
         startActivity(Intent.createChooser(shareIntent, "分享巡更信息到"));
