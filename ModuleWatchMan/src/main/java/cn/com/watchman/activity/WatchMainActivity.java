@@ -1,5 +1,6 @@
 package cn.com.watchman.activity;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -17,7 +18,23 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.LocationSource;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.PolylineOptions;
+import com.amap.api.trace.LBSTraceClient;
+import com.amap.api.trace.TraceListener;
+import com.amap.api.trace.TraceLocation;
+import com.amap.api.trace.TraceOverlay;
 import com.baidu.location.BDLocationListener;
 import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.application.LibApplication;
@@ -28,10 +45,17 @@ import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import cn.com.watchman.R;
 import cn.com.watchman.bean.GPSBean;
+import cn.com.watchman.bean.PathRecord;
+import cn.com.watchman.database.DbAdapter;
 import cn.com.watchman.interfaces.GPSInfoInterface;
 import cn.com.watchman.interfaces.MyNotifyBroadcastClickInterface;
 import cn.com.watchman.interfaces.UploadCountInterface;
@@ -41,6 +65,7 @@ import cn.com.watchman.utils.DialogUtils;
 import cn.com.watchman.utils.MyLocationListener;
 import cn.com.watchman.utils.MyRequest;
 import cn.com.watchman.utils.NotifyUtils;
+import cn.com.watchman.utils.Util;
 import cn.com.watchman.utils.WMyUtils;
 import cn.com.watchman.weight.RadarView;
 
@@ -54,8 +79,7 @@ import static cn.com.watchman.R.id.watchMan_address;
  * 时    间：2017.4.25
  * 版    本：V1.0.0
  */
-@Router("watchman")
-public class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface, UploadCountInterface, MyNotifyBroadcastClickInterface {
+public abstract class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface, UploadCountInterface, MyNotifyBroadcastClickInterface {
 
     /**
      * 经度,纬度,海拔,精度,地址
@@ -75,6 +99,8 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     boolean isStart;
     private LocationService locationService;
     private BDLocationListener mListener;
+    private AMapLocationClient mLocationClient;
+    private AMapLocationClientOption mLocationOption;
     private MsgReceiver msgReceiver;
     private CountReceiver countReceiver;
     private RadarView scan_radar;
@@ -83,6 +109,16 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     private int count = 0;
     private TextView deviceID, copyText;
     private NotifyUtils notifyUtils;
+    private PathRecord record;
+    private long mStartTime;
+    private long mEndTime;
+    private List<TraceOverlay> mOverlayList = new ArrayList<>();
+    private List<TraceLocation> mTracelocationlist = new ArrayList<>();
+    private DbAdapter DbHepler;
+    private PolylineOptions mPolyoptions, tracePolytion;
+    private int tracesize = 30;
+    protected MapView mMapView;
+    protected AMap mAMap;
     /*
     当前上传次数，总上传次数
      */
@@ -122,7 +158,8 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             locationService.setLocationOption(locationService.getOption());
         }
         notifyUtils = new NotifyUtils(this, this);
-
+        mMapView = (MapView) findViewById(R.id.map);
+        mMapView.onCreate(savedInstanceState);// 此方法必须重写
     }
 
     /**
@@ -235,10 +272,13 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                 IntentFilter intentFilter1 = new IntentFilter();
                 intentFilter1.addAction("cn.com.watchman.count");
                 registerReceiver(countReceiver, intentFilter1);
+                btnStart();
+
             } else {
                 SharedUtil.setBoolean(this, "serviceFlag", true);
                 notifyUtils.clearAllNotify();
                 watchActivityStopService();
+                btnEnd();
             }
 
         } else if (i == R.id.watchMan_EventReport) {
@@ -248,9 +288,9 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             intent.putExtra("accuracy", String.valueOf(gpsBean.getAccuracy()));
             intent.putExtra("address", gpsBean.getAddress());
             startActivity(intent);
-
         } else if (i == R.id.watchMan_map) {
-            startActivity(new Intent(this, LocationActivity.class));
+//            startActivity(new Intent(this, LocationActivity.class));
+            startActivity(new Intent(this, RecordShowActivity.class));
         } else if (i == R.id.watchMan_statistics) {
             intent = new Intent(this, WatchManStatisticsActivity.class);
             intent.putExtra("currentCount", currentCount);
@@ -271,6 +311,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             myShareMethod();
         }
     }
+
 
     private void myShareMethod() {
 //        ScreenshotUtils.shoot(WatchMainActivity.this, "图片.png");
@@ -441,4 +482,8 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         locationService.stop();
         scan_radar.setSearching(false);//停止扫描
     }
+
+    protected abstract void btnStart();
+
+    protected abstract void btnEnd();
 }

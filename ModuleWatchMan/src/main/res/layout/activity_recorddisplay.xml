@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/title_background" >
+    android:background="@drawable/title_background">
 
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/title_background" >
+        android:background="@drawable/title_background">
 
         <LinearLayout
             android:id="@+id/title_lly_back"
@@ -21,7 +21,7 @@
             android:onClick="onBackClick"
             android:orientation="vertical"
             android:paddingLeft="5dp"
-            android:paddingStart="5dp" >
+            android:paddingStart="5dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title_center"
@@ -56,20 +56,18 @@
             android:descendantFocusability="beforeDescendants"
             android:gravity="center"
             android:orientation="vertical"
+            android:visibility="gone"
             android:paddingEnd="5dp"
             android:paddingRight="5dp"
             android:textOff="开始"
-            android:textOn="停止" >
-        </ToggleButton>
+            android:textOn="停止"/>
     </RelativeLayout>
 
-    <com.amap.api.maps.MapView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.amap.api.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/title" >
-    </com.amap.api.maps.MapView>
+        android:layout_below="@+id/title"/>
 
     <RadioGroup
         android:id="@+id/record_show_activity_trace_group"
@@ -78,12 +76,13 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="20dp"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/record_show_activity_origin_radio_button"
@@ -103,7 +102,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/record_show_activity_grasp_radio_button"
@@ -116,8 +115,7 @@
                 android:layout_height="13dp"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/grasp_flag"
-                android:paddingLeft="15dp" >
-            </View>
+                android:paddingLeft="15dp"/>
         </LinearLayout>
     </RadioGroup>
 

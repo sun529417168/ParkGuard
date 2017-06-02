@@ -2,6 +2,7 @@ package cn.com.watchman.bean;
 
 import com.amap.api.location.AMapLocation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @author ligen
  * 
  */
-public class PathRecord {
+public class PathRecord implements Serializable{
 	private AMapLocation mStartPoint;
 	private AMapLocation mEndPoint;
 	private List<AMapLocation> mPathLinePoints = new ArrayList<AMapLocation>();

@@ -208,13 +208,13 @@
             android:id="@+id/watchMan_sendCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/colorWhite"
             android:layout_alignBottom="@+id/new_main_ciShu"
             android:layout_marginLeft="10dp"
-            android:text="0"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/new_main_ciShu"
-            android:layout_toRightOf="@+id/new_main_ciShu" />
+            android:layout_toRightOf="@+id/new_main_ciShu"
+            android:text="0"
+            android:textColor="@color/colorWhite" />
 
         <TextView
             android:id="@+id/watchMan_deviceId"
@@ -348,4 +348,9 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
+    <include
+        layout="@layout/basicmap_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp" />
 </LinearLayout>

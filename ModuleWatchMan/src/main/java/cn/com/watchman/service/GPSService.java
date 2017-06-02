@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 
+import com.amap.api.maps.AMap;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.linked.erfli.library.application.LibApplication;
@@ -32,6 +33,7 @@ public class GPSService extends Service{
     private GPSBean gpsBean;
     private int currentCount = 0,totalCount;
     private Intent intent;
+
     @Override
     public void onCreate() {
         super.onCreate();

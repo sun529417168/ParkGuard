@@ -26,7 +26,7 @@
             android:screenOrientation="portrait" />
         <!--主界面-->
         <activity
-            android:name=".activity.WatchMainActivity"
+            android:name=".activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <!--事件上报界面-->
@@ -69,6 +69,7 @@
             android:screenOrientation="portrait" />
         <!--gps后台服务-->
         <service android:name=".service.GPSService" />
+        <service android:name="cn.com.watchman.service.AMapService" />
         <!--高德地图的服务-->
         <!--<service android:name="com.amap.api.location.APSService" />-->
     </application>

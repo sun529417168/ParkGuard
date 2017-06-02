@@ -48,7 +48,8 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".activity.WatchMainActivity$CountReceiver"/>
+        <receiver android:name=".activity.WatchMainActivity$CountReceiver" />
+
         <activity android:name=".activity.WatchManWelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,7 +70,7 @@
             android:screenOrientation="portrait" />
         <!--主界面-->
         <activity
-            android:name=".activity.WatchMainActivity"
+            android:name=".activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <!--事件上报界面-->
@@ -97,15 +98,17 @@
             android:name=".activity.WatchManLocationActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
-        <!--地图轨迹设计界面-->
+        <!--实现轨迹回放、纠偏后轨迹回放界面-->
         <activity
             android:name=".activity.RecordShowActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <!--轨迹列表的界面-->
         <activity
             android:name=".activity.RecordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <!--高德地图界面-->
         <activity
             android:name=".activity.LocationActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -113,6 +116,7 @@
 
         <!--gps后台服务-->
         <service android:name=".service.GPSService" />
+        <service android:name=".service.AMapService" />
         <!--高德地图的服务-->
         <service android:name="com.amap.api.location.APSService" />
     </application>
