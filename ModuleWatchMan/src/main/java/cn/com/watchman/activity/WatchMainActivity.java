@@ -26,9 +26,12 @@ import com.amap.api.maps.model.PolylineOptions;
 import com.amap.api.trace.TraceLocation;
 import com.amap.api.trace.TraceOverlay;
 import com.baidu.location.BDLocationListener;
+import com.github.mzule.activityrouter.annotation.Router;
 import com.linked.erfli.library.application.LibApplication;
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
+import com.linked.erfli.library.myserviceutils.MyConstant;
+import com.linked.erfli.library.myserviceutils.MyServiceUtils;
 import com.linked.erfli.library.service.LocationService;
 import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.SharedUtil;
@@ -63,7 +66,8 @@ import static cn.com.watchman.R.id.watchMan_address;
  * 时    间：2017.4.25
  * 版    本：V1.0.0
  */
-public abstract class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface, UploadCountInterface {
+@Router("watchman")
+public  class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface, UploadCountInterface {
 
     /**
      * 经度,纬度,海拔,精度,地址
@@ -126,7 +130,7 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
     @Override
     protected void setDate(Bundle savedInstanceState) {
         MyTitle.getInstance().setTitle(this, "实时巡更", PGApp, false);
-        isStart = SharedUtil.getBoolean(this, "serviceFlag", true);
+        isStart = MyServiceUtils.isServiceRunning(MyConstant.GPSSERVICE_CLASSNAME, this);
         SharedUtil.setLong(this, "runTime", System.currentTimeMillis() / 1000);
         msgReceiver = new MsgReceiver();
         countReceiver = new CountReceiver();
@@ -191,7 +195,7 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
         deviceID.setText("设备号:" + new DeviceUuidFactory(this).getDeviceUuid().toString().substring(0, 4) + "*****" + new DeviceUuidFactory(this).getDeviceUuid().toString().substring(new DeviceUuidFactory(this).getDeviceUuid().toString().length() - 4));
         copyText = (TextView) findViewById(R.id.watchMan_copy);
         copyText.setOnClickListener(this);
-        if (isStart) {
+        if (!isStart) {
             scan_radar.setVisibility(View.VISIBLE);
             scan_text.setVisibility(View.GONE);
             MyRequest.typeRequest(this, -1);
@@ -258,13 +262,10 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
                 IntentFilter intentFilter1 = new IntentFilter();
                 intentFilter1.addAction("cn.com.watchman.count");
                 registerReceiver(countReceiver, intentFilter1);
-                btnStart();
-
             } else {
 //                SharedUtil.setBoolean(this, "serviceFlag", true);
                 notifyUtils.clearAllNotify();
                 watchActivityStopService();
-                btnEnd();
                 isStart = false;
             }
 
@@ -276,7 +277,7 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
             intent.putExtra("address", gpsBean.getAddress());
             startActivity(intent);
         } else if (i == R.id.watchMan_map) {
-//            startActivity(new Intent(this, LocationActivity.class));
+//            startActivity(new Intent(this, RecordActivity.class));
             startActivity(new Intent(this, RecordShowActivity.class));
         } else if (i == R.id.watchMan_statistics) {
             intent = new Intent(this, WatchManStatisticsActivity.class);
@@ -465,7 +466,4 @@ public abstract class WatchMainActivity extends BaseActivity implements View.OnC
         scan_radar.setSearching(false);//停止扫描
     }
 
-    protected abstract void btnStart();
-
-    protected abstract void btnEnd();
 }

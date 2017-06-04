@@ -70,6 +70,7 @@ public class RecordShowActivity extends Activity implements
     private TraceRePlay mRePlay;
     private List<PathRecord> mAllRecord = new ArrayList<PathRecord>();
     private DbAdapter mDataBaseHelper;
+    private int recordId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +171,7 @@ public class RecordShowActivity extends Activity implements
                 case AMAP_LOADED:
                     for (int i = 0; i < mAllRecord.size(); i++) {
                         setupRecord(mAllRecord.get(mAllRecord.size() - i - 1).getId());
-                        if (i == 5)
+                        if (i == 3)
                             break;
                     }
                     break;

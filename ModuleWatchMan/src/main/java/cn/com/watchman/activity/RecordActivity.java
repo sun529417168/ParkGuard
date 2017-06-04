@@ -55,11 +55,9 @@ public class RecordActivity extends Activity implements OnItemClickListener {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         PathRecord recorditem = (PathRecord) parent.getAdapter().getItem(position);
         Intent intent = new Intent(RecordActivity.this, RecordShowActivity.class);
-        intent.putExtra(RECORD_ID, mAllRecord.get(0).getId());
-        intent.putExtra("record_id2", mAllRecord.get(1).getId());
-        startActivity(intent);
-//        mDataBaseHelper.delete(recorditem.getId());
-//        mAdapter.notifyDataSetChanged();
+//        intent.putExtra(RECORD_ID, mAllRecord.get(position).getId());
+//        startActivity(intent);
+        mDataBaseHelper.delete(recorditem.getId());
     }
 
 
