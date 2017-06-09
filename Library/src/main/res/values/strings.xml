@@ -11,7 +11,7 @@
     <string name="close">"关闭"</string>
     <string name="title_net">"网络不给力，请检查网络设置。"</string>
     <string name="scan_failed">扫描失败</string>
-    <string name="home_sendMessage">实时巡更正在上传数据</string>
+    <string name="home_sendMessage">巡更指挥系统正在上传数据</string>
 
     <!--登陆界面start-->
     <string name="username">"请输入帐号"</string>

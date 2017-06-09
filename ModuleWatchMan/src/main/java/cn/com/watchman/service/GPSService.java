@@ -24,7 +24,7 @@ import cn.com.watchman.utils.MyRequest;
  * 时    间：2017.5.9
  * 版    本：V1.0.0
  */
-public class GPSService extends Service{
+public class GPSService extends RecordService {
     private LocationService locationService;
     private int type;
     private String describe = "";
@@ -78,10 +78,10 @@ public class GPSService extends Service{
                     //实时上传
                     MyRequest.gpsRequest(GPSService.this, gpsBean);
                     currentCount++;
-                    totalCount=SharedUtil.getInteger(getApplicationContext(),"totalCount",0)+1;
-                    SharedUtil.setInteger(getApplicationContext(),"totalCount",totalCount);
-                    intent.putExtra("currentCount",currentCount);
-                    intent.putExtra("totalCount",totalCount);
+                    totalCount = SharedUtil.getInteger(getApplicationContext(), "totalCount", 0) + 1;
+                    SharedUtil.setInteger(getApplicationContext(), "totalCount", totalCount);
+                    intent.putExtra("currentCount", currentCount);
+                    intent.putExtra("totalCount", totalCount);
                     sendBroadcast(intent);
                 }
             }
@@ -96,11 +96,11 @@ public class GPSService extends Service{
             if (msg.what == 0) {
                 MyRequest.gpsRequest(GPSService.this, gpsBean);
                 currentCount++;
-                totalCount=SharedUtil.getInteger(getApplicationContext(),"totalCount",0)+1;
-                SharedUtil.setInteger(getApplicationContext(),"totalCount",totalCount);
+                totalCount = SharedUtil.getInteger(getApplicationContext(), "totalCount", 0) + 1;
+                SharedUtil.setInteger(getApplicationContext(), "totalCount", totalCount);
                 Log.i("上传次数", currentCount + "");
-                intent.putExtra("currentCount",currentCount);
-                intent.putExtra("totalCount",totalCount);
+                intent.putExtra("currentCount", currentCount);
+                intent.putExtra("totalCount", totalCount);
                 sendBroadcast(intent);
             }
             if (msg.what == 1) {
@@ -121,14 +121,14 @@ public class GPSService extends Service{
                         mHandler.sendMessage(msg);
                     } else {
                         Message msg = mHandler.obtainMessage();
-                        msg.what = 1;
+                        msg.what = 0;
                         mHandler.sendMessage(msg);
                     }
                     SharedUtil.setString(GPSService.this, "longitude", String.valueOf(gpsBean.getLongitude()));
                     SharedUtil.setString(GPSService.this, "latitude", String.valueOf(gpsBean.getLatitude()));
                 }
                 try {
-                    Thread.sleep(1000*30 );
+                    Thread.sleep(1000 * 30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -136,6 +136,10 @@ public class GPSService extends Service{
         }
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, Service.START_NOT_STICKY);
+    }
 
     @Override
     public void onDestroy() {

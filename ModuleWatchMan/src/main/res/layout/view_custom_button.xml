@@ -2,21 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue2"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_intentActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:id="@+id/custom_song_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
@@ -48,12 +49,13 @@
           </LinearLayout>-->
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dip"
-            android:layout_marginTop="5dip"
-            android:layout_toRightOf="@id/custom_song_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/custom_song_icon"
+            android:layout_toEndOf="@+id/custom_song_icon"
+            android:layout_toRightOf="@+id/custom_song_icon"
             android:orientation="vertical">
 
             <TextView
@@ -61,13 +63,40 @@
                 style="@style/NotificationTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_day_send_count"
+                android:layout_alignStart="@+id/tv_day_send_count"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="15dp"
+                android:text="当前上传次数"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_day_send_count"
+                style="@style/NotificationTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_custom_song_singer"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="当天上传次数"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_notifyTitleTextView"
+                style="@style/NotificationTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_custom_song_singer"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/tv_custom_song_singer"
+                android:text="园区卫士实时上传"
                 android:textSize="15sp" />
 
         </RelativeLayout>
 
     </RelativeLayout>
+
 
 </RelativeLayout>

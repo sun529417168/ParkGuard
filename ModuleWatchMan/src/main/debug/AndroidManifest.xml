@@ -83,6 +83,24 @@
             android:name=".utils.NotificationReceiver"
             android:process=":push" />
         <receiver android:name=".activity.WatchMainActivity$CountReceiver" />
+
+        <!--chat 聊天页面-->
+        <activity
+            android:name=".chatui.ChatMainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <!--图片展示页面-->
+        <activity
+            android:name=".chatui.FullImageActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <receiver android:name=".chatui.ChatMainActivity$MyChatBroadcasReceiver" />
+        <service
+            android:name=".chatui.service.MyScoketService"
+            android:process=":main" />
+        <receiver android:name=".activity.WatchMainActivity$CountReceiver" />
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@ public class UrlConfig {
 
     //周丽杰本机ip
     public static final String BaseRrl2 = "http://192.168.0.150:12321/Service";
-    public static final String BaseRrl3 = "http://dlaxsps.dlax.com.cn/Service";
+    public static final String BaseRrl3 = "http://sps.dlax.com.cn/Service";
     /**
      * 登陆接口返回token的
      */

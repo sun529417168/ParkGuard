@@ -20,8 +20,6 @@ import android.widget.TextView;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.PolylineOptions;
 import com.amap.api.trace.TraceLocation;
 import com.amap.api.trace.TraceOverlay;
@@ -44,6 +42,7 @@ import java.util.List;
 import cn.com.watchman.R;
 import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.bean.PathRecord;
+import cn.com.watchman.chatui.ChatMainActivity;
 import cn.com.watchman.database.DbAdapter;
 import cn.com.watchman.interfaces.GPSInfoInterface;
 import cn.com.watchman.interfaces.UploadCountInterface;
@@ -68,7 +67,7 @@ import static cn.com.watchman.R.id.watchMan_address;
  * 版    本：V1.0.0
  */
 @Router("watchman")
-public  class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface, UploadCountInterface {
+public class WatchMainActivity extends BaseActivity implements View.OnClickListener, GPSInfoInterface, UploadCountInterface {
 
     /**
      * 经度,纬度,海拔,精度,地址
@@ -114,6 +113,7 @@ public  class WatchMainActivity extends BaseActivity implements View.OnClickList
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 tv_sendCount.setText("" + msg.arg1);
+                notifyUtils.showButtonNotify(msg.arg1);
             }
         }
     };
@@ -127,7 +127,7 @@ public  class WatchMainActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
-        MyTitle.getInstance().setTitle(this, "实时巡更", PGApp, false);
+        MyTitle.getInstance().setTitle(this, "巡更指挥系统", PGApp, false);
         isStart = MyServiceUtils.isServiceRunning(MyConstant.GPSSERVICE_CLASSNAME, this);
         SharedUtil.setLong(this, "runTime", System.currentTimeMillis() / 1000);
         msgReceiver = new MsgReceiver();
@@ -173,7 +173,7 @@ public  class WatchMainActivity extends BaseActivity implements View.OnClickList
         tv_sendCount = (TextView) findViewById(R.id.watchMan_sendCount);
         tv_describe = (TextView) findViewById(R.id.tv_content_GPS);
         personName = (TextView) findViewById(R.id.name);
-        personName.setText(SharedUtil.getString(this,"personName"));
+        personName.setText(SharedUtil.getString(this, "personName"));
         eventLayout = (LinearLayout) findViewById(R.id.watchMan_EventReport);
         mapLayout = (LinearLayout) findViewById(R.id.watchMan_map);
         statisticsLayout = (LinearLayout) findViewById(R.id.watchMan_statistics);
@@ -243,7 +243,7 @@ public  class WatchMainActivity extends BaseActivity implements View.OnClickList
             }
             if (!isStart) {
 //                SharedUtil.setBoolean(this, "serviceFlag", false);
-                notifyUtils.showButtonNotify();
+                notifyUtils.showButtonNotify(0);
                 watchActivityStartService();
                 intent = new Intent(this, GPSService.class);
                 startService(intent);
@@ -267,11 +267,13 @@ public  class WatchMainActivity extends BaseActivity implements View.OnClickList
             }
 
         } else if (i == R.id.watchMan_EventReport) {
-            intent = new Intent(this, EventReportActivity.class);
-            intent.putExtra("longitude", String.valueOf(gpsBean.getLongitude()));
-            intent.putExtra("latitude", String.valueOf(gpsBean.getLatitude()));
-            intent.putExtra("accuracy", String.valueOf(gpsBean.getAccuracy()));
-            intent.putExtra("address", gpsBean.getAddress());
+//            intent = new Intent(this, EventReportActivity.class);
+//            intent.putExtra("longitude", String.valueOf(gpsBean.getLongitude()));
+//            intent.putExtra("latitude", String.valueOf(gpsBean.getLatitude()));
+//            intent.putExtra("accuracy", String.valueOf(gpsBean.getAccuracy()));
+//            intent.putExtra("address", gpsBean.getAddress());
+//            startActivity(intent);
+            intent = new Intent(this, ChatMainActivity.class);
             startActivity(intent);
         } else if (i == R.id.watchMan_map) {
 //            startActivity(new Intent(this, RecordActivity.class));
@@ -301,7 +303,7 @@ public  class WatchMainActivity extends BaseActivity implements View.OnClickList
 
     private void myShareMethod() {
 //        ScreenshotUtils.shoot(WatchMainActivity.this, "图片.png");
-        String address = TextUtils.isEmpty(tv_address.getText().toString().trim()) ? "喝酒之前我是中国的,喝完酒中国是我的!" : tv_address.getText().toString().trim();
+//        String address = TextUtils.isEmpty(tv_address.getText().toString().trim()) ? "喝酒之前我是中国的,喝完酒中国是我的!" : tv_address.getText().toString().trim();
 //        Intent shareIntent = new Intent();
 //        shareIntent.setAction(Intent.ACTION_SEND);
 ////        shareIntent.putExtra(Intent.EXTRA_STREAM, "位置:" + address + "\n" + "描述:" + "测试数据");
@@ -311,10 +313,12 @@ public  class WatchMainActivity extends BaseActivity implements View.OnClickList
 //        startActivity(Intent.createChooser(shareIntent, "分享巡更信息到"));
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        String text= "当前位置:"+gpsBean.getAddress()+"\n"
-                +"<a href=\"http://api.map.baidu.com/marker?location="+gpsBean.getLatitude()+","+gpsBean.getLongitude()+"&output=html\">点击查看位置</a>\n"
-                + "描述:" + "经度"+gpsBean.getLongitude()+"纬度"+gpsBean.getLatitude();
-        shareIntent.putExtra(Intent.EXTRA_TEXT,text);
+//        String text = "当前位置:" + gpsBean.getAddress() + "\n"
+//                + "http://api.map.baidu.com/marker?location=" + gpsBean.getLatitude() + "," + gpsBean.getLongitude() + "&output=html\n"
+//                + "描述:" + "经度" + gpsBean.getLongitude() + "纬度" + gpsBean.getLatitude();
+//        shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+        String text = "http://api.map.baidu.com/marker?location=" + gpsBean.getLatitude() + "," + gpsBean.getLongitude() + "&output=html";
+        shareIntent.putExtra(Intent.EXTRA_TEXT, text);
         shareIntent.setType("text/plain");
         //设置分享列表的标题，并且每次都显示分享列表
         startActivity(Intent.createChooser(shareIntent, "分享巡更信息到"));

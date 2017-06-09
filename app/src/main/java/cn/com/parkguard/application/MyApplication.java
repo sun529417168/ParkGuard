@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.Service;
 import android.content.Context;
 import android.os.Vibrator;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.alibaba.sdk.android.push.CloudPushService;
@@ -13,7 +14,6 @@ import com.baidu.mapapi.SDKInitializer;
 import com.github.mzule.activityrouter.annotation.Modules;
 import com.linked.erfli.library.service.LocationService;
 import com.linked.erfli.library.utils.EventPool;
-import com.linked.erfli.library.utils.NetWorkUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -41,6 +41,20 @@ public class MyApplication extends Application {
     public static ImageLoader imageLoader = ImageLoader.getInstance();
     public LocationService locationService;
     public Vibrator mVibrator;
+    private static MyApplication mInstance;
+
+    /**
+     * 屏幕宽度
+     */
+    public static int screenWidth;
+    /**
+     * 屏幕高度
+     */
+    public static int screenHeight;
+    /**
+     * 屏幕密度
+     */
+    public static float screenDensity;
 
     @Override
     public void onCreate() {
@@ -53,6 +67,8 @@ public class MyApplication extends Application {
         SDKInitializer.initialize(getApplicationContext());
 
         context = getApplicationContext();
+        mInstance = this;
+        initScreenSize();
         initCloudChannel(this);
         EventBus.getDefault().register(this);
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -72,7 +88,9 @@ public class MyApplication extends Application {
         imageLoader.init(config2);
 
     }
-
+    public static Context getInstance() {
+        return mInstance;
+    }
     /**
      * 初始化云推送通道
      *
@@ -95,7 +113,15 @@ public class MyApplication extends Application {
             }
         });
     }
-
+    /**
+     * 初始化当前设备屏幕宽高
+     */
+    private void initScreenSize() {
+        DisplayMetrics curMetrics = getApplicationContext().getResources().getDisplayMetrics();
+        screenWidth = curMetrics.widthPixels;
+        screenHeight = curMetrics.heightPixels;
+        screenDensity = curMetrics.density;
+    }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void logActivityCreate(EventPool.ActivityNotify activityNotify) {
         Log.d("ActivityCreate", activityNotify.activityName);

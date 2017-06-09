@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import cn.com.parkguard.R;
 import cn.com.parkguard.adapter.HomeAdapter;
 import cn.com.parkguard.bean.HomeBean;
+import cn.com.watchman.chatui.service.MyScoketService;
 
 
 public class HomeActivity extends BaseActivity implements AdapterView.OnItemClickListener {
@@ -78,9 +79,14 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
                 startActivity(new Intent(Settings.ACTION_SETTINGS));
             }
         });
+        if (!MyServiceUtils.isServiceRunning(MyConstant.GPSSERVICE_CLASSNAME, HomeActivity.this)) {
+            Intent startIntent = new Intent(this, MyScoketService.class);
+            startService(startIntent);
+        }
     }
 
     @Override
+
     public void onNetChange(int netMobile) {
         super.onNetChange(netMobile);
         //网络状态变化时的操作

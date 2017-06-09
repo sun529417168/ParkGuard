@@ -34,7 +34,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
     compile 'com.soundcloud.android.crop:lib_crop:1.0.0'
     compile 'com.aliyun.ams:alicloud-android-push:2.+'

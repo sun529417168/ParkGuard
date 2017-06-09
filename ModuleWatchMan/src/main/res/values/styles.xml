@@ -85,4 +85,18 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <!--chat UI -->
+
+    <style name="text_subhead_black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_title</item>
+        <item name="android:textSize">@dimen/text_subhead</item>
+    </style>
+    <style name="text_body">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_sub</item>
+        <item name="android:textSize">@dimen/text_body</item>
+    </style>
 </resources>

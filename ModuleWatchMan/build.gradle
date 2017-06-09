@@ -59,4 +59,9 @@ dependencies {
 //    compile 'com.amap.api:map3d-native:latest.integration'
 //    compile 'com.amap.api:map3d:latest.integration'
 //    compile 'com.amap.api:location:latest.integration'
+//    compile 'com.amap.api:map3d-native:latest.integration'
+//    compile 'com.amap.api:map3d:latest.integration'
+//    compile 'com.amap.api:location:latest.integration'
+    compile 'com.jude:easyrecyclerview:4.2.3'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

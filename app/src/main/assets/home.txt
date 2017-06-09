@@ -25,7 +25,7 @@
     },
     {
         "id": 105,
-        "name": "实时巡更",
+        "name": "巡更指挥",
         "isTrue": true,
         "imageView": 0
     },

@@ -13,6 +13,9 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
+import com.linked.erfli.library.utils.ActivityCollector;
+import com.linked.erfli.library.utils.SharedUtil;
+
 import cn.com.watchman.R;
 import cn.com.watchman.activity.WatchMainActivity;
 import cn.com.watchman.interfaces.PlayingNotification;
@@ -79,12 +82,13 @@ public class NotifyUtils implements PlayingNotification {
         clearAllNotify();
     }
 
-    public void showButtonNotify() {
+    public void showButtonNotify(int count) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity);
         mRemoteViews = new RemoteViews(getPackageName(), R.layout.view_custom_button);
         mRemoteViews.setImageViewResource(R.id.custom_song_icon, R.mipmap.watch_logo);
         //API3.0 以上的时候显示按钮，否则消失
-        mRemoteViews.setTextViewText(R.id.tv_custom_song_singer, "独立巡更正在上传数据中...");
+        mRemoteViews.setTextViewText(R.id.tv_custom_song_singer, "当前上传次数:" + count + "次");
+        mRemoteViews.setTextViewText(R.id.tv_day_send_count, "当天上传次数:"+SharedUtil.getInteger(activity.getApplicationContext(), "totalCount", 0) + "次");
         //如果版本号低于（3。0），那么不显示按钮
 //        if (getSystemVersion() <= 9) {
 //            mRemoteViews.setViewVisibility(R.id.ll_custom_button, View.GONE);
@@ -216,7 +220,7 @@ public class NotifyUtils implements PlayingNotification {
                             //已暂停
 //                            myNotifyBroadcastClickInterface.pauseServiceInterface();
                         }
-                        showButtonNotify();
+//                        showButtonNotify();
                         break;
                     case BUTTON_NEXT_ID:
 //                        Toast.makeText(activity, "下一首", Toast.LENGTH_SHORT).show();
@@ -254,7 +258,13 @@ public class NotifyUtils implements PlayingNotification {
 
 //        Intent broadcastIntent = new Intent(activity, NotificationReceiver.class);
 //        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 1, new Intent(activity, WatchMainActivity.class), flags);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 1, new Intent(activity, MainActivity.class), flags);
+//        return pendingIntent;
+        Intent notificationIntent = null;
+        if (ActivityCollector.isActivityExist(WatchMainActivity.class)) {
+            ActivityCollector.removeActivity(activity);
+        }
+        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, new Intent(activity, WatchMainActivity.class), flags);
         return pendingIntent;
     }
 
