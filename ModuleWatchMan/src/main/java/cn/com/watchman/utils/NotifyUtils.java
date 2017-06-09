@@ -14,7 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import cn.com.watchman.R;
-import cn.com.watchman.activity.MainActivity;
+import cn.com.watchman.activity.WatchMainActivity;
 import cn.com.watchman.interfaces.PlayingNotification;
 import cn.com.watchman.service.GPSService;
 
@@ -254,7 +254,7 @@ public class NotifyUtils implements PlayingNotification {
 
 //        Intent broadcastIntent = new Intent(activity, NotificationReceiver.class);
 //        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 1, new Intent(activity, MainActivity.class), flags);
+        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 1, new Intent(activity, WatchMainActivity.class), flags);
         return pendingIntent;
     }
 

@@ -5,6 +5,9 @@ import android.location.LocationManager;
 
 import com.linked.erfli.library.utils.SharedUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 文件名：WMyUtils
  * 描    述：工具类
@@ -41,5 +44,24 @@ public class WMyUtils {
         int m = (int) ((time % 3600) / 60);
         int s = (int) ((time % 3600) % 60);
         return Integer.toString(h) + "h" + Integer.toString(m) + "m" + Integer.toString(s) + "s";
+    }
+
+    /**
+     * stt
+     * 2016.8.29
+     * 方法说明：获取本地缓存
+     *
+     * @param objects
+     * @return
+     */
+    public static Object arrayList(Object[] objects) {
+        List<Object> list = new ArrayList<>();
+        if (objects == null || objects.length == 0) {
+            return list;
+        }
+        for (int i = 0; i < objects.length; i++) {
+            list.add(objects[i]);
+        }
+        return list;
     }
 }

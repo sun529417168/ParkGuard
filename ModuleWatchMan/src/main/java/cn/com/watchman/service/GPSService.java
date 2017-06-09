@@ -24,7 +24,7 @@ import cn.com.watchman.utils.MyRequest;
  * 时    间：2017.5.9
  * 版    本：V1.0.0
  */
-public class GPSService extends RecordService{
+public class GPSService extends Service{
     private LocationService locationService;
     private int type;
     private String describe = "";

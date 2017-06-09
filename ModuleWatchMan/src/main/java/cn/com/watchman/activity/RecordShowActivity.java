@@ -16,6 +16,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMap.OnMapLoadedListener;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -71,6 +72,8 @@ public class RecordShowActivity extends Activity implements
     private List<PathRecord> mAllRecord = new ArrayList<PathRecord>();
     private DbAdapter mDataBaseHelper;
     private int recordId = -1;
+    //声明mLocationOption对象
+    public AMapLocationClientOption mLocationOption = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,9 @@ public class RecordShowActivity extends Activity implements
         mDataBaseHelper = new DbAdapter(this);
         mDataBaseHelper.open();
         mAllRecord = mDataBaseHelper.queryRecordAll();
+        if (mAllRecord.size() > 0) {
+            recordId = mAllRecord.get(0).getId();
+        }
         initMap();
     }
 
@@ -169,11 +175,8 @@ public class RecordShowActivity extends Activity implements
             super.handleMessage(msg);
             switch (msg.what) {
                 case AMAP_LOADED:
-                    for (int i = 0; i < mAllRecord.size(); i++) {
-                        setupRecord(mAllRecord.get(mAllRecord.size() - i - 1).getId());
-                        if (i == 3)
-                            break;
-                    }
+                    if (recordId != -1)
+                        setupRecord(recordId);
                     break;
                 default:
                     break;

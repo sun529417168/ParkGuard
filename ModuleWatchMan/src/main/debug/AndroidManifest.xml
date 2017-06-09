@@ -67,15 +67,22 @@
             android:name=".activity.LocationActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <!--地图轨迹平滑移动界面-->
+        <activity
+            android:name=".activity.MoveShowActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <!--gps后台服务-->
         <service android:name=".service.GPSService" />
         <!--高德地图的服务-->
         <!--<service android:name="com.amap.api.location.APSService" />-->
+        <!--高德地图的后台收集轨迹的服务-->
+        <service android:name=".service.RecordService" />
 
         <receiver
             android:name=".utils.NotificationReceiver"
             android:process=":push" />
-        <receiver android:name=".activity.WatchMainActivity$CountReceiver"/>
+        <receiver android:name=".activity.WatchMainActivity$CountReceiver" />
     </application>
 
 </manifest>

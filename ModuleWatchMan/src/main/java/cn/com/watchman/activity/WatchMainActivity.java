@@ -49,6 +49,7 @@ import cn.com.watchman.interfaces.GPSInfoInterface;
 import cn.com.watchman.interfaces.UploadCountInterface;
 import cn.com.watchman.service.GPSService;
 import cn.com.watchman.service.MsgReceiver;
+import cn.com.watchman.service.RecordService;
 import cn.com.watchman.utils.DialogUtils;
 import cn.com.watchman.utils.MyLocationListener;
 import cn.com.watchman.utils.MyRequest;
@@ -104,9 +105,6 @@ public  class WatchMainActivity extends BaseActivity implements View.OnClickList
     private List<TraceLocation> mTracelocationlist = new ArrayList<>();
     private DbAdapter DbHepler;
     private PolylineOptions mPolyoptions, tracePolytion;
-    private int tracesize = 30;
-    protected MapView mMapView;
-    protected AMap mAMap;
     /*
     当前上传次数，总上传次数
      */
@@ -146,8 +144,7 @@ public  class WatchMainActivity extends BaseActivity implements View.OnClickList
             locationService.setLocationOption(locationService.getOption());
         }
         notifyUtils = new NotifyUtils(this);
-        mMapView = (MapView) findViewById(R.id.map);
-        mMapView.onCreate(savedInstanceState);// 此方法必须重写
+        startService(new Intent(this, RecordService.class));
     }
 
     /**
@@ -278,7 +275,8 @@ public  class WatchMainActivity extends BaseActivity implements View.OnClickList
             startActivity(intent);
         } else if (i == R.id.watchMan_map) {
 //            startActivity(new Intent(this, RecordActivity.class));
-            startActivity(new Intent(this, RecordShowActivity.class));
+//            startActivity(new Intent(this, RecordShowActivity.class));
+            startActivity(new Intent(this, MoveShowActivity.class));
         } else if (i == R.id.watchMan_statistics) {
             intent = new Intent(this, WatchManStatisticsActivity.class);
             intent.putExtra("currentCount", currentCount);

@@ -42,6 +42,7 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void setDate(Bundle savedInstanceState) {
         userName = SharedUtil.getString(mContext, "userName");//获取用户名
+        SharedUtil.setString(this, "PersonID", "91");
         Log.i("", "userName=" + userName);
 
     }
@@ -76,7 +77,8 @@ public class WelcomeActivity extends BaseActivity {
             public void onAnimationEnd(Animation animation) {
                 if (userName == null || "".equals(userName)) {
                     //userName为null 跳转到登录页面
-                    startActivity(new Intent(mContext, LoginActivity.class));
+//                    startActivity(new Intent(mContext, LoginActivity.class));
+                    startActivity(new Intent(mContext, HomeActivity.class));
                 } else {
                     //跳转到主页面
                     startActivity(new Intent(mContext, HomeActivity.class));

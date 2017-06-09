@@ -35,13 +35,19 @@ import java.util.Date;
 import java.util.List;
 
 import cn.com.watchman.R;
+import cn.com.watchman.bean.DinatesBean;
+import cn.com.watchman.bean.DinatesDaoImpl;
 import cn.com.watchman.bean.PathRecord;
 import cn.com.watchman.database.DbAdapter;
 import cn.com.watchman.utils.Util;
 
 
 /**
- * Created by sun_t on 2017/6/3.
+ * 文件名：RecordService
+ * 描    述：后台收集轨迹点位的服务
+ * 作    者：stt
+ * 时    间：2017.6.3
+ * 版    本：V1.1.0
  */
 
 public class RecordService extends Service implements LocationSource,
@@ -64,11 +70,13 @@ public class RecordService extends Service implements LocationSource,
     private int mDistance = 0;
     private TraceOverlay mTraceoverlay;
     private Marker mlocMarker;
+    private DinatesDaoImpl dinatesDao;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mMapView = new MapView(this);
+        dinatesDao = new DinatesDaoImpl(this);
         init();
         initpolyline();
     }
@@ -225,6 +233,10 @@ public class RecordService extends Service implements LocationSource,
                 record.addpoint(amapLocation);
                 mPolyoptions.add(mylocation);
                 Log.i("amapLocation", record.getPathline().toString());
+                /**
+                 * 开始收集信息
+                 */
+                dinatesDao.insert(new DinatesBean(amapLocation.getLongitude(), amapLocation.getLatitude(), System.currentTimeMillis() / 1000));
                 mTracelocationlist.add(Util.parseTraceLocation(amapLocation));
                 redrawline();
                 if (mTracelocationlist.size() > tracesize - 1) {
@@ -249,7 +261,7 @@ public class RecordService extends Service implements LocationSource,
             // 设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
 
-            mLocationOption.setInterval(2000);
+            mLocationOption.setInterval(3000);
 
             // 设置定位参数
             mLocationClient.setLocationOption(mLocationOption);

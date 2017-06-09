@@ -61,12 +61,23 @@ public class WatchManQRcodeActivity extends CaptureActivity implements GPSInfoIn
         if (TextUtils.isEmpty(resultString)) {
             restartPreview();
         } else {
-            if (Distance.isCompare(this, gpsBean, resultString)) {
-                MyRequest.codeRequest(this, gpsBean, resultString);
-            } else {
-                ToastUtil.show(this, "您没有在有效范围内");
-            }
-            restartPreview();
+            /**
+             * 指定的二维码
+             */
+//            if (Distance.isCompare(this, gpsBean, resultString)) {
+//                MyRequest.codeRequest(this, gpsBean, resultString);
+//            } else {
+//                ToastUtil.show(this, "您没有在有效范围内");
+//            }
+//                        restartPreview();//不重启
+            /**
+             * 目前的版本，只是显示
+             */
+            Intent in = new Intent(this, QRcodeShowActivity.class);
+            in.putExtra("value", resultString);
+            startActivity(in);
+            finish();
+
         }
     }
 

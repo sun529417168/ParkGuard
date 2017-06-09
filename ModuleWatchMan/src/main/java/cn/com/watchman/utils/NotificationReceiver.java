@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import cn.com.watchman.activity.MainActivity;
 import cn.com.watchman.activity.WatchMainActivity;
 
 /**
@@ -18,7 +17,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         if (SystemUtils.isAppAlive(context, "cn.com.parkguard")) {
             Intent mainIntent = new Intent(context, WatchMainActivity.class);
             mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Intent detailIntent = new Intent(context, MainActivity.class);
+            Intent detailIntent = new Intent(context, WatchMainActivity.class);
             Intent[] intents = {mainIntent, detailIntent};
             context.startActivities(intents);
         } else {
