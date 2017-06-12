@@ -87,11 +87,6 @@
             android:name=".activity.WatchManEditorUserActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
-        <!--主界面-->
-        <activity
-            android:name=".activity.MainActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait" />
         <!--事件上报界面-->
         <activity
             android:name=".activity.EventReportActivity"
@@ -144,7 +139,6 @@
             android:exported="false">
             <intent-filter android:priority="1000"></intent-filter>
         </service>
-        <service android:name=".service.AMapService" />
         <service android:name=".service.GPSService" />
         <!--高德地图的服务-->
         <service android:name="com.amap.api.location.APSService" />
