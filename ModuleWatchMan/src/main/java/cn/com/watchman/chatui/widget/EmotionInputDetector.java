@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.SharedUtil;
@@ -35,8 +34,8 @@ import cn.com.watchman.chatui.uiutils.Utils;
 import cn.com.watchman.networkrequest.WatchManRequest;
 
 /**
- * 作者：Rance on 2016/12/13 15:19
- * 邮箱：rance935@163.com
+ * 时间:2017年6月12日10:11:13
+ *
  * 输入框管理类
  */
 public class EmotionInputDetector {
@@ -210,7 +209,6 @@ public class EmotionInputDetector {
                 mSendButton.setVisibility(View.GONE);
                 MessageInfo messageInfo = new MessageInfo();
                 Log.i("MainActivity主页", "发送的数据:" + mEditText.getText().toString());
-                Toast.makeText(mActivity, "" + mEditText.getText().toString(), Toast.LENGTH_SHORT).show();
                 messageInfo.setContent(mEditText.getText().toString());
                 EventBus.getDefault().post(messageInfo);
                 String deviceguid = new DeviceUuidFactory(mActivity).getDeviceUuid().toString();
