@@ -41,6 +41,7 @@
             android:minHeight="36dp"
             android:paddingLeft="@dimen/content_horizontal_margin"
             android:paddingRight="@dimen/content_horizontal_margin"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView

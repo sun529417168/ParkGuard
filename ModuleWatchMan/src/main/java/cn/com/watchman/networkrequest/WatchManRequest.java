@@ -239,4 +239,51 @@ public class WatchManRequest {
             }
         });
     }
+
+    /***
+     *
+     * @param mActivity
+     * @param subSysType
+     * @param dataType
+     * @param mark
+     * @param DeviceGUID
+     * @param message_type
+     * @param message
+     * @param send_time
+     * @param Longitude
+     * @param Latitude
+     * @param user_id
+     */
+    public static void sendChatMsg(final Activity mActivity, int subSysType, int dataType, String mark, String DeviceGUID, int message_type, String message, String send_time, String Longitude, String Latitude, String user_id) {
+
+        Map<String, Object> params = new HashMap<>();
+//        params.put("DeviceGUID", DeviceGUID);
+        params.put("message_type", message_type);
+        params.put("message", message);
+        params.put("send_time", send_time);
+//        params.put("Longitude", Longitude);
+//        params.put("Latitude", Latitude);
+        params.put("user_id", user_id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("subSysType", subSysType);
+        map.put("dataType", dataType);
+        map.put("mark", mark);
+        map.put("data", params);
+        String sendChatJson = JSON.toJSONString(map);
+        Log.i("事件上报图片上传返回结果:", "" + sendChatJson);
+        String json = "{\"subSysType\":10,\"dataType\":8,\"mark\":\"patrolpc\",\"data\":{\" message_type\":1,\"message\":\"12121\",\"send_time\":\"1497003655374\",\" user_id\":90}}";
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatJson).build().execute(new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.i("即时通讯发送数据返回结果:1", "" + e.getMessage());
+//                ToastUtil.show(mActivity, "错误代码" + e.getMessage());
+                ToastUtil.show(mActivity, "发送失败!");
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+                Log.i("即时通讯发送数据返回结果:2", "" + response);
+            }
+        });
+    }
 }

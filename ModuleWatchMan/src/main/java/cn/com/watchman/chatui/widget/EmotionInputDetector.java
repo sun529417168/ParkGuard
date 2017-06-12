@@ -22,6 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.linked.erfli.library.utils.DeviceUuidFactory;
+import com.linked.erfli.library.utils.SharedUtil;
+
 import org.greenrobot.eventbus.EventBus;
 
 import cn.com.watchman.R;
@@ -29,6 +32,7 @@ import cn.com.watchman.chatui.enity.MessageInfo;
 import cn.com.watchman.chatui.uiutils.AudioRecoderUtils;
 import cn.com.watchman.chatui.uiutils.PopupWindowFactory;
 import cn.com.watchman.chatui.uiutils.Utils;
+import cn.com.watchman.networkrequest.WatchManRequest;
 
 /**
  * 作者：Rance on 2016/12/13 15:19
@@ -127,6 +131,12 @@ public class EmotionInputDetector {
         return this;
     }
 
+    public String getTime() {
+        long time = System.currentTimeMillis() / 1000;//获取系统时间的10位的时间戳
+        String str = String.valueOf(time);
+        return str;
+    }
+
     public EmotionInputDetector bindToEmotionButton(View emotionButton) {
         emotionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,6 +213,9 @@ public class EmotionInputDetector {
                 Toast.makeText(mActivity, "" + mEditText.getText().toString(), Toast.LENGTH_SHORT).show();
                 messageInfo.setContent(mEditText.getText().toString());
                 EventBus.getDefault().post(messageInfo);
+                String deviceguid = new DeviceUuidFactory(mActivity).getDeviceUuid().toString();
+                String userId = SharedUtil.getString(mActivity, "PersonID");
+                WatchManRequest.sendChatMsg(mActivity, 10, 8, "patrolpc", deviceguid, 1, mEditText.getText().toString(), getTime(), "-1", "-1", userId);
                 mEditText.setText("");
             }
         });

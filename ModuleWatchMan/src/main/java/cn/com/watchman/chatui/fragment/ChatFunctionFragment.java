@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,43 +39,23 @@ public class ChatFunctionFragment extends BaseFragment implements View.OnClickLi
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE2 = 7;
     private File output;
     private Uri imageUri;
+    private TextView chat_function_photograph;
+    private TextView chat_function_photo;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_chat_function, container, false);
+            chat_function_photograph = (TextView) rootView.findViewById(R.id.chat_function_photograph);
+            chat_function_photo = (TextView) rootView.findViewById(R.id.chat_function_photo);
+            chat_function_photograph.setOnClickListener(this);
+            chat_function_photo.setOnClickListener(this);
         }
+
         return rootView;
     }
 
-    public void onClick(View view) {
-        int i = view.getId();
-        if (i == R.id.chat_function_photograph) {
-            if (ContextCompat.checkSelfPermission(getActivity(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_CALL_PHONE2);
-
-            } else {
-                takePhoto();
-            }
-
-        } else if (i == R.id.chat_function_photo) {
-            if (ContextCompat.checkSelfPermission(getActivity(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_CALL_PHONE2);
-
-            } else {
-                choosePhoto();
-            }
-        }
-    }
 
     /**
      * 拍照
@@ -184,4 +165,42 @@ public class ChatFunctionFragment extends BaseFragment implements View.OnClickLi
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    //    public void onClick(View view) {
+//        int i = view.getId();
+//        if (i == R.id.chat_function_photograph) {
+//
+//
+//        } else if (i == R.id.chat_function_photo) {
+//
+//        }
+//    }
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.chat_function_photograph) {
+            if (ContextCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_CALL_PHONE2);
+
+            } else {
+                takePhoto();
+            }
+
+        } else if (i == R.id.chat_function_photo) {
+            if (ContextCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_CALL_PHONE2);
+
+            } else {
+                choosePhoto();
+            }
+
+        }
+    }
 }

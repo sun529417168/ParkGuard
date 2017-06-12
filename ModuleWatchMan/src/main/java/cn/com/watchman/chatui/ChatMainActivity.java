@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.jude.easyrecyclerview.EasyRecyclerView;
@@ -331,7 +330,6 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final MessageInfo messageInfo) {
-        Toast.makeText(this, "执行MessageEventBus方法", Toast.LENGTH_SHORT).show();
         messageInfo.setHeader(boyUrl);
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
