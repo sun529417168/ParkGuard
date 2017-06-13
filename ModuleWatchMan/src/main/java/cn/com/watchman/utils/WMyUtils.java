@@ -6,6 +6,7 @@ import android.location.LocationManager;
 import com.linked.erfli.library.utils.SharedUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -63,5 +64,21 @@ public class WMyUtils {
             list.add(objects[i]);
         }
         return list;
+    }
+
+    /**
+     * stt
+     * 2016.8.29
+     * 方法说明：获取今天凌晨的时间戳
+     *
+     * @return
+     */
+    public static String getTimesmorning() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return Long.toString((cal.getTimeInMillis() / 1000));
     }
 }

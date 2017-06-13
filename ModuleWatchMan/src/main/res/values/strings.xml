@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">独立巡更</string>
+    <string name="app_name">巡更指挥</string>
     <string name="tv_Title_Longitude">经度:</string>
     <string name="tv_Title_Latitude">纬度:</string>
     <string name="tv_Title_Altitude">海拔:</string>

@@ -100,7 +100,6 @@
         <service
             android:name=".chatui.service.MyScoketService"
             android:process=":main" />
-        <receiver android:name=".activity.WatchMainActivity$CountReceiver" />
     </application>
 
 </manifest>
