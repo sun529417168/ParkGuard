@@ -10,6 +10,7 @@ import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -89,7 +90,8 @@ public class RadarView extends View {
 			final int minimumHeight = getSuggestedMinimumHeight();
 			mWidth = resolveMeasured(widthMeasureSpec, minimumWidth);
 			mHeight = resolveMeasured(heightMeasureSpec, minimumHeight);
-			mScanBmp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.radar_scan_img), mWidth- mOutWidth, mWidth - mOutWidth, false);
+//			mScanBmp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.radar_scan_img), mWidth- mOutWidth, mWidth - mOutWidth, false);
+			mScanBmp = Bitmap.createScaledBitmap(readBitMap(mContext,R.drawable.radar_scan_img), mWidth- mOutWidth, mWidth - mOutWidth, false);
 
 			// 获取x/y轴中心点
 			mCx = mWidth / 2;
@@ -102,6 +104,23 @@ public class RadarView extends View {
 			mOutsideRadius = mWidth / 2;// 外圆的半径
 			mInsideRadius = (mWidth - mOutWidth) / 4 / 2;// 内圆的半径,除最外层,其它圆的半径=层数*insideRadius
 		}
+	}
+	public static Bitmap readBitMap(Context context, int resId){
+
+		BitmapFactory.Options opt = new BitmapFactory.Options();
+
+		opt.inPreferredConfig = Bitmap.Config.RGB_565;
+
+		opt.inPurgeable = true;
+
+		opt.inInputShareable = true;
+
+		// 获取资源图片
+
+		InputStream is = context.getResources().openRawResource(resId);
+
+		return BitmapFactory.decodeStream(is, null, opt);
+
 	}
 
 	/**

@@ -1,10 +1,13 @@
 package cn.com.watchman.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 
 import com.linked.erfli.library.utils.SharedUtil;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -80,5 +83,26 @@ public class WMyUtils {
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.MILLISECOND, 0);
         return Long.toString((cal.getTimeInMillis() / 1000));
+    }
+
+    /**
+     * stt
+     * 2016.8.29
+     * 方法说明：压缩图片释放内存
+     *
+     * @return
+     */
+    public static Bitmap readBitMap(Context context, int resId) {
+
+        InputStream is = context.getResources().openRawResource(resId);
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+
+        options.inJustDecodeBounds = false;
+
+        options.inSampleSize = 1;   // width，hight设为原来的十分一
+
+        Bitmap btp = BitmapFactory.decodeStream(is, null, options);
+        return btp;
     }
 }
