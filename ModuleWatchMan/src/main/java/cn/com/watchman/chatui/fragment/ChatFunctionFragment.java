@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,14 +23,17 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 
 import cn.com.watchman.R;
+import cn.com.watchman.chatui.ChatWarningActivity;
 import cn.com.watchman.chatui.base.BaseFragment;
 import cn.com.watchman.chatui.enity.MessageInfo;
 import cn.com.watchman.chatui.uiutils.Constants;
 
 
 /**
- * 作者：Rance on 2016/12/13 16:01
- * 邮箱：rance935@163.com
+ * 描述:聊天页面功能选择Fragment(拍照,相册选择图片)
+ * 作者：zzq
+ * 修改时间：2017年6月13日14:18:06
+ * 版本:V1.0.0
  */
 public class ChatFunctionFragment extends BaseFragment implements View.OnClickListener {
     private View rootView;
@@ -41,6 +45,7 @@ public class ChatFunctionFragment extends BaseFragment implements View.OnClickLi
     private Uri imageUri;
     private TextView chat_function_photograph;
     private TextView chat_function_photo;
+    private TextView chat_function_warning;
 
     @Nullable
     @Override
@@ -51,6 +56,8 @@ public class ChatFunctionFragment extends BaseFragment implements View.OnClickLi
             chat_function_photo = (TextView) rootView.findViewById(R.id.chat_function_photo);
             chat_function_photograph.setOnClickListener(this);
             chat_function_photo.setOnClickListener(this);
+            chat_function_warning = (TextView) rootView.findViewById(R.id.chat_function_warning);
+            chat_function_warning.setOnClickListener(this);
         }
 
         return rootView;
@@ -114,6 +121,7 @@ public class ChatFunctionFragment extends BaseFragment implements View.OnClickLi
                     try {
                         MessageInfo messageInfo = new MessageInfo();
                         messageInfo.setImageUrl(imageUri.getPath());
+                        Log.i("发送图片后返回的的URL:1", "" + imageUri.getPath());
                         EventBus.getDefault().post(messageInfo);
                     } catch (Exception e) {
                     }
@@ -126,9 +134,18 @@ public class ChatFunctionFragment extends BaseFragment implements View.OnClickLi
                 if (res == Activity.RESULT_OK) {
                     try {
                         Uri uri = data.getData();
-                        MessageInfo messageInfo = new MessageInfo();
-                        messageInfo.setImageUrl(uri.getPath());
-                        EventBus.getDefault().post(messageInfo);
+                        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+                        if (cursor != null && cursor.moveToFirst()) {
+                            String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
+                            Log.i("发送图片后返回的的URL:2", "" + path);
+                            MessageInfo messageInfo = new MessageInfo();
+                            messageInfo.setImageUrl(path);
+                            EventBus.getDefault().post(messageInfo);
+                        }
+//                        Uri uri = data.getData();
+//
+//                        Log.i("发送图片后返回的的URL:2", "" + uri);
+//
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.d(Constants.TAG, e.getMessage());
@@ -200,7 +217,10 @@ public class ChatFunctionFragment extends BaseFragment implements View.OnClickLi
             } else {
                 choosePhoto();
             }
-
+        } else if (i == R.id.chat_function_warning) {
+            Intent intent = new Intent();
+            intent.setClass(getActivity(),ChatWarningActivity.class);
+            getActivity().startActivityForResult(intent,2);
         }
     }
 }

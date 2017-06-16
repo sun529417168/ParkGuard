@@ -43,6 +43,7 @@ import cn.com.watchman.R;
 import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.bean.PathRecord;
 import cn.com.watchman.chatui.ChatMainActivity;
+import cn.com.watchman.chatui.service.MyScoketService;
 import cn.com.watchman.database.DbAdapter;
 import cn.com.watchman.interfaces.GPSInfoInterface;
 import cn.com.watchman.interfaces.UploadCountInterface;
@@ -468,4 +469,12 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         scan_radar.setSearching(false);//停止扫描
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!MyServiceUtils.isServiceRunning(MyConstant.SOCKETSERVICE_CLASSNAME, WatchMainActivity.this)) {
+            Intent startIntent = new Intent(this, MyScoketService.class);
+            startService(startIntent);
+        }
+    }
 }

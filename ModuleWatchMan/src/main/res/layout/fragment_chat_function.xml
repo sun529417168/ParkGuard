@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:padding="@dimen/activity_horizontal_margin"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/chat_function_photo"
@@ -21,4 +22,13 @@
         android:drawableTop="@mipmap/icon_chat_photograph"
         android:gravity="center"
         android:text="摄像" />
+    <!--chat_function_warning-->
+    <TextView
+        android:id="@+id/chat_function_warning"
+        style="@style/text_body"
+        android:layout_marginLeft="@dimen/content_horizontal_margin"
+        android:drawablePadding="@dimen/content_vertical_margin"
+        android:drawableTop="@mipmap/icon_chat_warning"
+        android:gravity="center"
+        android:text="告警" />
 </LinearLayout>

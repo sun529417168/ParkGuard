@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -13,6 +14,7 @@ import cn.com.watchman.chatui.adapter.holder.ChatAcceptViewHolder;
 import cn.com.watchman.chatui.adapter.holder.ChatSendViewHolder;
 import cn.com.watchman.chatui.enity.MessageInfo;
 import cn.com.watchman.chatui.uiutils.Constants;
+import cn.com.watchman.chatui.widget.GifTextView;
 
 /**
  * 作者：Rance on 2016/11/29 10:46
@@ -57,5 +59,9 @@ public class ChatAdapter extends RecyclerArrayAdapter<MessageInfo> {
         void onImageClick(View view, int position);
 
         void onVoiceClick(ImageView imageView, int position);
+
+        void onItemTextClick(GifTextView gifTextView, int position);
+
+        void onItemWarningClick(View view, TextView tv);
     }
 }

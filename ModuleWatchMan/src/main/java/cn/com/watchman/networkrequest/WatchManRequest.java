@@ -18,11 +18,17 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.com.watchman.bean.UserBean;
+import cn.com.watchman.chatui.enity.ChatProblemTypeLeftEntity;
+import cn.com.watchman.chatui.interfaces.ChatMsgInterface;
+import cn.com.watchman.chatui.interfaces.ChatProblemTypeLeftInterface;
+import cn.com.watchman.chatui.interfaces.ChatSendPicTureInterface;
 import cn.com.watchman.config.WMUrlConfig;
 import cn.com.watchman.interfaces.EventReportDataInterface;
 import cn.com.watchman.interfaces.WatchManLoginInterface;
@@ -139,7 +145,7 @@ public class WatchManRequest {
         map.put("alarmtime", alarmtime);//告警时间
         map.put("alarmtype", alarmtype);//int
         map.put("deviceguid", deviceguid);//当前设备唯一id
-        map.put("specified_point", -1);//规定巡更点id（后期扩展用）
+        map.put("specified_point", "-1");//规定巡更点id（后期扩展用）
         map.put("point_code", "");//string 巡更点编号，可为无。
         map.put("routeid", -1);//路线id（后期扩展用）
         map.put("Longitude", Longitude);//纬度
@@ -200,6 +206,7 @@ public class WatchManRequest {
 
     public static void sendImageRequest(final Activity mActivity, int dataType, File file, String fileName, int alarmid, final int mapSize, final int i) {
         LoadingDialogUtil.show(mActivity);
+
         Map<String, Object> map = new HashMap<>();
         map.put("imgbs", FileToByteUtils.getBytesFromFile(file));
         map.put("imgname", fileName);
@@ -223,6 +230,7 @@ public class WatchManRequest {
             @Override
             public void onResponse(String response, int id) {
                 try {
+
                     JSONObject jsonObject = new JSONObject(response);
                     int d = jsonObject.getInt("d");
                     if (d != 1) {
@@ -241,7 +249,7 @@ public class WatchManRequest {
     }
 
     /***
-     *
+     * 聊天信息发送(文本)
      * @param mActivity
      * @param subSysType
      * @param dataType
@@ -254,15 +262,15 @@ public class WatchManRequest {
      * @param Latitude
      * @param user_id
      */
-    public static void sendChatMsg(final Activity mActivity, int subSysType, int dataType, String mark, String DeviceGUID, int message_type, String message, String send_time, String Longitude, String Latitude, String user_id) {
-
+    public static void sendChatMsg(final Activity mActivity, int subSysType, int dataType, String mark, String DeviceGUID, int message_type, String message, String send_time, String Longitude, String Latitude, int user_id) {
+        final ChatMsgInterface chatMsgInterface = (ChatMsgInterface) mActivity;
         Map<String, Object> params = new HashMap<>();
-//        params.put("DeviceGUID", DeviceGUID);
+        params.put("DeviceGUID", DeviceGUID);
         params.put("message_type", message_type);
         params.put("message", message);
         params.put("send_time", send_time);
-//        params.put("Longitude", Longitude);
-//        params.put("Latitude", Latitude);
+        params.put("Longitude", Longitude);
+        params.put("Latitude", Latitude);
         params.put("user_id", user_id);
         Map<String, Object> map = new HashMap<>();
         map.put("subSysType", subSysType);
@@ -271,19 +279,207 @@ public class WatchManRequest {
         map.put("data", params);
         String sendChatJson = JSON.toJSONString(map);
         Log.i("事件上报图片上传返回结果:", "" + sendChatJson);
-        String json = "{\"subSysType\":10,\"dataType\":8,\"mark\":\"patrolpc\",\"data\":{\" message_type\":1,\"message\":\"12121\",\"send_time\":\"1497003655374\",\" user_id\":90}}";
-        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatJson).build().execute(new GenericsCallback(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatJson).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Log.i("即时通讯发送数据返回结果:1", "" + e.getMessage());
 //                ToastUtil.show(mActivity, "错误代码" + e.getMessage());
                 ToastUtil.show(mActivity, "发送失败!");
+                chatMsgInterface.onChatMsgError();
             }
 
             @Override
-            public void onResponse(Object response, int id) {
+            public void onResponse(String response, int id) {
                 Log.i("即时通讯发送数据返回结果:2", "" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int d = jsonObject.getInt("d");
+                    if (d > 0) {
+                        chatMsgInterface.onChatMsgResponse();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
+
+    /**
+     * 方法名：getProblemTypeLeft
+     * 功    能：获取一级节点信息
+     * 参    数：Activity activity final String username, final String password
+     * 返回值：无
+     */
+    public static void getChatProblemTypeLeft(final Activity activity, ChatProblemTypeLeftInterface problemTypeLeftInterfaces) {
+        final ChatProblemTypeLeftInterface problemTypeLeftInterface = problemTypeLeftInterfaces;
+        OkHttpUtils.get().url(UrlConfig.URL_GETBEGINNINGENTITY).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onResponse(String response, int id) {
+                ArrayList<ChatProblemTypeLeftEntity> problemTypeLeftList = (ArrayList<ChatProblemTypeLeftEntity>) JSON.parseArray(response, ChatProblemTypeLeftEntity.class);
+                problemTypeLeftInterface.getChatTypeLeft(problemTypeLeftList);
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                ToastUtil.show(activity, "服务器有错误，请稍候再试");
+            }
+        });
+    }
+
+    /**
+     * 方法名：newAddChatProblemPicture
+     * 功    能：巡更事件上报  图片上传
+     * 参    数：Context activity, Map<String,File> fileMap, Object... strings
+     * 返回值：无
+     */
+    public static void newAddChatProblemPricture(final Activity mActivity, List<File> listFile, List<String> fileName, String problemDes, int alarmid, int dataType, int subSysType, String longitude, String latitude, String deviceUuid, String time) {
+        LoadingDialogUtil.show(mActivity);
+        final ChatSendPicTureInterface chatSendPicTureInterface = (ChatSendPicTureInterface) mActivity;
+
+        List<Map<String, Object>> list = new ArrayList<>();
+        //图片流  文件名保存到map里
+        Map<String, Object> fileMap = null;
+//        List<byte[]> listByte;
+        if (listFile.size() == fileName.size()) {
+            for (int i = 0; i < listFile.size(); i++) {
+//                listByte = new ArrayList<>();
+//                listByte.add(FileToByteUtils.getBytesFromFile(listFile.get(i)));
+                fileMap = new HashMap<>();
+                String[] s = fileName.get(i).split("\\.");
+                fileMap.put("imgbs", FileToByteUtils.getBytesFromFile(listFile.get(i)));
+//                fileMap.put("imgbs", s[0]);
+                fileMap.put("imgname", s[0]);
+                fileMap.put("extname", s[1]);
+                list.add(fileMap);
+            }
+        }
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("alarm_related_info", 1);//如果告警类型为长时间未移动 ，此字段为持续为移动时间 如果此字段为巡更点异常，1、为巡更点故障  2、恢复
+        dataMap.put("alarmtext", problemDes);//告警描述信息
+        dataMap.put("alarmtime", time);//时间戳
+        dataMap.put("alarmtype", 3);//告警类型 1:长时间未移动 3:人工上报告警信息
+        dataMap.put("deviceguid", deviceUuid);//当前设备唯一编号
+        dataMap.put("specified_point", -1);//规定巡更点id（后期扩展用）
+        dataMap.put("point_code", "");//巡更点编号，可为无
+        dataMap.put("routeid", -1);//路线id（后期扩展用）
+        dataMap.put("Longitude", !("-1").equals(longitude) ? longitude : "-1");//	经度，-1为无
+        dataMap.put("Latitude", !("-1").equals(latitude) ? latitude : "-1");//纬度, -1为无
+        dataMap.put("file_num", listFile.size());//文件个数
+        dataMap.put("file_list", list);//文件保存到list中
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("subSysType", subSysType);
+        params.put("dataType", dataType);
+        params.put("mark", "patrolphone");
+        params.put("data", dataMap);
+        String sendChatWarningimg = JSON.toJSONString(params);
+        Log.i("巡更巡检事件上报log", "json:" + sendChatWarningimg);
+        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatWarningimg).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                ToastUtil.show(mActivity, "错误代码" + e.getMessage().toString());
+                if (LoadingDialogUtil.show(mActivity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Log.i("success", "成功:" + response);
+                Toast.makeText(mActivity, "上传成功", Toast.LENGTH_SHORT).show();
+//                try {
+//
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    int d = jsonObject.getInt("d");
+//                    if (d != 1) {
+//                        Toast.makeText(mActivity, "第" + i + "张图片上传失败!", Toast.LENGTH_SHORT).show();
+//                    }
+//                    if (i == mapSize) {
+//                        Toast.makeText(mActivity, "上传成功", Toast.LENGTH_SHORT).show();
+//                        mActivity.finish();
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    Toast.makeText(mActivity, "数据解析失败!", Toast.LENGTH_SHORT).show();
+//                }
+            }
+        });
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("imgbs", fileName);
+//        map.put("imgname", fileName);
+//        map.put("alarmid", alarmid);
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("subSysType", 10);
+//        params.put("dataType", dataType);
+//        params.put("mark", "patrolphone");
+//        params.put("data", map);
+//        String sendChatWarningimg = JSON.toJSONString(params);
+//        Log.i("巡更巡检事件上报log", "json:" + sendChatWarningimg);
+//        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json;charset=utf-8")).content(sendChatWarningimg).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+//            @Override
+//            public void onError(Call call, Exception e, int id) {
+//                Log.i("onerror", "onResponse:" + e.getMessage());
+//                ToastUtil.show(mActivity, "错误代码" + e.getMessage().toString());
+//                if (LoadingDialogUtil.show(mActivity).isShowing()) {
+//                    LoadingDialogUtil.dismiss();
+//                }
+//            }
+//
+//            @Override
+//            public void onResponse(String response, int id) {
+//                Toast.makeText(mActivity, "success", Toast.LENGTH_SHORT).show();
+//                Log.i("successok", "onResponse:" + response);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    int d = jsonObject.getInt("d");
+////                    chatSendPicTureInterface.getChatSenPictureResponce(response);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                if (LoadingDialogUtil.show(mActivity).isShowing()) {
+//                    LoadingDialogUtil.dismiss();
+//                }
+//            }
+//        });
+    }
+    /**
+     * 方法名：addProblemRequestsb
+     * 功    能：上报问题最新方法不管有没有图片
+     * 参    数：Context activity, Map<String,File> fileMap, Object... strings
+     * 返回值：无
+     */
+
+//    public static void addProblemRequestsb(final Activity activity, Map<String, File> fileMap, Object... strings) {
+//        LoadingDialogUtil.show(activity);//显示加载
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("ProblemTitle", "问题名称");
+//        params.put("SearchProblemType", strings[0]);
+//        params.put("Position", strings[1]);
+//        params.put("GPS", strings[2]);
+//        params.put("FindDate", strings[3]);
+//        params.put("ProblemDes", strings[4]);
+//        params.put("ReportPerson", SharedUtil.getString(activity, "PersonID"));
+//        OkHttpUtils.post().files("mFile", fileMap).url(UrlConfig.URL_IMGUPLOAD).params(params).build().execute(new StringCallback() {
+//            @Override
+//            public void onResponse(String response, int id) {
+//                if ("true".equals(response)) {
+//                    ToastUtil.show(activity, "上报成功");
+//                    activity.finish();
+//                } else {
+//                    ToastUtil.show(activity, "上报失败，请稍候再试");
+//                }
+//                if (LoadingDialogUtil.show(activity).isShowing()) {
+//                    LoadingDialogUtil.dismiss();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Call call, Exception e, int id) {
+//                ToastUtil.show(activity, "服务器异常，请稍后再试");
+//                if (LoadingDialogUtil.show(activity).isShowing()) {
+//                    LoadingDialogUtil.dismiss();
+//                }
+//            }
+//        });
+//    }
 }

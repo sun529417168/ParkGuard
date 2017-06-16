@@ -21,6 +21,7 @@
             android:id="@+id/chat_item_header"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="@mipmap/logo"
             android:layout_alignParentLeft="true" />
 
         <cn.com.watchman.chatui.widget.BubbleImageView

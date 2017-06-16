@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.jude.easyrecyclerview.EasyRecyclerView;
@@ -45,6 +46,7 @@ import cn.com.watchman.chatui.enity.MessageInfo;
 import cn.com.watchman.chatui.enity.SocketMsgInfo;
 import cn.com.watchman.chatui.fragment.ChatEmotionFragment;
 import cn.com.watchman.chatui.fragment.ChatFunctionFragment;
+import cn.com.watchman.chatui.interfaces.ChatMsgInterface;
 import cn.com.watchman.chatui.service.MyScoketService;
 import cn.com.watchman.chatui.uiutils.Constants;
 import cn.com.watchman.chatui.uiutils.GlobalOnItemClickManagerUtils;
@@ -52,16 +54,19 @@ import cn.com.watchman.chatui.uiutils.MediaManager;
 import cn.com.watchman.chatui.uiutils.MyConstant;
 import cn.com.watchman.chatui.uiutils.MyServiceUtils;
 import cn.com.watchman.chatui.widget.EmotionInputDetector;
+import cn.com.watchman.chatui.widget.GifTextView;
 import cn.com.watchman.chatui.widget.MyPopWindowView;
 import cn.com.watchman.chatui.widget.NoScrollViewPager;
 import cn.com.watchman.chatui.widget.StateButton;
 
 
 /**
- * Created by 志强 on 2017.6.9.
+ * 描    述：聊天页面
+ * 作    者：zzq
+ * 时    间：2017年6月8日
+ * 版    本：V1.0.0
  */
-
-public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnDismissListener {
+public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnDismissListener, ChatMsgInterface {
 
     EasyRecyclerView chatList;//聊天页面布局
     ImageView emotionVoice;//语音按钮
@@ -272,6 +277,21 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
                 }
             });
         }
+
+        @Override
+        public void onItemTextClick(GifTextView gifTextView, int position) {
+            Log.i("聊天页面textview点击事件", "" + gifTextView.getText());
+            Toast.makeText(ChatMainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onItemWarningClick(View view, TextView tv) {
+            Log.i("聊天页面Warning点击事件", "" + tv.getText());
+            Intent intent = new Intent();
+            intent.putExtra("id", tv.getText());
+            intent.setClass(ChatMainActivity.this, WarningDetailsActivity.class);
+            startActivity(intent);
+        }
     };
 
     /**
@@ -328,20 +348,23 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         chatAdapter.addAll(messageInfos);
     }
 
+    MessageInfo mMessageInfo;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final MessageInfo messageInfo) {
-        messageInfo.setHeader(boyUrl);
-        messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-        messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
-        messageInfos.add(messageInfo);
-        chatAdapter.add(messageInfo);
+        mMessageInfo = messageInfo;
+        mMessageInfo.setHeader(boyUrl);
+        mMessageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+        mMessageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
+        messageInfos.add(mMessageInfo);
+        chatAdapter.add(mMessageInfo);
         chatList.scrollToPosition(chatAdapter.getCount() - 1);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                messageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-                chatAdapter.notifyDataSetChanged();
-            }
-        }, 2000);
+//        new Handler().postDelayed(new Runnable() {
+//            public void run() {
+//                mMessageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
+//                chatAdapter.notifyDataSetChanged();
+//            }
+//        }, 2000);
 //        new Handler().postDelayed(new Runnable() {
 //            public void run() {
 //                MessageInfo message = new MessageInfo();
@@ -390,6 +413,19 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         }
         return super.onTouchEvent(event);
     }
+
+    @Override
+    public void onChatMsgError() {
+        mMessageInfo.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
+        chatAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChatMsgResponse() {
+        mMessageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
+        chatAdapter.notifyDataSetChanged();
+    }
+
 
     public class MyChatBroadcasReceiver extends BroadcastReceiver {
         @Override
@@ -455,6 +491,45 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         if (!MyServiceUtils.isServiceRunning(MyConstant.GPSSERVICE_CLASSNAME, ChatMainActivity.this)) {
             Intent startIntent = new Intent(this, MyScoketService.class);
             startService(startIntent);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("聊天页面onActivityResult方法:", "requestCode:" + requestCode + ",resultCode:" + resultCode);
+        switch (requestCode) {
+            case 2:
+                if (resultCode == RESULT_OK) {
+                    String id = data.getStringExtra("warningId");
+                    String name = data.getStringExtra("warningName");
+                    String address = data.getStringExtra("warningAddress");
+                    String time = data.getStringExtra("warningTime");
+                    String imgUrl = data.getStringExtra("warningImgUrl");
+                    MessageInfo messageInfo = new MessageInfo();
+                    MessageInfo.Warning warning = new MessageInfo.Warning();
+                    warning.setWarningId(id);
+                    warning.setWarningMsg(name);
+                    warning.setWarningDatetime(time);
+                    warning.setWarningAddress(address);
+                    warning.setWarningImgUrl(imgUrl);
+                    messageInfo.setWarning(warning);
+//        messageInfo.setWarning("not null");
+                    mMessageInfo = messageInfo;
+                    mMessageInfo.setHeader(boyUrl);
+                    mMessageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+                    mMessageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
+                    messageInfos.add(mMessageInfo);
+                    chatAdapter.add(mMessageInfo);
+                    chatList.scrollToPosition(chatAdapter.getCount() - 1);
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
+                            mMessageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
+                            chatAdapter.notifyDataSetChanged();
+                        }
+                    }, 2000);
+                }
+                break;
         }
     }
 }

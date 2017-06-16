@@ -212,8 +212,8 @@ public class EmotionInputDetector {
                 messageInfo.setContent(mEditText.getText().toString());
                 EventBus.getDefault().post(messageInfo);
                 String deviceguid = new DeviceUuidFactory(mActivity).getDeviceUuid().toString();
-                String userId = SharedUtil.getString(mActivity, "PersonID");
-                WatchManRequest.sendChatMsg(mActivity, 10, 8, "patrolpc", deviceguid, 1, mEditText.getText().toString(), getTime(), "-1", "-1", userId);
+                int userId = Integer.parseInt(SharedUtil.getString(mActivity, "PersonID"));
+                WatchManRequest.sendChatMsg(mActivity, 10, 8, "patrolphone", deviceguid, 1, mEditText.getText().toString(), getTime(), "-1", "-1", userId);
                 mEditText.setText("");
             }
         });

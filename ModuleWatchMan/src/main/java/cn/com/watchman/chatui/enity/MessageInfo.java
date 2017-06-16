@@ -1,7 +1,8 @@
 package cn.com.watchman.chatui.enity;
 
 /**
- * 作者：Rance on 2016/12/14 14:13
+ * 描述:聊天发送数据实体类
+ * 作者：zzq
  * 邮箱：rance935@163.com
  */
 public class MessageInfo {
@@ -14,6 +15,76 @@ public class MessageInfo {
     private String imageUrl;
     private long voiceTime;
     private String msgId;
+    //new add
+    private Warning warning;
+//    private String warning;
+
+    public Warning getWarning() {
+        return warning;
+    }
+
+    public void setWarning(Warning warning) {
+        this.warning = warning;
+    }
+
+    public static class Warning {
+        private String warningId;
+        private String warningMsg;
+        private String warningDatetime;
+        private String warningAddress;
+        private String warningImgUrl;
+
+
+
+        public String getWarningImgUrl() {
+            return warningImgUrl;
+        }
+
+        public void setWarningImgUrl(String warningImgUrl) {
+            this.warningImgUrl = warningImgUrl;
+        }
+
+
+
+        public String getWarningMsg() {
+            return warningMsg;
+        }
+
+        public void setWarningMsg(String warningMsg) {
+            this.warningMsg = warningMsg;
+        }
+
+        public String getWarningDatetime() {
+            return warningDatetime;
+        }
+
+        public void setWarningDatetime(String warningDatetime) {
+            this.warningDatetime = warningDatetime;
+        }
+
+        public String getWarningAddress() {
+            return warningAddress;
+        }
+
+        public void setWarningAddress(String warningAddress) {
+            this.warningAddress = warningAddress;
+        }
+
+        public String getWarningId() {
+            return warningId;
+        }
+
+        public void setWarningId(String warningId) {
+            this.warningId = warningId;
+        }
+    }
+//    public String getWarning() {
+//        return warning;
+//    }
+//
+//    public void setWarning(String warning) {
+//        this.warning = warning;
+//    }
 
     public int getType() {
         return type;

@@ -90,6 +90,21 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.NoActionBar" />
+        <!--chat 预警页面-->
+        <activity
+            android:name=".chatui.ChatWarningActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--chat 输入地址页面-->
+        <activity
+            android:name=".chatui.ChatInputAddressActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--chat 告警详情页面-->
+        <activity
+            android:name=".chatui.WarningDetailsActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <!--图片展示页面-->
         <activity
             android:name=".chatui.FullImageActivity"
