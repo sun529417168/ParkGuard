@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import com.amap.api.trace.LBSTraceClient;
 import com.amap.api.trace.TraceListener;
 import com.amap.api.trace.TraceLocation;
 import com.amap.api.trace.TraceOverlay;
+import com.linked.erfli.library.utils.SharedUtil;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -39,6 +42,8 @@ import cn.com.watchman.bean.DinatesBean;
 import cn.com.watchman.bean.DinatesDaoImpl;
 import cn.com.watchman.bean.PathRecord;
 import cn.com.watchman.database.DbAdapter;
+import cn.com.watchman.utils.Distance;
+import cn.com.watchman.utils.MyRequest;
 import cn.com.watchman.utils.Util;
 
 
@@ -71,6 +76,8 @@ public class RecordService extends Service implements LocationSource,
     private TraceOverlay mTraceoverlay;
     private Marker mlocMarker;
     private DinatesDaoImpl dinatesDao;
+    private boolean isThread = true;
+    private AMapLocation mAmapLocation = null;
 
     @Override
     public void onCreate() {
@@ -79,6 +86,7 @@ public class RecordService extends Service implements LocationSource,
         dinatesDao = new DinatesDaoImpl(this);
         init();
         initpolyline();
+        new MyThread().start();
     }
 
     @Override
@@ -226,6 +234,7 @@ public class RecordService extends Service implements LocationSource,
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null) {
             if (amapLocation != null && amapLocation.getErrorCode() == 0) {
+                mAmapLocation = amapLocation;
                 mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
                 LatLng mylocation = new LatLng(amapLocation.getLatitude(),
                         amapLocation.getLongitude());
@@ -235,8 +244,9 @@ public class RecordService extends Service implements LocationSource,
                 /**
                  * 开始收集信息
                  */
-                
-                dinatesDao.insert(new DinatesBean(amapLocation.getLongitude(), amapLocation.getLatitude(), System.currentTimeMillis() / 1000));
+//                if (Distance.isCompareTwo(this, amapLocation)) {
+//                    dinatesDao.insert(new DinatesBean(amapLocation.getLongitude(), amapLocation.getLatitude(), System.currentTimeMillis() / 1000));
+//                }
                 mTracelocationlist.add(Util.parseTraceLocation(amapLocation));
                 redrawline();
                 if (mTracelocationlist.size() > tracesize - 1) {
@@ -245,6 +255,39 @@ public class RecordService extends Service implements LocationSource,
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
                 Log.e("AmapErr", errText);
+            }
+        }
+    }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                /**
+                 * 开始收集信息
+                 */
+                dinatesDao.insert(new DinatesBean(mAmapLocation.getLongitude(), mAmapLocation.getLatitude(), System.currentTimeMillis() / 1000));
+            }
+        }
+    };
+
+    public class MyThread extends Thread {
+        public void run() {
+            while (isThread) {
+                if (mAmapLocation != null && mAmapLocation.getErrorCode() == 0) {
+                    if (Distance.isCompareTwo(RecordService.this, mAmapLocation)) {
+                        Message msg = mHandler.obtainMessage();
+                        msg.what = 0;
+                        mHandler.sendMessage(msg);
+                    } 
+                    SharedUtil.setString(RecordService.this, "ReLongitude", String.valueOf(mAmapLocation.getLongitude()));
+                    SharedUtil.setString(RecordService.this, "ReLatitude", String.valueOf(mAmapLocation.getLatitude()));
+                }
+                try {
+                    Thread.sleep(1000 * 3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -380,5 +423,6 @@ public class RecordService extends Service implements LocationSource,
         LBSTraceClient mTraceClient = new LBSTraceClient(getApplicationContext());
         mTraceClient.queryProcessedTrace(2, Util.parseTraceLocationList(record.getPathline()), LBSTraceClient.TYPE_AMAP, this);
         saveRecord(record.getPathline(), record.getDate());
+        isThread = false;
     }
 }
