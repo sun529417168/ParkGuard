@@ -232,10 +232,10 @@ public class RecordService extends Service implements LocationSource,
                 mAMap.moveCamera(CameraUpdateFactory.changeLatLng(mylocation));
                 record.addpoint(amapLocation);
                 mPolyoptions.add(mylocation);
-                Log.i("amapLocation", record.getPathline().toString());
                 /**
                  * 开始收集信息
                  */
+                
                 dinatesDao.insert(new DinatesBean(amapLocation.getLongitude(), amapLocation.getLatitude(), System.currentTimeMillis() / 1000));
                 mTracelocationlist.add(Util.parseTraceLocation(amapLocation));
                 redrawline();

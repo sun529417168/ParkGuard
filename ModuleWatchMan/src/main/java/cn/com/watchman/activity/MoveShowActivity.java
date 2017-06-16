@@ -47,9 +47,9 @@ import cn.com.watchman.utils.WMyUtils;
  * 版    本：V1.1.2
  */
 
-public class MoveShowActivity extends BaseActivity implements LocationSource, AMapLocationListener {
-    private MapView mapView;
-    private AMap aMap;
+public abstract class MoveShowActivity extends BaseActivity implements LocationSource, AMapLocationListener {
+    protected MapView mapView;
+    protected AMap aMap;
     private DinatesDaoImpl dinatesDao;
     private SensorEventHelper mSensorHelper;
     private boolean mFirstFix = false;
@@ -61,6 +61,7 @@ public class MoveShowActivity extends BaseActivity implements LocationSource, AM
     private static final int STROKE_COLOR = Color.argb(180, 3, 145, 255);
     private static final int FILL_COLOR = Color.argb(10, 0, 0, 180);
     public static final String LOCATION_MARKER_FLAG = "mylocation";
+    protected List<DinatesBean> dinatesList = new ArrayList<>();
 
     @Override
     protected void setView() {
@@ -79,20 +80,16 @@ public class MoveShowActivity extends BaseActivity implements LocationSource, AM
         if (aMap == null) {
             aMap = mapView.getMap();
         }
-        addPolylineInPlayGround();
-        List<LatLng> points = readLatLngs();
-        LatLngBounds.Builder b = LatLngBounds.builder();
-        for (int i = 0; i < points.size(); i++) {
-            b.include(points.get(i));
+        dinatesList = dinatesDao.rawQuery("select * from t_gps where time > ?", new String[]{WMyUtils.getTimesmorning()});
+        if (dinatesList.size() == 0) {
+            findViewById(R.id.move_trajectory).setVisibility(View.GONE);
+            locate();
+        } else {
+            trajectory();
         }
-        LatLngBounds bounds = b.build();
-        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
-        LatLng drivePoint = points.get(0);
-        Pair<Integer, LatLng> pair = PointsUtil.calShortestDistancePoint(points, drivePoint);
-        points.set(pair.first, drivePoint);
     }
 
-    private void addPolylineInPlayGround() {
+    protected void addPolylineInPlayGround() {
         List<LatLng> list = readLatLngs();
         List<Integer> colorList = new ArrayList<Integer>();
         List<BitmapDescriptor> bitmapDescriptors = new ArrayList<BitmapDescriptor>();
@@ -122,16 +119,20 @@ public class MoveShowActivity extends BaseActivity implements LocationSource, AM
                 .width(18));
     }
 
-    private List<LatLng> readLatLngs() {
+    protected List<LatLng> readLatLngs() {
         List<LatLng> points = new ArrayList<>();
-        List<DinatesBean> dinatesList = dinatesDao.rawQuery("select * from t_gps where time > ?", new String[]{WMyUtils.getTimesmorning()});
+
         for (DinatesBean bean : dinatesList) {
             points.add(new LatLng(bean.getLatitude(), bean.getLongitude()));
         }
         return points;
     }
 
-    public void onBackClick(View view) {//定位
+    public void onBackClick(View view) {//定位点击事件
+        locate();
+    }
+
+    protected void locate() {//定位方法
         setUpMap();
         mSensorHelper = new SensorEventHelper(this);
         if (mSensorHelper != null) {
@@ -139,20 +140,35 @@ public class MoveShowActivity extends BaseActivity implements LocationSource, AM
         }
     }
 
-    public void onTrajectory(View view) {//轨迹
+    public void onTrajectory(View view) {//轨迹点击事件
+        trajectory();
+    }
+
+    protected void trajectory() {//轨迹方法
         mListener = null;
         if (mlocationClient != null) {
             mlocationClient.stopLocation();
             mlocationClient.onDestroy();
         }
         mlocationClient = null;
-        init();
+        addPolylineInPlayGround();
+        List<LatLng> points = readLatLngs();
+        LatLngBounds.Builder b = LatLngBounds.builder();
+        for (int i = 0; i < points.size(); i++) {
+            b.include(points.get(i));
+        }
+        LatLngBounds bounds = b.build();
+        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+        LatLng drivePoint = points.get(0);
+        Pair<Integer, LatLng> pair = PointsUtil.calShortestDistancePoint(points, drivePoint);
+        points.set(pair.first, drivePoint);
+        initMarker();
     }
 
     /**
      * 设置一些amap的属性
      */
-    private void setUpMap() {
+    protected void setUpMap() {
         aMap.setLocationSource(this);// 设置定位监听
         aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
@@ -286,7 +302,7 @@ public class MoveShowActivity extends BaseActivity implements LocationSource, AM
         mCircle = aMap.addCircle(options);
     }
 
-    private void addMarker(LatLng latlng) {
+    protected void addMarker(LatLng latlng) {
         if (mLocMarker != null) {
             return;
         }
@@ -297,4 +313,6 @@ public class MoveShowActivity extends BaseActivity implements LocationSource, AM
         mLocMarker = aMap.addMarker(options);
         mLocMarker.setTitle(LOCATION_MARKER_FLAG);
     }
+
+    protected abstract void initMarker();
 }

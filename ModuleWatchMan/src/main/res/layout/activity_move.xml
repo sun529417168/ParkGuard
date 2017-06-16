@@ -22,6 +22,7 @@
         android:onClick="onBackClick" />
 
     <ImageButton
+        android:id="@+id/move_trajectory"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_above="@+id/move_position"

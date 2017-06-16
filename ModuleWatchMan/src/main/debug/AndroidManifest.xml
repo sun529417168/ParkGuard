@@ -69,7 +69,7 @@
             android:screenOrientation="portrait" />
         <!--地图轨迹平滑移动界面-->
         <activity
-            android:name=".activity.MoveShowActivity"
+            android:name=".activity.MarkerActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <!--gps后台服务-->

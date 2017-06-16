@@ -278,7 +278,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         } else if (i == R.id.watchMan_map) {
 //            startActivity(new Intent(this, RecordActivity.class));
 //            startActivity(new Intent(this, RecordShowActivity.class));
-            startActivity(new Intent(this, MoveShowActivity.class));
+            startActivity(new Intent(this, MarkerActivity.class));
         } else if (i == R.id.watchMan_statistics) {
             intent = new Intent(this, WatchManStatisticsActivity.class);
             intent.putExtra("currentCount", currentCount);

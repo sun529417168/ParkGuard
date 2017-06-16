@@ -223,12 +223,26 @@ public class MyUtils {
      */
     public static String stampToDate(String s) {
         String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long lt = new Long(s);
         Date date = new Date(lt);
         res = simpleDateFormat.format(date);
         return res;
+    }
+
+    /**
+     * 十位数时间戳转换成时间
+     *
+     * @param time 时间戳
+     * @return
+     */
+    public static String stampToDates(String time) {
+        SimpleDateFormat sdr = new SimpleDateFormat("yyyy年MM月dd日HH时mm分");
+        @SuppressWarnings("unused")
+        long lcc = Long.valueOf(time);
+        int i = Integer.parseInt(time);
+        String times = sdr.format(new Date(i * 1000L));
+        return times;
     }
 
     /**
@@ -241,8 +255,7 @@ public class MyUtils {
      */
     public static String dateToStamp(String s) {
         String res = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-                "yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date;
         try {
             date = simpleDateFormat.parse(s);

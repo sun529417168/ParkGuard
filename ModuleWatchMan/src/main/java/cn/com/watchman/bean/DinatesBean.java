@@ -24,6 +24,7 @@ public class DinatesBean implements Serializable {
     private double latitude;
     @Column(name = "time", type = "LONG")
     private long time;
+    private String info;
 
 
     public DinatesBean() {
@@ -35,6 +36,13 @@ public class DinatesBean implements Serializable {
         this.longitude = longitude;
         this.latitude = latitude;
         this.time = time;
+    }
+
+    public DinatesBean(double longitude, double latitude, String info) {
+        super();
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.info = info;
     }
 
     public int getId() {
@@ -69,9 +77,22 @@ public class DinatesBean implements Serializable {
         this.time = time;
     }
 
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     @Override
     public String toString() {
-        return "GPSBean [id=" + id + ", longitude=" + longitude + ", latitude="
-                + latitude + ", time=" + time + "]";
+        return "DinatesBean{" +
+                "id=" + id +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", time=" + time +
+                ", info='" + info + '\'' +
+                '}';
     }
 }
