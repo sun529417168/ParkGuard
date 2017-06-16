@@ -33,6 +33,7 @@ public class GPSService extends Service {
     private int currentCount = 0,totalCount;
     private Intent intent;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -112,6 +113,7 @@ public class GPSService extends Service {
     public class MyThread extends Thread {
         public void run() {
             while (isThread) {
+                MyRequest.typeRequest(GPSService.this,1);
                 if (gpsBean != null) {
                     Log.i("gpsInfo", gpsBean.toString());
                     if (Distance.isCompare(GPSService.this, gpsBean)) {

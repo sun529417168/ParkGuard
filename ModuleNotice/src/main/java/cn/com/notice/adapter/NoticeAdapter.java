@@ -84,7 +84,7 @@ public class NoticeAdapter extends MyBaseAdapter {
         /**
          * 赋值
          */
-        number.setText(bean.getInformSno());
+        number.setText("编号:"+bean.getInformSno());
         date.setText(firstDate+" "+notice_week);
         notice_calendar_year_month.setText(notice_text_year_month);
         notice_calendar_week.setText(notice_week);

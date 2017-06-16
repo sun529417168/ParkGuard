@@ -37,7 +37,8 @@
             <cn.com.watchman.weight.RadarView
                 android:id="@+id/watchMan_scan_radar"
                 android:layout_width="80dp"
-                android:layout_height="80dp" />
+                android:layout_height="80dp"
+              />
 
         </LinearLayout>
 

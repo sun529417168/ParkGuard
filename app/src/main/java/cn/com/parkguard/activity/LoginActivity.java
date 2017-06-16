@@ -3,11 +3,15 @@ package cn.com.parkguard.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.alibaba.sdk.android.push.CloudPushService;
@@ -18,10 +22,11 @@ import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
-import cn.com.parkguard.Utils.MyRequest;
 import cn.com.parkguard.R;
+import cn.com.parkguard.Utils.MyRequest;
 import cn.com.parkguard.bean.UserBean;
 import cn.com.parkguard.interfaces.LoginInterface;
+
 
 
 /**
@@ -38,7 +43,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private String username, password;
     private Button loginBtn;
     private TextView forgetPassword;
-
+    private ImageButton pwdVisible,pwdDelete;
+    private Boolean pwdIsVisible=false;
     @Override
     protected void setView() {
         setContentView(R.layout.activity_login);
@@ -60,7 +66,35 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         loginBtn.setOnClickListener(this);
         forgetPassword = (TextView) findViewById(R.id.login_forget_password);
         forgetPassword.setOnClickListener(this);
+        pwdVisible=(ImageButton)findViewById(R.id.password_visible);
+        pwdDelete=(ImageButton)findViewById(R.id.password_delete);
+        pwdVisible.setOnClickListener(this);
+        pwdDelete.setOnClickListener(this);
+        pwdVisible.setVisibility(View.GONE);
+        pwdDelete.setVisibility(View.GONE);
+        inputPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                pwdVisible.setVisibility(View.VISIBLE);
+                pwdDelete.setVisibility(View.VISIBLE);
+                if(s.length()==0)
+                {
+                    pwdVisible.setVisibility(View.GONE);
+                    pwdDelete.setVisibility(View.GONE);
+                    hidePassword();
+                }
+            }
+        });
     }
 
     @Override
@@ -84,6 +118,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 Intent intent = new Intent(this, ForgetPasswordActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.password_visible:
+                if(pwdIsVisible)
+                {
+                    hidePassword();
+                }
+                else
+                {
+                    showPassword();
+                }
+                break;
+            case R.id.password_delete:
+                inputPassword.setText("");
+                pwdVisible.setVisibility(View.GONE);
+                pwdDelete.setVisibility(View.GONE);
+                if(pwdIsVisible)
+                {
+                    hidePassword();
+                }
+                break;
         }
     }
 
@@ -100,7 +153,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
         return flag;
     }
-
+    public void hidePassword() {
+        inputPassword.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        pwdVisible.setBackgroundResource(R.drawable.open);
+        inputPassword.setSelection(inputPassword.getText().toString().trim().length());
+        pwdIsVisible=false;
+    }
+    public void showPassword(){
+        inputPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        pwdVisible.setBackgroundResource(R.drawable.close);
+        inputPassword.setSelection(inputPassword.getText().toString().trim().length());
+        pwdIsVisible=true;
+    }
     @Override
     public void login(final UserBean userBean) {
         SharedUtil.setString(this, "PersonID", userBean.getPersonId() + "");
