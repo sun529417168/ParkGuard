@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.linked.erfli.library.utils.SharedUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -100,8 +101,7 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
     private String girlUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497010388545&di=da66ed1f9e340aa4022d3b357c847cc0&imgtype=0&src=http%3A%2F%2Fv1.qzone.cc%2Favatar%2F201303%2F18%2F17%2F14%2F5146daf314dfa660.jpg%2521180x180.jpg";
     private String boyUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497010481703&di=1c26989083c94c4937eb3365ff2cc8c3&imgtype=0&src=http%3A%2F%2Fimg.meimi.cc%2Ftouxiang%2F20170522%2Fswxy0j0iijy335.png";
 
-    private LinearLayout title_back;
-    private TextView title_name;
+    private TextView chat_tv_myName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,8 +128,8 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         emotionSend = (StateButton) findViewById(R.id.emotion_send);
         viewpager = (NoScrollViewPager) findViewById(R.id.viewpager);
         emotionLayout = (RelativeLayout) findViewById(R.id.emotion_layout);
-        title_name = (TextView) findViewById(R.id.title_name);
-        title_name.setText("实时通讯");
+        chat_tv_myName = (TextView) findViewById(R.id.chat_tv_myName);
+        chat_tv_myName.setText(SharedUtil.getString(this, "personName"));
     }
 
     private void initWidget() {
