@@ -40,6 +40,7 @@ import java.util.List;
 import cn.com.watchman.R;
 import cn.com.watchman.bean.DinatesBean;
 import cn.com.watchman.bean.DinatesDaoImpl;
+import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.bean.PathRecord;
 import cn.com.watchman.database.DbAdapter;
 import cn.com.watchman.utils.Distance;
@@ -77,7 +78,7 @@ public class RecordService extends Service implements LocationSource,
     private Marker mlocMarker;
     private DinatesDaoImpl dinatesDao;
     private boolean isThread = true;
-    private AMapLocation mAmapLocation = null;
+    private GPSBean gpsBean;
 
     @Override
     public void onCreate() {
@@ -234,10 +235,9 @@ public class RecordService extends Service implements LocationSource,
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null) {
             if (amapLocation != null && amapLocation.getErrorCode() == 0) {
-                mAmapLocation = amapLocation;
+                gpsBean = new GPSBean(amapLocation.getLongitude(), amapLocation.getLatitude());
                 mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-                LatLng mylocation = new LatLng(amapLocation.getLatitude(),
-                        amapLocation.getLongitude());
+                LatLng mylocation = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
                 mAMap.moveCamera(CameraUpdateFactory.changeLatLng(mylocation));
                 record.addpoint(amapLocation);
                 mPolyoptions.add(mylocation);
@@ -247,6 +247,7 @@ public class RecordService extends Service implements LocationSource,
 //                if (Distance.isCompareTwo(this, amapLocation)) {
 //                    dinatesDao.insert(new DinatesBean(amapLocation.getLongitude(), amapLocation.getLatitude(), System.currentTimeMillis() / 1000));
 //                }
+                Log.i("定位数据", amapLocation.getLongitude() + "===" + amapLocation.getLatitude());
                 mTracelocationlist.add(Util.parseTraceLocation(amapLocation));
                 redrawline();
                 if (mTracelocationlist.size() > tracesize - 1) {
@@ -266,7 +267,8 @@ public class RecordService extends Service implements LocationSource,
                 /**
                  * 开始收集信息
                  */
-                dinatesDao.insert(new DinatesBean(mAmapLocation.getLongitude(), mAmapLocation.getLatitude(), System.currentTimeMillis() / 1000));
+                Log.i("aMapLocation", gpsBean.getLongitude() + "===" + gpsBean.getLatitude());
+                dinatesDao.insert(new DinatesBean(gpsBean.getLongitude(), gpsBean.getLatitude(), System.currentTimeMillis() / 1000));
             }
         }
     };
@@ -274,14 +276,14 @@ public class RecordService extends Service implements LocationSource,
     public class MyThread extends Thread {
         public void run() {
             while (isThread) {
-                if (mAmapLocation != null && mAmapLocation.getErrorCode() == 0) {
-                    if (Distance.isCompareTwo(RecordService.this, mAmapLocation)) {
+                if (gpsBean != null) {
+                    if (Distance.isCompareTwoLa(RecordService.this, gpsBean)) {
                         Message msg = mHandler.obtainMessage();
                         msg.what = 0;
                         mHandler.sendMessage(msg);
-                    } 
-                    SharedUtil.setString(RecordService.this, "ReLongitude", String.valueOf(mAmapLocation.getLongitude()));
-                    SharedUtil.setString(RecordService.this, "ReLatitude", String.valueOf(mAmapLocation.getLatitude()));
+                    }
+                    SharedUtil.setString(RecordService.this, "ReLongitude", String.valueOf(gpsBean.getLongitude()));
+                    SharedUtil.setString(RecordService.this, "ReLatitude", String.valueOf(gpsBean.getLatitude()));
                 }
                 try {
                     Thread.sleep(1000 * 3);

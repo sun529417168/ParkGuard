@@ -74,7 +74,7 @@ public class GPSService extends Service {
                     describe = "网络定位成功";
                 }
                 gpsBean = new GPSBean(location.getLongitude(), location.getLatitude(), location.getLocationDescribe(), location.getRadius(), location.getAltitude(), describe, location.getSatelliteNumber(), location.getGpsAccuracyStatus() + "", location.getSpeed());
-                if (location.getSpeed() > 10) {
+                if (location.getSpeed() > 30) {
                     //实时上传
                     MyRequest.gpsRequest(GPSService.this, gpsBean);
                     currentCount++;

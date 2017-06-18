@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
+import com.amap.api.maps.model.LatLng;
 import com.linked.erfli.library.utils.SharedUtil;
 
 import cn.com.watchman.bean.GPSBean;
@@ -91,6 +92,31 @@ public class Distance {
             return true;
         }
     }
+    /**
+     * 方法名：isCompare
+     * 功    能：判断是否大于20米
+     * 参    数：Activity activity, GPSBean gpsBean
+     * 返回值：boolean
+     */
+    public static boolean isCompareTwoLa(Context activity, GPSBean amapLocation) {
+        double compare1 = getDistance(amapLocation.getLongitude(), amapLocation.getLatitude(), TextUtils.isEmpty(SharedUtil.getString(activity, "ReLongitude")) ? amapLocation.getLongitude() : Double.parseDouble(SharedUtil.getString(activity, "ReLongitude")), TextUtils.isEmpty(SharedUtil.getString(activity, "ReLatitude")) ? amapLocation.getLatitude() : Double.parseDouble(SharedUtil.getString(activity, "ReLatitude")));
+        double compare2 = 20;
+        Double double1 = new Double(String.valueOf(compare1));
+        Double double2 = new Double(String.valueOf(compare2));
+        int retval = double1.compareTo(double2);
+        if (retval > 0) {
+            Log.i("看看距离", "大于10米");
+            return true;
+        } else if (retval < 0) {
+            Log.i("看看距离", "小于10米");
+            return false;
+        } else {
+            Log.i("看看距离", "等于10米");
+            return true;
+        }
+    }
+
+
 
     /**
      * 方法名：isCompare
