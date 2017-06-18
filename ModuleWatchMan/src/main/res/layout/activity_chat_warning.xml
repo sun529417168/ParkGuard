@@ -34,7 +34,7 @@
                     style="@style/add_problem_textView"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/chat_add_problem_type_right"
-                    android:hint="@string/add_problem_choose" />
+                    android:hint="消防上报" />
 
                 <ImageView
                     android:id="@+id/chat_add_problem_type_right"
@@ -49,6 +49,7 @@
             <!--所在区域start-->
             <RelativeLayout
                 android:id="@+id/chat_add_problem_positionLayout"
+                android:visibility="gone"
                 style="@style/add_problem_layout">
 
                 <TextView

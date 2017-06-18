@@ -3,6 +3,7 @@ package cn.com.watchman.chatui;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.linked.erfli.library.ShowZoomPhotoActivity;
 import com.linked.erfli.library.adapter.TaskDetalPhotoAdapter;
@@ -39,10 +41,14 @@ import java.util.Map;
 
 import cn.com.watchman.R;
 import cn.com.watchman.chatui.enity.ChatProblemTypeLeftEntity;
+import cn.com.watchman.chatui.gpslocation.GPSLocationListener;
+import cn.com.watchman.chatui.gpslocation.GPSLocationManager;
+import cn.com.watchman.chatui.gpslocation.GPSProviderStatus;
 import cn.com.watchman.chatui.interfaces.ChatProblemTypeLeftInterface;
 import cn.com.watchman.chatui.interfaces.ChatSendPicTureInterface;
 import cn.com.watchman.chatui.widget.ChatProblemTypePopwindow;
 import cn.com.watchman.networkrequest.WatchManRequest;
+
 
 /**
  * 描    述：巡更告警
@@ -76,7 +82,7 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
     private GridView chat_add_problem_detail_gridView;
 
     //==================
-    private String problemType = "";
+    private String problemType = "3";
     private String address;
     private ArrayList<String> listPath = new ArrayList<String>();
     private File mCameraFile;
@@ -86,9 +92,9 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
     private TaskDetalPhotoAdapter taskDetalPhotoAdapter;
     private String getLongitude = "-1";//经度
     private String getLatitude = "-1";//纬度
-//    private String findDate;//时间
+    private String time;//时间
     private String problemDes;//描述
-
+    private GPSLocationManager gpsLocationManager;
     @Override
     protected void setView() {
         super.setView();
@@ -99,7 +105,11 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
     @Override
     protected void setDate(Bundle savedInstanceState) {
         super.setDate(savedInstanceState);
+        gpsLocationManager = GPSLocationManager.getInstances(ChatWarningActivity.this);
+//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -110,6 +120,7 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
     @Override
     protected void init() {
         super.init();
+
         //标题
         title_name = (TextView) findViewById(R.id.title_name);
         title_back = (LinearLayout) findViewById(R.id.title_back);
@@ -163,22 +174,18 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
                 DialogUtils.initGPS(this);
                 return;
             }
-            MyUtils.getLoc(ChatWarningActivity.this);
+//            getLocation();
+            gpsLocationManager.start(new MyListener());
+
+//            MyUtils.getLoc(ChatWarningActivity.this);
 //            findDate = chat_add_problem_findTime.getText().toString().trim();
             problemDes = chat_add_problem_inputInfo.getText().toString().trim();
             String deviceUuid = new DeviceUuidFactory(ChatWarningActivity.this).getDeviceUuid().toString();
+            time = getTime();
+            Log.i("坐标点", "getLongitude:" + getLongitude + ",getLatitude:" + getLatitude);
             if (isEmpty()) {
-                WatchManRequest.newAddChatProblemPricture(this, listFile, fileName, problemDes, -1, 11, 10, getLongitude, getLatitude, deviceUuid, getTime());
+                WatchManRequest.newAddChatProblemPricture(this, listFile, fileName, problemDes, -1, 11, 10, getLongitude, getLatitude, deviceUuid, time);
             }
-//            Intent intent = new Intent();
-//            intent.putExtra("warningId", "1");
-//            intent.putExtra("warningName", "事件上报");
-//            intent.putExtra("warningTime", "2017年6月15日16:23:55");
-//            intent.putExtra("warningAddress", "克利夫兰");
-//            String imgUrl = "http://images11.app.happyjuzi.com/content/201705/03/d5cd4691-6350-482c-8d40-7acf226e10e2.jpeg";
-//            intent.putExtra("warningImgUrl", imgUrl);
-//            setResult(RESULT_OK, intent);
-//            finish();
         } else if (i == R.id.chat_add_problem) {
             WatchManRequest.getChatProblemTypeLeft(this, ChatWarningActivity.this);
         } else if (i == R.id.chat_add_problem_positionLayout) {
@@ -207,7 +214,16 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
      */
     @Override
     public void getChatSenPictureResponce(Object o) {
-
+        Intent intent = new Intent();
+        int id = (int) o;
+        intent.putExtra("warningId", id);
+        intent.putExtra("warningName", "事件上报");
+        intent.putExtra("warningTime", WatchManRequest.times(time));
+        intent.putExtra("warningAddress", "北京");
+        String imgUrl = listPath.get(0) != null ? listPath.get(0) : "";
+        intent.putExtra("warningImgUrl", imgUrl);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private boolean isEmpty() {
@@ -218,10 +234,12 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
         if (TextUtils.isEmpty(problemType)) {
             ToastUtil.show(this, "请选择问题类型");
             return false;
-        } else if (TextUtils.isEmpty(address)) {
-            ToastUtil.show(this, "请输入所在区域");
-            return false;
-        } else if (TextUtils.isEmpty(problemDes)) {
+        }
+//        else if (TextUtils.isEmpty(address)) {
+//            ToastUtil.show(this, "请输入所在区域");
+//            return false;
+//        }
+        else if (TextUtils.isEmpty(problemDes)) {
             ToastUtil.show(this, "请输入问题描述");
             return false;
         } else {
@@ -315,5 +333,88 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
         startActivity(in);
     }
 
+    class MyListener implements GPSLocationListener {
+
+        @Override
+        public void UpdateLocation(Location location) {
+            if (location != null) {
+                getLongitude = String.valueOf(location.getLongitude());
+                getLatitude = String.valueOf(location.getLatitude());
+//                Toast.makeText(ChatWarningActivity.this, "定位" + "getLongitude:" + location.getLongitude() + ",getLatitude:" + location.getLatitude(), Toast.LENGTH_SHORT).show();
+//                problemDes = chat_add_problem_inputInfo.getText().toString().trim();
+//                String deviceUuid = new DeviceUuidFactory(ChatWarningActivity.this).getDeviceUuid().toString();
+//                time = getTime();
+//                Log.i("坐标点", "getLongitude:" + getLongitude + ",getLatitude:" + getLatitude);
+//                if (isEmpty()) {
+//                    WatchManRequest.newAddChatProblemPricture(ChatWarningActivity.this, listFile, fileName, problemDes, -1, 11, 10, getLongitude, getLatitude, deviceUuid, time);
+//                }
+            }
+        }
+
+        @Override
+        public void UpdateStatus(String provider, int status, Bundle extras) {
+        }
+
+        @Override
+        public void UpdateGPSProviderStatus(int gpsStatus) {
+            switch (gpsStatus) {
+                case GPSProviderStatus.GPS_ENABLED:
+                    Toast.makeText(ChatWarningActivity.this, "GPS开启", Toast.LENGTH_SHORT).show();
+                    break;
+                case GPSProviderStatus.GPS_DISABLED:
+                    Toast.makeText(ChatWarningActivity.this, "GPS关闭", Toast.LENGTH_SHORT).show();
+                    break;
+                case GPSProviderStatus.GPS_OUT_OF_SERVICE:
+                    Toast.makeText(ChatWarningActivity.this, "GPS不可用", Toast.LENGTH_SHORT).show();
+                    break;
+                case GPSProviderStatus.GPS_TEMPORARILY_UNAVAILABLE:
+                    Toast.makeText(ChatWarningActivity.this, "GPS暂时不可用", Toast.LENGTH_SHORT).show();
+                    break;
+                case GPSProviderStatus.GPS_AVAILABLE:
+                    Toast.makeText(ChatWarningActivity.this, "GPS可用啦", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    }
+//    private LocationManager locationManager;
+//    Double latitude;
+//    Double longitude;
+//    private void getLocation() {
+//        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//        if (location != null) {
+//            latitude = location.getLatitude();
+//            longitude = location.getLongitude();
+//        } else {
+//
+//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+//        }
+//    }
+//    LocationListener locationListener = new LocationListener() {
+//        // Provider的状态在可用、暂时不可用和无服务三个状态直接切换时触发此函数
+//        @Override
+//        public void onStatusChanged(String provider, int status, Bundle extras) {
+//        }
+//
+//        // Provider被enable时触发此函数，比如GPS被打开
+//        @Override
+//        public void onProviderEnabled(String provider) {
+//        }
+//
+//        // Provider被disable时触发此函数，比如GPS被关闭
+//        @Override
+//        public void onProviderDisabled(String provider) {
+//        }
+//
+//        // 当坐标改变时触发此函数，如果Provider传进相同的坐标，它就不会被触发
+//        @Override
+//        public void onLocationChanged(Location location) {
+//            if (location != null) {
+//                Log.e("Map", "Location changed : Lat: " + location.getLatitude() + " Lng: " + location.getLongitude());
+//                 latitude = location.getLatitude(); // 经度
+//                 longitude = location.getLongitude(); // 纬度
+//                Log.i("坐标点", "getLongitude:" + latitude + ",getLatitude:" + longitude);
+//            }
+//        }
+//    };
 
 }

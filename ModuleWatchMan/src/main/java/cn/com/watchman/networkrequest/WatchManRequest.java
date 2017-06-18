@@ -342,8 +342,6 @@ public class WatchManRequest {
 //        List<byte[]> listByte;
         if (listFile.size() == fileName.size()) {
             for (int i = 0; i < listFile.size(); i++) {
-//                listByte = new ArrayList<>();
-//                listByte.add(FileToByteUtils.getBytesFromFile(listFile.get(i)));
                 fileMap = new HashMap<>();
                 String[] s = fileName.get(i).split("\\.");
                 fileMap.put("imgbs", FileToByteUtils.getBytesFromFile(listFile.get(i)));
@@ -374,7 +372,7 @@ public class WatchManRequest {
         params.put("data", dataMap);
         String sendChatWarningimg = JSON.toJSONString(params);
         Log.i("巡更巡检事件上报log", "json:" + sendChatWarningimg);
-        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatWarningimg).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatWarningimg).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
                 ToastUtil.show(mActivity, "错误代码" + e.getMessage().toString());
@@ -387,60 +385,20 @@ public class WatchManRequest {
             public void onResponse(String response, int id) {
                 Log.i("success", "成功:" + response);
                 Toast.makeText(mActivity, "上传成功", Toast.LENGTH_SHORT).show();
-//                try {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int d = jsonObject.getInt("d");
+                    chatSendPicTureInterface.getChatSenPictureResponce(d);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (LoadingDialogUtil.show(mActivity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
 //
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    int d = jsonObject.getInt("d");
-//                    if (d != 1) {
-//                        Toast.makeText(mActivity, "第" + i + "张图片上传失败!", Toast.LENGTH_SHORT).show();
-//                    }
-//                    if (i == mapSize) {
-//                        Toast.makeText(mActivity, "上传成功", Toast.LENGTH_SHORT).show();
-//                        mActivity.finish();
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(mActivity, "数据解析失败!", Toast.LENGTH_SHORT).show();
-//                }
             }
         });
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("imgbs", fileName);
-//        map.put("imgname", fileName);
-//        map.put("alarmid", alarmid);
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("subSysType", 10);
-//        params.put("dataType", dataType);
-//        params.put("mark", "patrolphone");
-//        params.put("data", map);
-//        String sendChatWarningimg = JSON.toJSONString(params);
-//        Log.i("巡更巡检事件上报log", "json:" + sendChatWarningimg);
-//        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json;charset=utf-8")).content(sendChatWarningimg).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
-//            @Override
-//            public void onError(Call call, Exception e, int id) {
-//                Log.i("onerror", "onResponse:" + e.getMessage());
-//                ToastUtil.show(mActivity, "错误代码" + e.getMessage().toString());
-//                if (LoadingDialogUtil.show(mActivity).isShowing()) {
-//                    LoadingDialogUtil.dismiss();
-//                }
-//            }
 //
-//            @Override
-//            public void onResponse(String response, int id) {
-//                Toast.makeText(mActivity, "success", Toast.LENGTH_SHORT).show();
-//                Log.i("successok", "onResponse:" + response);
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    int d = jsonObject.getInt("d");
-////                    chatSendPicTureInterface.getChatSenPictureResponce(response);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                if (LoadingDialogUtil.show(mActivity).isShowing()) {
-//                    LoadingDialogUtil.dismiss();
-//                }
-//            }
-//        });
     }
     /**
      * 方法名：addProblemRequestsb

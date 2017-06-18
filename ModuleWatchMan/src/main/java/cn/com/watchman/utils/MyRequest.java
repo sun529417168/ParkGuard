@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.linked.erfli.library.config.UrlConfig;
 import com.linked.erfli.library.okhttps.OkHttpUtils;
@@ -20,7 +18,6 @@ import com.linked.erfli.library.utils.DialogUtils;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,10 +28,6 @@ import cn.com.watchman.config.WMUrlConfig;
 import cn.com.watchman.interfaces.PersonInfoInterface;
 import okhttp3.Call;
 import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * 文件名：MyRequest
@@ -198,9 +191,9 @@ public class MyRequest {
                 JSONObject jsonObject = JSONObject.parseObject(response);
                 int code = jsonObject.getInteger("d");
                 if (code == 1) {
-                    ToastUtil.show(activity, "上传点位成功");
+//                    ToastUtil.show(activity, "上传点位成功");
                 } else {
-                    ToastUtil.show(activity, "上传点位失败");
+//                    ToastUtil.show(activity, "上传点位失败");
                 }
             }
 
