@@ -49,8 +49,8 @@
             <!--所在区域start-->
             <RelativeLayout
                 android:id="@+id/chat_add_problem_positionLayout"
-                android:visibility="gone"
-                style="@style/add_problem_layout">
+                style="@style/add_problem_layout"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/add_problem_textView"
@@ -170,12 +170,14 @@
                     android:id="@+id/chat_add_problem_detail_gridView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/chat_add_problem_detail_photoText"
-                    android:layout_marginTop="15dp"
                     android:horizontalSpacing="3dp"
                     android:numColumns="3"
+                    android:layout_marginTop="30dp"
                     android:scrollbars="none"
-                    android:verticalSpacing="10dp" />
+                    android:verticalSpacing="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
                 <View
                     android:layout_width="match_parent"
@@ -207,6 +209,8 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/login_button"
         android:text="@string/add_problem_button"
         android:textColor="@color/white"

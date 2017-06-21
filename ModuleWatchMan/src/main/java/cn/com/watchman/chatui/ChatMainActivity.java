@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +30,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.linked.erfli.library.utils.SharedUtil;
+import com.linked.erfli.library.utils.StatusBarUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -108,6 +108,7 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_chat_main);
+        StatusBarUtils.ff(ChatMainActivity.this);
         init();
         EventBus.getDefault().register(this);
         // 动态注册广播
@@ -305,6 +306,7 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         messageInfo.setHeader(girlUrl);
         messageInfos.add(messageInfo);
 
+
 //        MessageInfo messageInfo1 = new MessageInfo();
 //        messageInfo1.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
 //        messageInfo1.setVoiceTime(3000);
@@ -376,6 +378,8 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
 //                chatList.scrollToPosition(chatAdapter.getCount() - 1);
 //            }
 //        }, 3000);
+
+
     }
 
     @Override
@@ -522,12 +526,14 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
                     messageInfos.add(mMessageInfo);
                     chatAdapter.add(mMessageInfo);
                     chatList.scrollToPosition(chatAdapter.getCount() - 1);
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            mMessageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-                            chatAdapter.notifyDataSetChanged();
-                        }
-                    }, 2000);
+                    mMessageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
+                    chatAdapter.notifyDataSetChanged();
+//                    new Handler().postDelayed(new Runnable() {
+//                        public void run() {
+//                            mMessageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
+//                            chatAdapter.notifyDataSetChanged();
+//                        }
+//                    }, 2000);
                 }
                 break;
         }

@@ -26,9 +26,11 @@ import java.util.Map;
 
 import cn.com.watchman.bean.UserBean;
 import cn.com.watchman.chatui.enity.ChatProblemTypeLeftEntity;
+import cn.com.watchman.chatui.enity.WarningDetailsInfo;
 import cn.com.watchman.chatui.interfaces.ChatMsgInterface;
 import cn.com.watchman.chatui.interfaces.ChatProblemTypeLeftInterface;
 import cn.com.watchman.chatui.interfaces.ChatSendPicTureInterface;
+import cn.com.watchman.chatui.interfaces.ChatWarningDetailsInterface;
 import cn.com.watchman.config.WMUrlConfig;
 import cn.com.watchman.interfaces.EventReportDataInterface;
 import cn.com.watchman.interfaces.WatchManLoginInterface;
@@ -353,7 +355,7 @@ public class WatchManRequest {
         }
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("alarm_related_info", 1);//如果告警类型为长时间未移动 ，此字段为持续为移动时间 如果此字段为巡更点异常，1、为巡更点故障  2、恢复
-        dataMap.put("alarmtext", problemDes);//告警描述信息
+        dataMap.put("alarmtext", !"".equals(problemDes) ? problemDes : " ");//告警描述信息,是否为空,如果为空 传递一个空格 空字符串
         dataMap.put("alarmtime", time);//时间戳
         dataMap.put("alarmtype", 3);//告警类型 1:长时间未移动 3:人工上报告警信息
         dataMap.put("deviceguid", deviceUuid);//当前设备唯一编号
@@ -395,49 +397,52 @@ public class WatchManRequest {
                 if (LoadingDialogUtil.show(mActivity).isShowing()) {
                     LoadingDialogUtil.dismiss();
                 }
-//
             }
         });
-//
     }
-    /**
-     * 方法名：addProblemRequestsb
-     * 功    能：上报问题最新方法不管有没有图片
-     * 参    数：Context activity, Map<String,File> fileMap, Object... strings
-     * 返回值：无
-     */
 
-//    public static void addProblemRequestsb(final Activity activity, Map<String, File> fileMap, Object... strings) {
-//        LoadingDialogUtil.show(activity);//显示加载
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("ProblemTitle", "问题名称");
-//        params.put("SearchProblemType", strings[0]);
-//        params.put("Position", strings[1]);
-//        params.put("GPS", strings[2]);
-//        params.put("FindDate", strings[3]);
-//        params.put("ProblemDes", strings[4]);
-//        params.put("ReportPerson", SharedUtil.getString(activity, "PersonID"));
-//        OkHttpUtils.post().files("mFile", fileMap).url(UrlConfig.URL_IMGUPLOAD).params(params).build().execute(new StringCallback() {
-//            @Override
-//            public void onResponse(String response, int id) {
-//                if ("true".equals(response)) {
-//                    ToastUtil.show(activity, "上报成功");
-//                    activity.finish();
-//                } else {
-//                    ToastUtil.show(activity, "上报失败，请稍候再试");
-//                }
-//                if (LoadingDialogUtil.show(activity).isShowing()) {
-//                    LoadingDialogUtil.dismiss();
-//                }
-//            }
-//
-//            @Override
-//            public void onError(Call call, Exception e, int id) {
-//                ToastUtil.show(activity, "服务器异常，请稍后再试");
-//                if (LoadingDialogUtil.show(activity).isShowing()) {
-//                    LoadingDialogUtil.dismiss();
-//                }
-//            }
-//        });
-//    }
+    public static void getWarningDetails(final Activity mActivity, int subSysType, int dataType, String DeviceGUID, int user_id, int id) {
+        LoadingDialogUtil.show(mActivity);
+        final ChatWarningDetailsInterface chatWarningDetailsInterface = (ChatWarningDetailsInterface) mActivity;
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("DeviceGUID", DeviceGUID);
+        dataMap.put("user_id", user_id);
+        dataMap.put("id", id);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("subSysType", subSysType);
+        map.put("dataType", dataType);
+        map.put("mark", "patrolphone");
+        map.put("data", dataMap);
+        String warningDetails = JSON.toJSONString(map);
+        Log.i("告警事件详情log", "json:" + warningDetails);
+        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(warningDetails).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.i("告警事件详情log", "" + e.getMessage());
+                if (LoadingDialogUtil.show(mActivity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Log.i("告警事件详情log", "" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String json = jsonObject.getString("d");
+                    Log.i("告警事件详情logjson,", "" + json);
+                    JsonGenericsSerializator jsonGenericsSerializator = new JsonGenericsSerializator();
+                    WarningDetailsInfo warningDetailsInfo = jsonGenericsSerializator.transform(json, WarningDetailsInfo.class);
+                    chatWarningDetailsInterface.getWarningDetailsInterface(warningDetailsInfo);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (LoadingDialogUtil.show(mActivity).isShowing()) {
+                    LoadingDialogUtil.dismiss();
+                }
+            }
+        });
+
+    }
 }

@@ -38,7 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/chat_war_details_tv_state"
@@ -55,7 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/chat_war_details_tv_type"
@@ -72,7 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/chat_war_details_tv_region"
@@ -89,7 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/chat_war_details_tv_reprotperson"
@@ -133,19 +137,18 @@
                     android:layout_marginTop="10dp"
                     android:text="图片" />
 
-                <com.linked.erfli.library.weight.ReportedGridview
+                <GridView
                     android:id="@+id/problem_detail_gridView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/chat_war_details_tv_photo"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:horizontalSpacing="3dp"
+                    android:layout_marginTop="10dp"
+                    android:horizontalSpacing="10dp"
                     android:numColumns="3"
-                    android:scrollbars="none"
-                    android:verticalSpacing="10dp" />
+                    android:scrollbars="none" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -168,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/chat_war_details_tv_describe"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
                     android:text="内容描述valuea" />
             </RelativeLayout>
@@ -177,7 +180,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/chat_war_details_tv_reply"

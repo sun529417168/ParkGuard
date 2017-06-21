@@ -10,6 +10,6 @@ package cn.com.watchman.config;
 
 public class WMUrlConfig {
     public static final String URL = "http://sps.dlax.com.cn/Service/PatrolDataService.asmx/PhonePatrolData";// 正式域名
-//    public static final String TESTURL = "http://dlaxsps.dlax.com.cn/Service/PatrolDataService.asmx/PhonePatrolData";// 测试
+    public static final String TESTURL = "http://dlaxsps.dlax.com.cn/Service/PatrolDataService.asmx/PhonePatrolData";// 测试
 
 }
