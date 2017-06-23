@@ -48,6 +48,7 @@ public abstract class BaseActivity extends BaseCheckPermissionActivity implement
         inspectNet();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         setOnCreate(savedInstanceState);
 //        StatusBarUtils.ff(this);

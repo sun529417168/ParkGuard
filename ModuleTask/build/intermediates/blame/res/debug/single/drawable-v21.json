@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\crop__selectable_background.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\c0613c3abacb4ae1537934c7ba2e2a1d4b2595c8\\output\\res\\drawable-v21\\crop__selectable_background.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_hide_password.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\drawable-v21\\avd_hide_password.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_password_eye.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\drawable-v21\\design_password_eye.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_show_password.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\drawable-v21\\avd_show_password.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\notification_action_background.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\drawable-v21\\abc_edit_text_material.xml"
+    }
+]

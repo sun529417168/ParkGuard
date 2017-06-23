@@ -18,11 +18,15 @@ import com.linked.erfli.library.service.LocationService;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.com.watchman.bean.DinatesBean;
 import cn.com.watchman.bean.DinatesDaoImpl;
 import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.utils.Distance;
 import cn.com.watchman.utils.MyRequest;
+import cn.com.watchman.utils.WMyUtils;
 
 /**
  * 文件名：LocationService
@@ -36,12 +40,13 @@ public class GPSService extends Service {
      * 阿里的
      */
     private AMapLocationClient locationClientContinue = null;
-    private long sleepTime = 3 * 1000;
+    private long sleepTime = 15 * 1000;
     private boolean isThread = true;
     private GPSBean gpsBean;
     private DinatesDaoImpl dinatesDao;
     private Intent intent;
     private int currentCount = 0, totalCount;
+    protected List<DinatesBean> dinatesList = new ArrayList<>();
 
     @Override
     public void onCreate() {
@@ -50,6 +55,13 @@ public class GPSService extends Service {
         startContinueLocation();
         intent = new Intent("cn.com.watchman.count");
         new MyThread().start();
+        //获取比今天早的点位数据，并都删掉
+        dinatesList = dinatesDao.rawQuery("select * from t_gps where time < ?", new String[]{WMyUtils.getTimesmorning()});
+        if (dinatesList.size() > 0) {
+            for (DinatesBean bean : dinatesList) {
+                dinatesDao.delete(bean.getId());
+            }
+        }
     }
 
     @Override
@@ -86,9 +98,9 @@ public class GPSService extends Service {
             Log.i("高德地图定位", location.getLongitude() + "===" + location.getLatitude());
             gpsBean = new GPSBean(location.getLongitude(), location.getLatitude(), location.getAddress(), location.getAccuracy(), location.getAltitude(), location.getProvider(), location.getSatellites(), location.getGpsAccuracyStatus() + "", location.getSpeed());
             if (Double.parseDouble(String.valueOf(location.getSpeed())) > 0 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 1) {//行走状态
-                sleepTime = 10 * 1000;
+                sleepTime = 15 * 1000;
             } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 1 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 3) {
-                sleepTime = 5 * 1000;
+                sleepTime = 10 * 1000;
             } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 3 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 10) {
                 sleepTime = 4 * 1000;
             } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 10 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 40) {
@@ -96,7 +108,7 @@ public class GPSService extends Service {
             } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 40) {
                 sleepTime = 3 * 1000;
             } else {
-                sleepTime = 3 * 1000;
+                sleepTime = 10 * 1000;
             }
         }
     };
@@ -109,6 +121,7 @@ public class GPSService extends Service {
                 /**
                  * 开始收集信息
                  */
+                ToastUtil.show(GPSService.this, String.valueOf(gpsBean.getAccuracy()));
                 Log.i("aMapLocation", gpsBean.getLongitude() + "===" + gpsBean.getLatitude());
                 MyRequest.gpsRequest(GPSService.this, gpsBean);
                 currentCount++;
@@ -119,16 +132,23 @@ public class GPSService extends Service {
                 sendBroadcast(intent);
                 dinatesDao.insert(new DinatesBean(gpsBean.getLongitude(), gpsBean.getLatitude(), System.currentTimeMillis() / 1000));
             }
+            if (msg.what == 1) {
+                Log.i("aMapLocation", "小于10米，没有进入");
+            }
         }
     };
 
     public class MyThread extends Thread {
         public void run() {
             while (isThread) {
-                if (gpsBean != null) {
+                if (gpsBean != null && Double.parseDouble(String.valueOf(gpsBean.getAccuracy())) < 30) {
                     if (Distance.isCompare(GPSService.this, gpsBean)) {
                         Message msg = mHandler.obtainMessage();
                         msg.what = 0;
+                        mHandler.sendMessage(msg);
+                    } else {
+                        Message msg = mHandler.obtainMessage();
+                        msg.what = 1;
                         mHandler.sendMessage(msg);
                     }
                     SharedUtil.setString(GPSService.this, "longitude", String.valueOf(gpsBean.getLongitude()));

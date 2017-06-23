@@ -1,0 +1,366 @@
+[
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_text_input_password_icon.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_text_input_password_icon.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\notification_template_part_time.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\item_showphoto.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\item_showphoto.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_item_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\select_dialog_item_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\activity_task_detail.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\activity_task_detail.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_custom_big.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_menu_item.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_navigation_menu_item.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\notification_template_media.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\activity_task.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\activity_task.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_title_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_icon.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_layout_tab_icon.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_showphoto.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\fragment_showphoto.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_subheader.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_navigation_item_subheader.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_action_bar_title_item.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_bar.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_action_mode_bar.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\item_gridview_photo.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\item_gridview_photo.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\pull_to_refresh_header_vertical.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\pull_to_refresh_header_vertical.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\task_activity_welcome.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\task_activity_welcome.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\item_task.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\item_task.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_checkbox.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_list_menu_item_checkbox.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\task_activity_add.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\task_activity_add.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_separator.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_navigation_item_separator.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\activity_editor_user.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\activity_editor_user.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media_custom.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\notification_template_media_custom.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\item_choose_person_group.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\item_choose_person_group.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\task_activity_login.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\task_activity_login.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_popup_menu_header_item_layout.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_navigation_item.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_bottom_sheet_dialog.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_bottom_sheet_dialog.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\showphoto_activity.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\showphoto_activity.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\task_activity_editoruser.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\task_activity_editoruser.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\loading_dialog.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\loading_dialog.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_snackbar.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_layout_snackbar.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_item_layout.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_action_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_multichoice_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\select_dialog_multichoice_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_layout.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_list_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_expanded_menu_layout.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_expanded_menu_layout.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_view.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_search_view.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_menu_item_action_area.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_menu_item_action_area.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_sex.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_sex.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\support_simple_spinner_dropdown_item.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_screen_simple.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\crop__layout_done_cancel.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\c0613c3abacb4ae1537934c7ba2e2a1d4b2595c8\\output\\res\\layout\\crop__layout_done_cancel.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\crop__activity_crop.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\c0613c3abacb4ae1537934c7ba2e2a1d4b2595c8\\output\\res\\layout\\crop__activity_crop.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_close_item_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_action_mode_close_item_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_snackbar_include.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_layout_snackbar_include.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_text.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_layout_tab_text.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_photo.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_photo.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_radio.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_list_menu_item_radio.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\pop_add_task_type.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\pop_add_task_type.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_select_dialog_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_toolbar.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_popup_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_pull_task.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_pull_task.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_singlechoice_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_task.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\fragment_task.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_dialog_title_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_dialog_title_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_content_include.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_screen_content_include.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_lines_media.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\notification_template_lines_media.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\item_task_textview.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\item_task_textview.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_alert_dialog_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_icon.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_list_menu_item_icon.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\showphoto.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\showphoto.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\item_wheelview.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\item_wheelview.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\common_datetime.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\common_datetime.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_chronometer.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\pull_to_refresh_header.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\pull_to_refresh_header.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_detail_task_name.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_detail_task_name.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_icon_group.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\item_choose_person_child.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\item_choose_person_child.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_layout.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_action_menu_layout.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\softupdate_progress.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\softupdate_progress.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_header.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_navigation_item_header.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_bottom_navigation_item.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_bottom_navigation_item.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\task_activity_inputtext.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\task_activity_inputtext.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\task_activity_chooseperon.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\task_activity_chooseperon.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_pull_quit.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_pull_quit.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\notification_action.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action_tombstone.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\title.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\title.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_up_container.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_action_bar_up_container.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\pull_to_refresh_header_horizontal.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\pull_to_refresh_header_horizontal.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_menu.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\layout\\design_navigation_menu.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\task_item_gridview_photo.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\src\\main\\res\\layout\\task_item_gridview_photo.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\layout\\activity_scan_camera.xml",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\layout\\activity_scan_camera.xml"
+    }
+]

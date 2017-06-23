@@ -210,8 +210,6 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             IntentFilter intentFilter1 = new IntentFilter();
             intentFilter.addAction("cn.com.watchman.count");
             registerReceiver(countReceiver, intentFilter1);
-
-
         }
         Calendar calendar = Calendar.getInstance();
         String currentTime = "" + calendar.get(Calendar.YEAR) + (calendar.get(Calendar.MONTH) + 1) + calendar.get(Calendar.DAY_OF_MONTH);
@@ -262,9 +260,17 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             }
 
         } else if (i == R.id.watchMan_EventReport) {
+            if (!WMyUtils.isOpen(this)) {
+                DialogUtils.showGPSDialog(this);
+                return;
+            }
             intent = new Intent(this, ChatMainActivity.class);
             startActivity(intent);
         } else if (i == R.id.watchMan_map) {
+            if (!WMyUtils.isOpen(this)) {
+                DialogUtils.showGPSDialog(this);
+                return;
+            }
             startActivity(new Intent(this, MarkerActivity.class));
         } else if (i == R.id.watchMan_statistics) {
             intent = new Intent(this, WatchManStatisticsActivity.class);
@@ -447,4 +453,6 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             startService(startIntent);
         }
     }
+    
+    
 }

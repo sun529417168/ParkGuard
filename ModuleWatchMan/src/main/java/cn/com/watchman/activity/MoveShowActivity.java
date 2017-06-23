@@ -62,6 +62,7 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
     private static final int FILL_COLOR = Color.argb(10, 0, 0, 180);
     public static final String LOCATION_MARKER_FLAG = "mylocation";
     protected List<DinatesBean> dinatesList = new ArrayList<>();
+    private boolean isSend = true;
 
     @Override
     protected void setView() {
@@ -80,8 +81,17 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
         if (aMap == null) {
             aMap = mapView.getMap();
         }
-        dinatesList = dinatesDao.rawQuery("select * from t_gps where time > ?", new String[]{WMyUtils.getTimesmorning()});
+        //定位方法
         locate();
+    }
+    
+    public void clearInfo(View view){
+        dinatesList = dinatesDao.find();
+        if (dinatesList.size() > 0) {
+            for (DinatesBean bean : dinatesList) {
+                dinatesDao.delete(bean.getId());
+            }
+        }
     }
 
     protected void addPolylineInPlayGround() {
@@ -127,17 +137,17 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
         locate();
     }
 
-    protected void locate() {//定位方法
+    /**
+     * 定位方法
+     */
+    protected void locate() {
+        isSend = true;
         setUpMap();
         mSensorHelper = new SensorEventHelper(this);
         if (mSensorHelper != null) {
             mSensorHelper.registerSensorListener();
         }
-        if (dinatesList.size() < 3) {
-            findViewById(R.id.move_trajectory).setVisibility(View.GONE);
-        } else {
-            trajectory();
-        }
+
     }
 
     public void onTrajectory(View view) {//轨迹点击事件
@@ -145,12 +155,13 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
     }
 
     protected void trajectory() {//轨迹方法
-//        mListener = null;
-//        if (mlocationClient != null) {
+        mListener = null;
+        if (mlocationClient != null) {
             mlocationClient.stopLocation();
-//            mlocationClient.onDestroy();
-//        }
-//        mlocationClient = null;
+            mlocationClient.onDestroy();
+        }
+        mlocationClient = null;
+        dinatesList = dinatesDao.rawQuery("select * from t_gps where time > ?", new String[]{WMyUtils.getTimesmorning()});
         addPolylineInPlayGround();
         List<LatLng> points = readLatLngs();
         LatLngBounds.Builder b = LatLngBounds.builder();
@@ -236,6 +247,7 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
+
                 LatLng location = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
                 if (!mFirstFix) {
                     mFirstFix = true;
@@ -248,6 +260,17 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
                     mCircle.setRadius(aMapLocation.getAccuracy());
                     mLocMarker.setPosition(location);
                     aMap.moveCamera(CameraUpdateFactory.changeLatLng(location));
+                }
+                //第一次进来把最后一个点位加入list
+                if (isSend) {
+                    isSend = false;
+                    dinatesDao.insert(new DinatesBean(aMapLocation.getLongitude(), aMapLocation.getLatitude(), System.currentTimeMillis() / 1000));
+                    dinatesList = dinatesDao.rawQuery("select * from t_gps where time > ?", new String[]{WMyUtils.getTimesmorning()});
+                    if (dinatesList.size() < 2) {//如果点位数据小于两个没有轨迹
+                        findViewById(R.id.move_trajectory).setVisibility(View.GONE);
+                    } else {
+                        trajectory();
+                    }
                 }
             } else {
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
