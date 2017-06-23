@@ -6,17 +6,22 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.linked.erfli.library.function.takephoto.app.TakePhoto;
+import com.linked.erfli.library.function.takephoto.app.TakePhotoImpl;
+
 /**
  * 作者：Rance on 2016/11/18 15:19
  * 邮箱：rance935@163.com
  */
-public class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment implements TakePhoto.TakeResultListener {
     public Activity mActivity;
+    private TakePhoto takePhoto;
 
     @Nullable
     @Override
@@ -60,5 +65,32 @@ public class BaseFragment extends Fragment {
             // progressDialog.hide();会导致android.view.WindowLeaked
             progressDialog.dismiss();
         }
+    }
+
+    /**
+     * 获取TakePhoto实例
+     *
+     * @return
+     */
+    public TakePhoto getTakePhoto() {
+        if (takePhoto == null) {
+            takePhoto = new TakePhotoImpl(this, this);
+        }
+        return takePhoto;
+    }
+
+    @Override
+    public void takeSuccess(String imagePath) {
+        Log.i("新的发送图片回调方法", "" + imagePath);
+    }
+
+    @Override
+    public void takeFail(String msg) {
+
+    }
+
+    @Override
+    public void takeCancel() {
+
     }
 }

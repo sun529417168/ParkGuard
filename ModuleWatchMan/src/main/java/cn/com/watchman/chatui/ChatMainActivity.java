@@ -25,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.jude.easyrecyclerview.EasyRecyclerView;
@@ -48,6 +47,7 @@ import cn.com.watchman.chatui.enity.SocketMsgInfo;
 import cn.com.watchman.chatui.fragment.ChatEmotionFragment;
 import cn.com.watchman.chatui.fragment.ChatFunctionFragment;
 import cn.com.watchman.chatui.interfaces.ChatMsgInterface;
+import cn.com.watchman.chatui.interfaces.ChatSendPhotoInterface;
 import cn.com.watchman.chatui.service.MyScoketService;
 import cn.com.watchman.chatui.uiutils.Constants;
 import cn.com.watchman.chatui.uiutils.GlobalOnItemClickManagerUtils;
@@ -67,7 +67,7 @@ import cn.com.watchman.chatui.widget.StateButton;
  * 时    间：2017年6月8日
  * 版    本：V1.0.0
  */
-public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnDismissListener, ChatMsgInterface {
+public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnDismissListener, ChatMsgInterface,ChatSendPhotoInterface {
 
     EasyRecyclerView chatList;//聊天页面布局
     ImageView emotionVoice;//语音按钮
@@ -282,7 +282,7 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         @Override
         public void onItemTextClick(GifTextView gifTextView, int position) {
             Log.i("聊天页面textview点击事件", "" + gifTextView.getText());
-            Toast.makeText(ChatMainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(ChatMainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -354,6 +354,7 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final MessageInfo messageInfo) {
+        Log.i("MessageEventBus:","messageInfo"+ messageInfo.getImageUrl());
         mMessageInfo = messageInfo;
         mMessageInfo.setHeader(boyUrl);
         mMessageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
@@ -377,8 +378,6 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
 //                chatAdapter.add(message);
 //                chatList.scrollToPosition(chatAdapter.getCount() - 1);
 //            }
-//        }, 3000);
-
 
     }
 
@@ -430,6 +429,18 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         chatAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void getChatSendPhotoError() {
+        mMessageInfo.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
+        chatAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getChatSendPhotoSuccess() {
+        mMessageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
+        chatAdapter.notifyDataSetChanged();
+    }
+
 
     public class MyChatBroadcasReceiver extends BroadcastReceiver {
         @Override
@@ -457,13 +468,13 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
                         e.printStackTrace();
                     }
                 } else {
-                    message.setImageUrl(result);
-                    message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-                    message.setHeader(girlUrl);
-                    messageInfos.add(message);
-                    chatAdapter.add(message);
-                    chatList.scrollToPosition(chatAdapter.getCount() - 1);
-                    chatAdapter.notifyDataSetChanged();
+//                    message.setImageUrl(result);
+//                    message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+//                    message.setHeader(girlUrl);
+//                    messageInfos.add(message);
+//                    chatAdapter.add(message);
+//                    chatList.scrollToPosition(chatAdapter.getCount() - 1);
+//                    chatAdapter.notifyDataSetChanged();
                 }
 
             }

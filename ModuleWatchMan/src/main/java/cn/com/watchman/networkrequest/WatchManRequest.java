@@ -29,6 +29,7 @@ import cn.com.watchman.chatui.enity.ChatProblemTypeLeftEntity;
 import cn.com.watchman.chatui.enity.WarningDetailsInfo;
 import cn.com.watchman.chatui.interfaces.ChatMsgInterface;
 import cn.com.watchman.chatui.interfaces.ChatProblemTypeLeftInterface;
+import cn.com.watchman.chatui.interfaces.ChatSendPhotoInterface;
 import cn.com.watchman.chatui.interfaces.ChatSendPicTureInterface;
 import cn.com.watchman.chatui.interfaces.ChatWarningDetailsInterface;
 import cn.com.watchman.config.WMUrlConfig;
@@ -281,7 +282,7 @@ public class WatchManRequest {
         map.put("data", params);
         String sendChatJson = JSON.toJSONString(map);
         Log.i("事件上报图片上传返回结果:", "" + sendChatJson);
-        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatJson).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatJson).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Log.i("即时通讯发送数据返回结果:1", "" + e.getMessage());
@@ -443,6 +444,58 @@ public class WatchManRequest {
                 }
             }
         });
+    }
 
+    /**
+     * 即时通讯 发送图片
+     *
+     * @param
+     * @param device_code
+     */
+    public static void ChatSendPhoto(Activity mActivity, String device_code, File file, String fileName, String fileTxt, String time, int user_id) {
+        final ChatSendPhotoInterface chatSendPhotoInterface= (ChatSendPhotoInterface) mActivity;
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("device_code", device_code);//唯一设备编号
+        dataMap.put("message_type", 6);//6:即时通讯图片消息
+        dataMap.put("file_name", fileName);//
+        dataMap.put("file_ext", fileTxt);//
+        dataMap.put("file", FileToByteUtils.getBytesFromFile(file));//图片流
+        dataMap.put("send_time", time);//时间戳
+        dataMap.put("Longitude", "-1");//
+        dataMap.put("Latitude", "-1");//
+        dataMap.put("user_id", user_id);//
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("subSysType", 10);
+        map.put("dataType", 13);
+        map.put("mark", "patrolphone");
+        map.put("data", dataMap);
+        String sendChatPhoto = JSON.toJSONString(map);
+        Log.i("通讯发送数据json", "json:" + sendChatPhoto);
+        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatPhoto).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.i("通讯发送数据error", "" + e.getMessage());
+                chatSendPhotoInterface.getChatSendPhotoError();
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Log.i("通讯发送数据success", "" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int d = jsonObject.getInt("d");
+                    if(d>0){
+                        chatSendPhotoInterface.getChatSendPhotoSuccess();
+                    }else{
+                        chatSendPhotoInterface.getChatSendPhotoError();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 }
