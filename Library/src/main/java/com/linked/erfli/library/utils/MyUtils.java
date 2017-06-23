@@ -246,6 +246,21 @@ public class MyUtils {
     }
 
     /**
+     * 十位数时间戳转换成时间
+     *
+     * @param time 时间戳
+     * @return
+     */
+    public static String stampToTime(String time) {
+        SimpleDateFormat sdr = new SimpleDateFormat("HH:mm");
+        @SuppressWarnings("unused")
+        long lcc = Long.valueOf(time);
+        int i = Integer.parseInt(time);
+        String times = sdr.format(new Date(i * 1000L));
+        return times;
+    }
+
+    /**
      * 方法名：dateToStamp
      * 功 能：将时间转换为时间戳
      * 参 数：String s

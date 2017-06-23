@@ -159,6 +159,8 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <!--高德地图定位的服务-->
+        <service android:name=".service.LocationGDService" />
     </application>
 
 </manifest>

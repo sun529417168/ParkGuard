@@ -49,7 +49,6 @@ import cn.com.watchman.interfaces.GPSInfoInterface;
 import cn.com.watchman.interfaces.UploadCountInterface;
 import cn.com.watchman.service.GPSService;
 import cn.com.watchman.service.MsgReceiver;
-import cn.com.watchman.service.RecordService;
 import cn.com.watchman.utils.DialogUtils;
 import cn.com.watchman.utils.MyLocationListener;
 import cn.com.watchman.utils.MyRequest;
@@ -145,7 +144,6 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             locationService.setLocationOption(locationService.getOption());
         }
         notifyUtils = new NotifyUtils(this);
-        startService(new Intent(this, RecordService.class));
     }
 
     /**
@@ -235,7 +233,6 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent intent;
         int i = v.getId();
         if (i == R.id.watchMan_center) {
             if (!WMyUtils.isOpen(this)) {
@@ -243,11 +240,9 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                 return;
             }
             if (!isStart) {
-//                SharedUtil.setBoolean(this, "serviceFlag", false);
                 notifyUtils.showButtonNotify(0);
                 watchActivityStartService();
-                intent = new Intent(this, GPSService.class);
-                startService(intent);
+                startService(new Intent(this, GPSService.class));
                 MyRequest.typeRequest(this, 1);
                 suspendBtn.setBackgroundResource(R.drawable.activity_main_stop);
                 isStart = true;
@@ -261,24 +256,15 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                 intentFilter1.addAction("cn.com.watchman.count");
                 registerReceiver(countReceiver, intentFilter1);
             } else {
-//                SharedUtil.setBoolean(this, "serviceFlag", true);
                 notifyUtils.clearAllNotify();
                 watchActivityStopService();
                 isStart = false;
             }
 
         } else if (i == R.id.watchMan_EventReport) {
-//            intent = new Intent(this, EventReportActivity.class);
-//            intent.putExtra("longitude", String.valueOf(gpsBean.getLongitude()));
-//            intent.putExtra("latitude", String.valueOf(gpsBean.getLatitude()));
-//            intent.putExtra("accuracy", String.valueOf(gpsBean.getAccuracy()));
-//            intent.putExtra("address", gpsBean.getAddress());
-//            startActivity(intent);
             intent = new Intent(this, ChatMainActivity.class);
             startActivity(intent);
         } else if (i == R.id.watchMan_map) {
-//            startActivity(new Intent(this, RecordActivity.class));
-//            startActivity(new Intent(this, RecordShowActivity.class));
             startActivity(new Intent(this, MarkerActivity.class));
         } else if (i == R.id.watchMan_statistics) {
             intent = new Intent(this, WatchManStatisticsActivity.class);
@@ -296,28 +282,14 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             ToastUtil.show(this, "复制成功,去粘贴吧");
         } else if (i == R.id.title_share) {
             //分享方法
-//            Toast.makeText(this, "分享方法", Toast.LENGTH_SHORT).show();
             myShareMethod();
         }
     }
 
 
     private void myShareMethod() {
-//        ScreenshotUtils.shoot(WatchMainActivity.this, "图片.png");
-//        String address = TextUtils.isEmpty(tv_address.getText().toString().trim()) ? "喝酒之前我是中国的,喝完酒中国是我的!" : tv_address.getText().toString().trim();
-//        Intent shareIntent = new Intent();
-//        shareIntent.setAction(Intent.ACTION_SEND);
-////        shareIntent.putExtra(Intent.EXTRA_STREAM, "位置:" + address + "\n" + "描述:" + "测试数据");
-//        shareIntent.putExtra(Intent.EXTRA_STREAM, "描述:" + "测试数据");
-////        shareIntent.setType("image*//**//*");
-//        shareIntent.setType("text/plain");
-//        startActivity(Intent.createChooser(shareIntent, "分享巡更信息到"));
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-//        String text = "当前位置:" + gpsBean.getAddress() + "\n"
-//                + "http://api.map.baidu.com/marker?location=" + gpsBean.getLatitude() + "," + gpsBean.getLongitude() + "&output=html\n"
-//                + "描述:" + "经度" + gpsBean.getLongitude() + "纬度" + gpsBean.getLatitude();
-//        shareIntent.putExtra(Intent.EXTRA_TEXT, text);
         String text = "http://api.map.baidu.com/marker?location=" + gpsBean.getLatitude() + "," + gpsBean.getLongitude() + "&output=html";
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
         shareIntent.setType("text/plain");
@@ -444,8 +416,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     Intent intent;
 
     private void watchActivityStartService() {
-        intent = new Intent(this, GPSService.class);
-        startService(intent);
+        startService(new Intent(this, GPSService.class));
         MyRequest.typeRequest(this, 1);
         suspendBtn.setBackgroundResource(R.drawable.activity_main_stop);
         isStart = false;
@@ -458,8 +429,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void watchActivityStopService() {
-        intent = new Intent(this, GPSService.class);
-        stopService(intent);
+        stopService(new Intent(this, GPSService.class));
         scan_radar.setVisibility(View.VISIBLE);
         scan_text.setVisibility(View.GONE);
         MyRequest.typeRequest(this, -1);

@@ -81,12 +81,7 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
             aMap = mapView.getMap();
         }
         dinatesList = dinatesDao.rawQuery("select * from t_gps where time > ?", new String[]{WMyUtils.getTimesmorning()});
-        if (dinatesList.size() == 0) {
-            findViewById(R.id.move_trajectory).setVisibility(View.GONE);
-            locate();
-        } else {
-            trajectory();
-        }
+        locate();
     }
 
     protected void addPolylineInPlayGround() {
@@ -138,6 +133,11 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
         if (mSensorHelper != null) {
             mSensorHelper.registerSensorListener();
         }
+        if (dinatesList.size() < 3) {
+            findViewById(R.id.move_trajectory).setVisibility(View.GONE);
+        } else {
+            trajectory();
+        }
     }
 
     public void onTrajectory(View view) {//轨迹点击事件
@@ -145,12 +145,12 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
     }
 
     protected void trajectory() {//轨迹方法
-        mListener = null;
-        if (mlocationClient != null) {
+//        mListener = null;
+//        if (mlocationClient != null) {
             mlocationClient.stopLocation();
-            mlocationClient.onDestroy();
-        }
-        mlocationClient = null;
+//            mlocationClient.onDestroy();
+//        }
+//        mlocationClient = null;
         addPolylineInPlayGround();
         List<LatLng> points = readLatLngs();
         LatLngBounds.Builder b = LatLngBounds.builder();

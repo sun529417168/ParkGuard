@@ -47,7 +47,7 @@ public class Distance {
 
     /**
      * 方法名：isCompare
-     * 功    能：判断是否大于10米
+     * 功    能：判断是否大于20米
      * 参    数：Activity activity, GPSBean gpsBean
      * 返回值：boolean
      */

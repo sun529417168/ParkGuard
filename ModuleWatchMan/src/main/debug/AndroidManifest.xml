@@ -115,6 +115,7 @@
         <service
             android:name=".chatui.service.MyScoketService"
             android:process=":main" />
+        <!--高德地图定位的服务-->
     </application>
 
 </manifest>

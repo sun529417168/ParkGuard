@@ -50,7 +50,7 @@ import cn.com.watchman.utils.Util;
 
 /**
  * 文件名：RecordService
- * 描    述：后台收集轨迹点位的服务
+ * 描    述：后台收集轨迹点位的服务,同时也可以用作实时轨迹，目前写了一个定位的方法所以这个服务暂时舍弃，后期需要实时估计的服务在打开使用
  * 作    者：stt
  * 时    间：2017.6.3
  * 版    本：V1.1.0
@@ -247,7 +247,7 @@ public class RecordService extends Service implements LocationSource,
 //                if (Distance.isCompareTwo(this, amapLocation)) {
 //                    dinatesDao.insert(new DinatesBean(amapLocation.getLongitude(), amapLocation.getLatitude(), System.currentTimeMillis() / 1000));
 //                }
-                Log.i("定位数据", amapLocation.getLongitude() + "===" + amapLocation.getLatitude());
+                Log.i("高德地图定位数据", amapLocation.toString());
                 mTracelocationlist.add(Util.parseTraceLocation(amapLocation));
                 redrawline();
                 if (mTracelocationlist.size() > tracesize - 1) {
