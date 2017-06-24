@@ -11,10 +11,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.linked.erfli.library.application.LibApplication;
-import com.linked.erfli.library.service.LocationService;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 

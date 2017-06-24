@@ -375,7 +375,7 @@ public class WatchManRequest {
         params.put("data", dataMap);
         String sendChatWarningimg = JSON.toJSONString(params);
         Log.i("巡更巡检事件上报log", "json:" + sendChatWarningimg);
-        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatWarningimg).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatWarningimg).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
                 ToastUtil.show(mActivity, "错误代码" + e.getMessage().toString());

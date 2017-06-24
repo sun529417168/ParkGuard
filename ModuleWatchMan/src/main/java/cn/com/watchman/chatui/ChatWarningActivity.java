@@ -411,9 +411,19 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
                 if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
 //                    Toast.makeText(ChatWarningActivity.this, "gps定位成功", Toast.LENGTH_SHORT).show();
-                } else if (location.getLocType() == BDLocation.TypeNetWorkLocation)
-                getLongitude = String.valueOf(location.getLongitude());
-                getLatitude = String.valueOf(location.getLatitude());
+                } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
+
+                }
+                if (!"4.9E-324".equals(String.valueOf(location.getLongitude()))) {
+                    getLongitude = String.valueOf(location.getLongitude());
+                } else {
+                    getLongitude = "-1";
+                }
+                if (!"4.9E-324".equals(String.valueOf(location.getLatitude()))) {
+                    getLongitude = String.valueOf(location.getLatitude());
+                } else {
+                    getLatitude = "-1";
+                }
             }
         }
 

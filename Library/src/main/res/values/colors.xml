@@ -66,6 +66,7 @@
     <color name="red">#AE0101</color>
     <!--白色-->
     <color name="white">#FFFFFF</color>
+    <color name="zzq_white">#FAFAFA</color>
     <color name="white_s">#00000000</color>
     <color name="white_2">#FCFBFB</color>
     <!--黑色-->
