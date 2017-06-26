@@ -140,9 +140,7 @@ public class TaskReuest {
 
             @Override
             public void onError(Call call, Exception e, int id) {
-                if ("timeout".equals(e.getMessage().toString())) {
-                    ToastUtil.show(activity, "连接超时，请稍后再试");
-                }
+                ToastUtil.show(activity, "连接超时，请稍后再试");
                 if (LoadingDialogUtil.show(activity).isShowing()) {
                     LoadingDialogUtil.dismiss();
                 }
@@ -178,9 +176,7 @@ public class TaskReuest {
 
             @Override
             public void onError(Call call, Exception e, int id) {
-                if ("timeout".equals(e.getMessage().toString())) {
-                    ToastUtil.show(activity, "连接超时，请稍后再试");
-                }
+                ToastUtil.show(activity, "连接超时，请稍后再试");
                 if (LoadingDialogUtil.show(activity).isShowing()) {
                     LoadingDialogUtil.dismiss();
                 }

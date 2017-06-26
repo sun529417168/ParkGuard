@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_s">
+
+    <include
+        android:id="@+id/mine_title"
+        layout="@layout/title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mine_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@mipmap/user_background">
+
+                <ImageView
+                    android:id="@+id/mine_titleImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:src="@mipmap/logo" />
+
+                <TextView
+                    android:id="@+id/mine_titleUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mine_titleImage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/mine_titleWorkNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mine_titleUsername"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <!--姓名start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    style="@style/mine_userInfo"
+                    android:text="@string/mine_name" />
+
+                <TextView
+                    android:id="@+id/mine_name"
+                    style="@style/mine_userInfo"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <!--姓名end-->
+            <!--手机号start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    style="@style/mine_userInfo"
+                    android:text="@string/mine_phone" />
+
+                <TextView
+                    android:id="@+id/mine_phone"
+                    style="@style/mine_userInfo"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <!--手机号end-->
+            <!--身份证号start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    style="@style/mine_userInfo"
+                    android:text="@string/mine_userID" />
+
+                <TextView
+                    android:id="@+id/mine_userID"
+                    style="@style/mine_userInfo"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <!--身份证号end-->
+            <!--修改密码start-->
+            <RelativeLayout
+                android:id="@+id/mine_updatePassword"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    style="@style/mine_userInfo"
+                    android:text="@string/mine_updatePassword" />
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--修改密码end-->
+            <!--清除缓存start-->
+            <RelativeLayout
+                android:id="@+id/mine_cache_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    style="@style/mine_userInfo"
+                    android:text="@string/mine_clear" />
+
+                <TextView
+                    android:id="@+id/mine_cacheSize"
+                    style="@style/mine_userInfo"
+                    android:layout_marginRight="2dp"
+                    android:layout_toLeftOf="@+id/mine_clear_right" />
+
+                <ImageView
+                    android:id="@+id/mine_clear_right"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--清除缓存end-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/exit_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/login_button"
+        android:text="@string/cancellation"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</RelativeLayout>

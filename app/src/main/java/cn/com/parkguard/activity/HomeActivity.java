@@ -30,7 +30,13 @@ import cn.com.parkguard.R;
 import cn.com.parkguard.adapter.HomeAdapter;
 import cn.com.parkguard.bean.HomeBean;
 
-
+/**
+ * 文件名：HomeActivity
+ * 描    述：主界面
+ * 作    者：stt
+ * 时    间：2017.01.04
+ * 版    本：V1.0.0
+ */
 public class HomeActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     private TextView netText;
     private GridView gridView;
@@ -56,7 +62,7 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(HomeActivity.this,EditorUserActivity.class);
+                Intent intent=new Intent(HomeActivity.this,SettingActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,176 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-   <include
-       android:id="@+id/home_title"
-       layout="@layout/title"/>
+
+    <include
+        android:id="@+id/home_title"
+        layout="@layout/title" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:orientation="vertical">
-    <TextView
-        android:id="@+id/main_title_net"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/pale_pink"
-        android:padding="10dp"
-        android:text="@string/title_net"
-        android:textColor="@color/black"
-        android:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/home_image"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
-        android:background="@mipmap/home_title" />
-
-    <TextView
-        android:id="@+id/home_sendMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/home_sendMessage"
-        android:textColor="@color/black" />
-
-    <GridView
-        android:id="@+id/home_gridView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/home_image"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:horizontalSpacing="10dp"
-        android:numColumns="4"
-        android:scrollbars="none"
-        android:verticalSpacing="10dp" />
-    <!--任务列表start-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="20dp"
-        android:background="#f3f3f3"
-        android:orientation="vertical">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp">
-        <TextView
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="25dp"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="我的任务"/>
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/main_title_net"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pale_pink"
+                android:padding="10dp"
+                android:text="@string/title_net"
+                android:textColor="@color/black"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/home_image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:background="@mipmap/home_title" />
+
+            <TextView
+                android:id="@+id/home_sendMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/home_sendMessage"
+                android:textColor="@color/black" />
+
+            <GridView
+                android:id="@+id/home_gridView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/home_image"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:horizontalSpacing="10dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:verticalSpacing="10dp" />
+            <!--任务列表start-->
             <LinearLayout
-                android:id="@+id/home_task_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="25dp"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_gravity="center_vertical"
-                    android:text="更多"
-                    />
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="4dp"
-                    android:src="@drawable/home_more"/>
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:background="#f3f3f3"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="25dp"
+                        android:text="我的任务"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:id="@+id/home_task_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="25dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="更多"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="4dp"
+                            android:src="@drawable/home_more" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#e6e6e6" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <TextView
+                        android:id="@+id/home_task_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="暂无数据"
+                        android:textSize="20sp" />
+                </RelativeLayout>
             </LinearLayout>
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#e6e6e6"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp">
-            <TextView
-                android:id="@+id/home_task_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:textSize="20sp"
-                android:text="暂无数据"/>
-        </RelativeLayout>
-    </LinearLayout>
-    <!--任务列表end-->
-    <!--通知列表start-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="15dp"
-        android:background="#f3f3f3"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp">
-            <TextView
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="25dp"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="我的通知"/>
+            <!--任务列表end-->
+            <!--通知列表start-->
             <LinearLayout
-                android:id="@+id/home_notice_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="25dp"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_gravity="center_vertical"
-                    android:text="更多"
-                    />
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="4dp"
-                    android:src="@drawable/home_more"/>
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="15dp"
+                android:background="#f3f3f3"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="25dp"
+                        android:text="我的通知"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:id="@+id/home_notice_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="25dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="更多"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="4dp"
+                            android:src="@drawable/home_more" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#e6e6e6" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <TextView
+                        android:id="@+id/home_notice_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="暂无数据"
+                        android:textSize="20sp" />
+                </RelativeLayout>
             </LinearLayout>
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#e6e6e6"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp">
-            <TextView
-                android:id="@+id/home_notice_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:textSize="20sp"
-                android:text="暂无数据"/>
-        </RelativeLayout>
-    </LinearLayout>
-    <!--任务列表end-->
-    </LinearLayout>
+            <!--任务列表end-->
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

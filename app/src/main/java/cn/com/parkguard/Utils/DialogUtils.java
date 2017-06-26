@@ -21,6 +21,7 @@ import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.linked.erfli.library.utils.DataCleanManager;
+import com.linked.erfli.library.utils.PGActivityUtil;
 
 
 import cn.com.parkguard.R;
@@ -201,25 +202,14 @@ public class DialogUtils {
      * 参    数：Context context
      * 返回值：无
      */
-    public static void exit(final Activity activity) {
+    public static void exit(final PGActivityUtil PGApp, final Activity activity) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
         dialog.setTitle("提示信息");
         dialog.setMessage("确定要退出么？");
         dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-                CloudPushService cloudPushService = PushServiceFactory.getCloudPushService();
-                cloudPushService.unbindAccount(new CommonCallback() {
-                    @Override
-                    public void onSuccess(String s) {
-                        Log.i("unInitUserName", "bind account success");
-                    }
-
-                    @Override
-                    public void onFailed(String errorCode, String errorMessage) {
-                        Log.i("unInitUserNameError", "bind account fail" + "err:" + errorCode + " - message:" + errorMessage);
-                    }
-                });
+                PGApp.changeTopOne();
                 Intent in = new Intent(activity, LoginActivity.class);
                 activity.startActivity(in);
                 activity.finish();

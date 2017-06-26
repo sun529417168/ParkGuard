@@ -195,4 +195,44 @@ public class MyRequest {
             }
         });
     }
+
+    /**
+     * 方法名：updatePassWordRequest
+     * 功    能：修改密码
+     * 参    数：Activity activity final String username, final String password
+     * 返回值：无
+     */
+    public static void updatePassWordRequest(final Activity activity, String oldPassword, String newPassword) {
+        final Dialog progDialog = DialogUtils.showWaitDialog(activity);
+        Map<String, Object> params = new HashMap<>();
+        try {
+            params.put("PersonID", SharedUtil.getString(activity, "PersonID"));
+            params.put("OldPassWord", oldPassword);
+            params.put("NewPassWord", newPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.post().url(UrlConfig.URL_UPDATEPASSWORD).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+            @Override
+            public void onResponse(String response, int id) {
+                if ("true".equals(response)) {
+                    ToastUtil.show(activity, "修改成功");
+                    activity.finish();
+                } else {
+                    ToastUtil.show(activity, "修改成功，请稍候再试");
+                }
+                if (progDialog.isShowing()) {
+                    progDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                ToastUtil.show(activity, "服务器有错误，请稍候再试");
+                if (progDialog.isShowing()) {
+                    progDialog.dismiss();
+                }
+            }
+        });
+    }
 }
