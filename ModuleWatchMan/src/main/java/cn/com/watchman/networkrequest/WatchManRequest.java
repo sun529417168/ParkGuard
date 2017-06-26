@@ -498,4 +498,32 @@ public class WatchManRequest {
             }
         });
     }
+    /*
+     * 检查设备在线信息
+     * @param dataType:上传方式(4:检查设备状态)
+     * @param DeviceGUID：设备号
+     * @param userId：用户ID
+     * @param status：状态
+     */
+    public static void sendStatus(int dataType,String DeviceGUID,int userId,int status)
+    {
+        Map<String,Object> params=new HashMap<>();
+        params.put("dataType",dataType);
+        params.put("DeviceGUID",DeviceGUID);
+        params.put("userId",userId);
+        params.put("status",status);
+        String json=JSON.toJSONString(params);
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(json).build().execute(new GenericsCallback(new JsonGenericsSerializator()) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.i("status","fail");
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+                Log.i("status","success");
+            }
+        });
+    }
+
 }

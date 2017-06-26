@@ -211,7 +211,7 @@ public class MyRequest {
      * 参    数：Activity activity String... strings
      * 返回值：无
      */
-    public static void typeRequest(final Activity activity, final int status) {
+    public static void typeRequest(final Context activity, final int status) {
         Map<String, Object> params = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
         map.put("DeviceGUID", new DeviceUuidFactory(activity).getDeviceUuid().toString());

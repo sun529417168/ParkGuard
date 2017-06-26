@@ -1,7 +1,7 @@
 package cn.com.notice.activity;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -35,13 +35,14 @@ import cn.com.notice.interfaces.NoticeListInterface;
  * 版    本：V1.0.0
  */
 @Router("notice_list")
-public class NoticeActivity extends BaseActivity implements View.OnClickListener, NoticeListInterface {
+public class NoticeActivity extends BaseActivity implements View.OnClickListener,NoticeListInterface {
     private TextView titleName;//标题名称
     /**
      * 全部，一天，一个星期，一个月
      */
-    private TextView noticeAll, noticeOneDay, noticeOneWeek, noticeOneMonth;
-    private TextView[] textviews;
+    //private TextView noticeAll, noticeOneDay, noticeOneWeek, noticeOneMonth;
+    //private TextView[] textviews;
+    private TabLayout tabLayout;
     //刷新控件
     private PullToRefreshListView mPullRefreshListView;
     private ArrayList<NoticeBean.RowsBean> noticeList = new ArrayList<>();
@@ -78,17 +79,19 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         titleName.setText("通知公告");
         mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.notice_refresh_list);
         mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
-        noticeAll = (TextView) findViewById(R.id.notice_all);
+        tabLayout=(TabLayout)findViewById(R.id.notice_tab_layout);
+        initTablayout(tabLayout);
+        /*noticeAll = (TextView) findViewById(R.id.notice_all);
         noticeOneDay = (TextView) findViewById(R.id.notice_oneDay);
         noticeOneWeek = (TextView) findViewById(R.id.notice_oneWeek);
         noticeOneMonth = (TextView) findViewById(R.id.notice_oneMonth);
-        textviews = new TextView[]{noticeAll, noticeOneDay, noticeOneWeek, noticeOneMonth};
+        textviews = new TextView[]{noticeAll, noticeOneDay, noticeOneWeek, noticeOneMonth};*/
         nothing = (RelativeLayout) findViewById(R.id.notice_nothing);
-        setTextBack(noticeAll);
+        /*setTextBack(noticeAll);
         noticeAll.setOnClickListener(this);
         noticeOneDay.setOnClickListener(this);
         noticeOneWeek.setOnClickListener(this);
-        noticeOneMonth.setOnClickListener(this);
+        noticeOneMonth.setOnClickListener(this);*/
         mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -116,7 +119,7 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         MyTitle.getInstance().setNetText(this, netMobile);
     }
 
-    private void setTextBack(TextView view) {
+    /*private void setTextBack(TextView view) {
         for (int i = 0; i < textviews.length; i++) {
             if (view.getId() == textviews[i].getId()) {
                 textviews[i].setTextColor(ContextCompat.getColor(this, R.color.white));
@@ -126,31 +129,49 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
                 textviews[i].setBackgroundResource(R.color.white);
             }
         }
-    }
+    }*/
+    private void initTablayout(TabLayout tabLayout){
+        tabLayout.addTab(tabLayout.newTab().setText("全部"));
+        tabLayout.addTab(tabLayout.newTab().setText("三天"));
+        tabLayout.addTab(tabLayout.newTab().setText("一周"));
+        tabLayout.addTab(tabLayout.newTab().setText("一月"));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position=tab.getPosition();
+                if (position == 0) {
+                    timeNum = 0;
+                    request(timeNum);
 
+                } else if (position == 1) {
+                    timeNum = 1;
+                    request(timeNum);
+
+                } else if (position == 2) {
+                    timeNum = 2;
+                    request(timeNum);
+
+                } else if (position == 3) {
+                    timeNum = 3;
+                    request(timeNum);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.notice_all) {
-            setTextBack(noticeAll);
-            timeNum = 0;
-            request(timeNum);
-
-        } else if (i == R.id.notice_oneDay) {
-            setTextBack(noticeOneDay);
-            timeNum = 1;
-            request(timeNum);
-
-        } else if (i == R.id.notice_oneWeek) {
-            setTextBack(noticeOneWeek);
-            timeNum = 2;
-            request(timeNum);
-
-        } else if (i == R.id.notice_oneMonth) {
-            setTextBack(noticeOneMonth);
-            timeNum = 3;
-            request(timeNum);
-        } else if (i == R.id.title_back) {
+        if (i == R.id.title_back) {
             PGApp.finishTop();
         }
     }

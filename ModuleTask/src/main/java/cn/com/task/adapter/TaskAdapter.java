@@ -55,7 +55,7 @@ public class TaskAdapter extends MyBaseAdapter {
     public void onInitView(View view, final int position) {
         final TaskBean.RowsBean rowsBean = list.get(position);
         TextView number = get(view, R.id.item_task_number);  // 编号
-        TextView state = get(view, R.id.item_task_state);  // 状态
+        ImageView state = get(view, R.id.item_task_state);  // 状态
         TextView date = get(view, R.id.item_task_date);  // 日期
         ImageView imageView = get(view, R.id.item_task_image);  // 图片
         TextView name = get(view, R.id.item_task_name);  // 名称
@@ -82,7 +82,7 @@ public class TaskAdapter extends MyBaseAdapter {
         /**
          * 赋值
          */
-        number.setText("T" + rowsBean.getTaskSno().substring(9));
+        number.setText("编号:T" + rowsBean.getTaskSno().substring(9));
         for (TaskBean.RowsBean.ImageListBean imageBean : rowsBean.getImageList()) {
             if (imageBean.getAttachmentType() == 1) {
                 if (imageBean.getFileUrl() != null) {
@@ -103,20 +103,16 @@ public class TaskAdapter extends MyBaseAdapter {
             setTextColor(views);
         }
         if (rowsBean.getTaskAssignedState() == 1) {
-            state.setText("未查阅");
-            state.setBackgroundResource(R.color.red);
+            state.setImageResource(R.drawable.check_no);
         }
         if (rowsBean.getTaskAssignedState() == 2) {
-            state.setText("处理中");
-            state.setBackgroundResource(R.color.yellow);
+            state.setImageResource(R.drawable.in_progress);
         }
         if (rowsBean.getTaskAssignedState() == 3) {
-            state.setText("已完成");
-            state.setBackgroundResource(R.color.green);
+            state.setImageResource(R.drawable.finish_ok);
         }
         if (rowsBean.getTaskAssignedState() == 4) {
-            state.setText("未完成");
-            state.setBackgroundResource(R.color.fenSe);
+            state.setImageResource(R.drawable.finish_no);
         }
         date.setText(firstDate + " " + task_week);
         task_calendar_year_month.setText(task_text_year_month);

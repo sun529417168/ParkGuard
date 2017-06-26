@@ -151,21 +151,32 @@
     </RelativeLayout>
     <!--图片end-->
     <!--内容区域start-->
-    <TextView
-        android:id="@+id/notice_detail_info"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:gravity="left|top"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/white" />
+        <TextView
+            android:text="内容描述"
+            android:layout_width="match_parent"
+            android:paddingLeft="20dp"
+            style="@style/notice_detail_textView" />
+
+
+        <TextView
+            android:id="@+id/notice_detail_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="left|top"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
     <!--内容区域end-->
 </LinearLayout>

@@ -44,6 +44,7 @@ public class GPSService extends Service {
     private int currentCount = 0, totalCount;
     protected List<DinatesBean> dinatesList = new ArrayList<>();
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -137,6 +138,9 @@ public class GPSService extends Service {
     public class MyThread extends Thread {
         public void run() {
             while (isThread) {
+                MyRequest.typeRequest(GPSService.this,1);
+                if (gpsBean != null) {
+                    Log.i("gpsInfo", gpsBean.toString());
                 if (gpsBean != null && Double.parseDouble(String.valueOf(gpsBean.getAccuracy())) < 30) {
                     if (Distance.isCompare(GPSService.this, gpsBean)) {
                         Message msg = mHandler.obtainMessage();

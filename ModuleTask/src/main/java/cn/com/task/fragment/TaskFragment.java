@@ -3,11 +3,11 @@ package cn.com.task.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -26,11 +26,9 @@ import cn.com.task.AddTaskActivity;
 import cn.com.task.R;
 import cn.com.task.TaskSearchActivity;
 import cn.com.task.adapter.TaskAdapter;
-import cn.com.task.adapter.TaskStateAdapter;
 import cn.com.task.bean.TaskBean;
 import cn.com.task.interfaces.TaskListInterface;
 import cn.com.task.networkrequest.TaskReuest;
-import cn.com.task.weight.HorizontalListView;
 
 /**
  * Created by 志强 on 2017.4.27.
@@ -41,12 +39,13 @@ public class TaskFragment extends BaseFragment implements TaskListInterface, Vie
     private View view;
     private TextView title_name;
     private LinearLayout searchLayout;
+    private TabLayout tabLayout;
     //刷新控件
     private PullToRefreshListView mPullRefreshListView;
     private RelativeLayout nothing;
     private TaskAdapter taskAdapter;
-    private HorizontalListView horizontalListView;
-    private TaskStateAdapter taskStateAdapter;
+    //private HorizontalListView horizontalListView;
+    //private TaskStateAdapter taskStateAdapter;
     private int state = 0;//状态
     private int pageindex = 1;//页码数
     private List<TaskBean.RowsBean> rowsBeanList = new ArrayList();
@@ -82,13 +81,13 @@ public class TaskFragment extends BaseFragment implements TaskListInterface, Vie
         addTask.setOnClickListener(this);
         mPullRefreshListView = (PullToRefreshListView) rootView.findViewById(R.id.task_refresh_list);
         mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
-        horizontalListView = (HorizontalListView) rootView.findViewById(R.id.task_horizontalListView);
+        //horizontalListView = (HorizontalListView) rootView.findViewById(R.id.task_horizontalListView);
         nothing = (RelativeLayout) rootView.findViewById(R.id.task_nothing);
-        taskStateAdapter = new TaskStateAdapter(context, getTypeData());
-        horizontalListView.setAdapter(taskStateAdapter);
-        taskStateAdapter.setSelectIndex(0);
-        taskStateAdapter.notifyDataSetChanged();
-        horizontalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //taskStateAdapter = new TaskStateAdapter(context, getTypeData());
+        // horizontalListView.setAdapter(taskStateAdapter);
+        //taskStateAdapter.setSelectIndex(0);
+        //taskStateAdapter.notifyDataSetChanged();
+        /*horizontalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 state = position;
@@ -97,7 +96,9 @@ public class TaskFragment extends BaseFragment implements TaskListInterface, Vie
                 taskStateAdapter.setSelectIndex(position);
                 taskStateAdapter.notifyDataSetChanged();
             }
-        });
+        });*/
+        tabLayout=(TabLayout)rootView.findViewById(R.id.tabLayout);
+        initTablayout(tabLayout,getTypeData());
         mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(
@@ -175,6 +176,30 @@ public class TaskFragment extends BaseFragment implements TaskListInterface, Vie
         } else if (i == R.id.title_back) {
             getActivity().finish();
         }
+    }
+    private void initTablayout(TabLayout tabLayout,List<String> typeList){
+        for(String data:typeList)
+        {
+            tabLayout.addTab(tabLayout.newTab().setText(data));
+        }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                state = tab.getPosition();
+                pageindex = 1;
+                requestData(pageindex, tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private List<String> getTypeData() {

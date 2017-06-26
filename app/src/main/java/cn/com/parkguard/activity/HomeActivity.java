@@ -9,11 +9,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.github.mzule.activityrouter.router.Routers;
 import com.linked.erfli.library.base.BaseActivity;
+import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.myserviceutils.MyConstant;
 import com.linked.erfli.library.myserviceutils.MyServiceUtils;
 import com.linked.erfli.library.utils.MyUtils;
@@ -27,12 +29,12 @@ import java.util.ArrayList;
 import cn.com.parkguard.R;
 import cn.com.parkguard.adapter.HomeAdapter;
 import cn.com.parkguard.bean.HomeBean;
-import cn.com.watchman.chatui.service.MyScoketService;
 
 
 public class HomeActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     private TextView netText;
     private GridView gridView;
+    private LinearLayout setting;
     private int image[] = {R.mipmap.home_task, R.mipmap.home_notice, R.mipmap.home_problem, R.mipmap.home_statistical, R.mipmap.home_xungeng, R.mipmap.home_anwen, R.mipmap.ic_map, R.mipmap.home_monitor};
     private ArrayList<HomeBean> homeArrayList = new ArrayList<>();
     private HomeAdapter homeAdapter;
@@ -42,11 +44,22 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
     @Override
     protected void setView() {
         setContentView(R.layout.activity_main);
+
     }
 
     @Override
     protected void setDate(Bundle savedInstanceState) {
-        StatusBarUtils.ff(this, R.color.home_title);
+        StatusBarUtils.ff(this,R.color.colorPrimary);
+        MyTitle.getInstance().setTitle(this, "移动园区卫士", PGApp, false);
+        setting=(LinearLayout) findViewById(R.id.home_setter);
+        setting.setVisibility(View.VISIBLE);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(HomeActivity.this,EditorUserActivity.class);
+                startActivity(intent);
+            }
+        });
         ArrayList<HomeBean> homeList = (ArrayList<HomeBean>) JSON.parseArray(MyUtils.getFromAssets(this, "home.txt"), HomeBean.class);
         for (int i = 0; i < homeList.size(); i++) {
             if (homeList.get(i).isIsTrue()) {
@@ -80,8 +93,8 @@ public class HomeActivity extends BaseActivity implements AdapterView.OnItemClic
             }
         });
         if (!MyServiceUtils.isServiceRunning(MyConstant.GPSSERVICE_CLASSNAME, HomeActivity.this)) {
-            Intent startIntent = new Intent(this, MyScoketService.class);
-            startService(startIntent);
+            //Intent startIntent = new Intent(this, MyScoketService.class);
+            //startService(startIntent);
         }
     }
 

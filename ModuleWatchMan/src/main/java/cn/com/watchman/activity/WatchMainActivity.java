@@ -393,6 +393,7 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
         SharedUtil.isValue(this, "latitude");
 //        SharedUtil.setBoolean(this, "serviceFlag", true);
         SharedUtil.setInteger(this, "currentCount", currentCount);
+
     }
 
     public class CountReceiver extends BroadcastReceiver {
