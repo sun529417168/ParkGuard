@@ -118,7 +118,6 @@ public class GPSService extends Service {
                 /**
                  * 开始收集信息
                  */
-                ToastUtil.show(GPSService.this, String.valueOf(gpsBean.getAccuracy()));
                 Log.i("aMapLocation", gpsBean.getLongitude() + "===" + gpsBean.getLatitude());
                 MyRequest.gpsRequest(GPSService.this, gpsBean);
                 currentCount++;
@@ -138,26 +137,27 @@ public class GPSService extends Service {
     public class MyThread extends Thread {
         public void run() {
             while (isThread) {
-                MyRequest.typeRequest(GPSService.this,1);
+                MyRequest.typeRequest(GPSService.this, 1);
                 if (gpsBean != null) {
                     Log.i("gpsInfo", gpsBean.toString());
-                if (gpsBean != null && Double.parseDouble(String.valueOf(gpsBean.getAccuracy())) < 30) {
-                    if (Distance.isCompare(GPSService.this, gpsBean)) {
-                        Message msg = mHandler.obtainMessage();
-                        msg.what = 0;
-                        mHandler.sendMessage(msg);
-                    } else {
-                        Message msg = mHandler.obtainMessage();
-                        msg.what = 1;
-                        mHandler.sendMessage(msg);
+                    if (gpsBean != null && Double.parseDouble(String.valueOf(gpsBean.getAccuracy())) < 30) {
+                        if (Distance.isCompare(GPSService.this, gpsBean)) {
+                            Message msg = mHandler.obtainMessage();
+                            msg.what = 0;
+                            mHandler.sendMessage(msg);
+                        } else {
+                            Message msg = mHandler.obtainMessage();
+                            msg.what = 1;
+                            mHandler.sendMessage(msg);
+                        }
+                        SharedUtil.setString(GPSService.this, "longitude", String.valueOf(gpsBean.getLongitude()));
+                        SharedUtil.setString(GPSService.this, "latitude", String.valueOf(gpsBean.getLatitude()));
                     }
-                    SharedUtil.setString(GPSService.this, "longitude", String.valueOf(gpsBean.getLongitude()));
-                    SharedUtil.setString(GPSService.this, "latitude", String.valueOf(gpsBean.getLatitude()));
-                }
-                try {
-                    Thread.sleep(sleepTime);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    try {
+                        Thread.sleep(sleepTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -172,7 +172,7 @@ public class GPSService extends Service {
     public void onDestroy() {
         super.onDestroy();
         currentCount = 0;
-        SharedUtil.setInteger(this, "totalCount", totalCount);
+        SharedUtil.setInteger(GPSService.this, "totalCount", totalCount);
         isThread = false;
         if (null != locationClientContinue) {
             locationClientContinue.stopLocation();

@@ -240,7 +240,6 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
             if (!isStart) {
                 notifyUtils.showButtonNotify(0);
                 watchActivityStartService();
-                startService(new Intent(this, GPSService.class));
                 MyRequest.typeRequest(this, 1);
                 suspendBtn.setBackgroundResource(R.drawable.activity_main_stop);
                 isStart = true;
