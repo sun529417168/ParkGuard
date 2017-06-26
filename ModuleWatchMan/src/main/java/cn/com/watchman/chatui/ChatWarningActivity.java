@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
@@ -222,7 +223,12 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
             time = getTime();
             Log.i("坐标点", "getLongitude:" + getLongitude + ",getLatitude:" + getLatitude);
             if (isEmpty()) {
-                WatchManRequest.newAddChatProblemPricture(this, listFile, fileName, problemDes, -1, 11, 10, getLongitude, getLatitude, deviceUuid, time);
+                if (!"-1".equals(getLatitude) || !"-1".equals(getLongitude)) {
+                    WatchManRequest.newAddChatProblemPricture(this, listFile, fileName, problemDes, -1, 11, 10, getLongitude, getLatitude, deviceUuid, time);
+                } else {
+                    Toast.makeText(this, "定位失败,无法上传数据~", Toast.LENGTH_SHORT).show();
+                }
+
             }
         } else if (i == R.id.chat_add_problem) {
 //            WatchManRequest.getChatProblemTypeLeft(this, ChatWarningActivity.this);
@@ -377,7 +383,10 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
         locationService.stop();
     }
 
-    //高德定位回调监听器
+    /**
+     * 高德定位回调监听器
+     */
+
     public AMapLocationListener mLocationListener = new AMapLocationListener() {
 
         @Override
@@ -420,7 +429,7 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
                     getLongitude = "-1";
                 }
                 if (!"4.9E-324".equals(String.valueOf(location.getLatitude()))) {
-                    getLongitude = String.valueOf(location.getLatitude());
+                    getLatitude = String.valueOf(location.getLatitude());
                 } else {
                     getLatitude = "-1";
                 }

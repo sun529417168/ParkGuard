@@ -229,9 +229,9 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         public void onHeaderClick(int position, int type) {
             Log.i("MainActivity主页", "onHeaderClick:" + position + "#type:" + type);
             if (type == 1) {
-                openPopMethod("Beautiful Girl");
+//                openPopMethod("Beautiful Girl");
             } else if (type == 2) {
-                openPopMethod("Shiny boy");
+//                openPopMethod("Shiny boy");
             }
         }
 

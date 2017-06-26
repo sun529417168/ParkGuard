@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.utils.DeviceUuidFactory;
@@ -17,6 +18,7 @@ import cn.com.watchman.R;
 import cn.com.watchman.chatui.adapter.ChatWarningDetailsImageGridviewAdapter;
 import cn.com.watchman.chatui.enity.WarningDetailsInfo;
 import cn.com.watchman.chatui.interfaces.ChatWarningDetailsInterface;
+import cn.com.watchman.chatui.uiutils.MyGridViewHeightUtiils;
 import cn.com.watchman.networkrequest.WatchManRequest;
 
 /**
@@ -48,6 +50,7 @@ public class WarningDetailsActivity extends BaseActivity implements View.OnClick
     protected void setDate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         warningId = Integer.parseInt(intent.getStringExtra("id"));
+        Toast.makeText(this, "" + warningId, Toast.LENGTH_SHORT).show();
         String deviceUuid = new DeviceUuidFactory(WarningDetailsActivity.this).getDeviceUuid().toString();
         int userId = Integer.parseInt(SharedUtil.getString(WarningDetailsActivity.this, "PersonID"));
         WatchManRequest.getWarningDetails(WarningDetailsActivity.this, 10, 12, deviceUuid, userId, warningId);
@@ -81,16 +84,23 @@ public class WarningDetailsActivity extends BaseActivity implements View.OnClick
     @Override
     public void getWarningDetailsInterface(WarningDetailsInfo warningDetailsInfo) {
         list = new ArrayList();
-        chat_war_details_tv_number_value.setText(warningDetailsInfo.getAlarm().getDeviceguid());
-        String time=warningDetailsInfo.getAlarm().getAlarm_time();
-        time=time.replace("T"," ");
-        chat_war_details_tv_reprottime_value.setText(time);
-        chat_war_details_tv_describe_value.setText(warningDetailsInfo.getAlarm().getAlarm_text());
-        int fileSize = warningDetailsInfo.getFile().size();
-        for (int i = 0; i < fileSize; i++) {
-            list.add(warningDetailsInfo.getFile().get(i).getFile_address());
+        if (warningDetailsInfo.getFile().size() > 0) {
+            chat_war_details_tv_number_value.setText(warningDetailsInfo.getAlarm().getDeviceguid());
+            String time = warningDetailsInfo.getAlarm().getAlarm_time();
+            time = time.replace("T", " ");
+            chat_war_details_tv_reprottime_value.setText(time);
+            chat_war_details_tv_describe_value.setText(warningDetailsInfo.getAlarm().getAlarm_text());
+            int fileSize = warningDetailsInfo.getFile().size();
+            for (int i = 0; i < fileSize; i++) {
+                list.add(warningDetailsInfo.getFile().get(i).getFile_address());
+            }
+            adapter = new ChatWarningDetailsImageGridviewAdapter(WarningDetailsActivity.this, list);
+            problem_detail_gridView.setAdapter(adapter);
+            MyGridViewHeightUtiils.setListViewHeightBasedOnChildren(problem_detail_gridView);
+            adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(this, "数据查询有误~", Toast.LENGTH_SHORT).show();
         }
-        adapter = new ChatWarningDetailsImageGridviewAdapter(WarningDetailsActivity.this, list);
-        problem_detail_gridView.setAdapter(adapter);
+
     }
 }

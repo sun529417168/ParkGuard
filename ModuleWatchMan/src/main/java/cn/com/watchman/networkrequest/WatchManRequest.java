@@ -282,7 +282,7 @@ public class WatchManRequest {
         map.put("data", params);
         String sendChatJson = JSON.toJSONString(map);
         Log.i("事件上报图片上传返回结果:", "" + sendChatJson);
-        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatJson).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatJson).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Log.i("即时通讯发送数据返回结果:1", "" + e.getMessage());
@@ -338,6 +338,7 @@ public class WatchManRequest {
     public static void newAddChatProblemPricture(final Activity mActivity, List<File> listFile, List<String> fileName, String problemDes, int alarmid, int dataType, int subSysType, String longitude, String latitude, String deviceUuid, String time) {
         LoadingDialogUtil.show(mActivity);
         final ChatSendPicTureInterface chatSendPicTureInterface = (ChatSendPicTureInterface) mActivity;
+        Log.i("photofilelog","图片:"+listFile.size()+","+fileName.size());
 
         List<Map<String, Object>> list = new ArrayList<>();
         //图片流  文件名保存到map里
@@ -375,7 +376,7 @@ public class WatchManRequest {
         params.put("data", dataMap);
         String sendChatWarningimg = JSON.toJSONString(params);
         Log.i("巡更巡检事件上报log", "json:" + sendChatWarningimg);
-        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatWarningimg).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatWarningimg).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
                 ToastUtil.show(mActivity, "错误代码" + e.getMessage().toString());
@@ -417,7 +418,7 @@ public class WatchManRequest {
         map.put("data", dataMap);
         String warningDetails = JSON.toJSONString(map);
         Log.i("告警事件详情log", "json:" + warningDetails);
-        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(warningDetails).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(warningDetails).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Log.i("告警事件详情log", "" + e.getMessage());
@@ -472,7 +473,7 @@ public class WatchManRequest {
         map.put("data", dataMap);
         String sendChatPhoto = JSON.toJSONString(map);
         Log.i("通讯发送数据json", "json:" + sendChatPhoto);
-        OkHttpUtils.postString().url(WMUrlConfig.TESTURL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatPhoto).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(sendChatPhoto).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
 
             @Override
             public void onError(Call call, Exception e, int id) {
