@@ -82,6 +82,16 @@
             android:name=".activity.EditorUserActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <!--设置界面-->
+        <activity
+            android:name=".activity.SettingActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--设置界面-->
+        <activity
+            android:name=".activity.UpdatePasswordActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <!--高德地图的服务-->
         <service android:name="com.amap.api.location.APSService" />
     </application>
