@@ -28,7 +28,6 @@ public class MyGridViewHeightUtiils {
             // 获取item的高度和
             totalHeight += listItem.getMeasuredHeight();
         }
-
         // 获取listview的布局参数
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         // 设置高度
