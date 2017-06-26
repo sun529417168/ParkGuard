@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import com.amap.api.trace.LBSTraceClient;
 import com.amap.api.trace.TraceListener;
 import com.amap.api.trace.TraceLocation;
 import com.amap.api.trace.TraceOverlay;
+import com.linked.erfli.library.utils.SharedUtil;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -37,14 +40,17 @@ import java.util.List;
 import cn.com.watchman.R;
 import cn.com.watchman.bean.DinatesBean;
 import cn.com.watchman.bean.DinatesDaoImpl;
+import cn.com.watchman.bean.GPSBean;
 import cn.com.watchman.bean.PathRecord;
 import cn.com.watchman.database.DbAdapter;
+import cn.com.watchman.utils.Distance;
+import cn.com.watchman.utils.MyRequest;
 import cn.com.watchman.utils.Util;
 
 
 /**
  * 文件名：RecordService
- * 描    述：后台收集轨迹点位的服务
+ * 描    述：后台收集轨迹点位的服务,同时也可以用作实时轨迹，目前写了一个定位的方法所以这个服务暂时舍弃，后期需要实时估计的服务在打开使用
  * 作    者：stt
  * 时    间：2017.6.3
  * 版    本：V1.1.0
@@ -71,6 +77,8 @@ public class RecordService extends Service implements LocationSource,
     private TraceOverlay mTraceoverlay;
     private Marker mlocMarker;
     private DinatesDaoImpl dinatesDao;
+    private boolean isThread = true;
+    private GPSBean gpsBean;
 
     @Override
     public void onCreate() {
@@ -79,6 +87,7 @@ public class RecordService extends Service implements LocationSource,
         dinatesDao = new DinatesDaoImpl(this);
         init();
         initpolyline();
+        new MyThread().start();
     }
 
     @Override
@@ -226,17 +235,19 @@ public class RecordService extends Service implements LocationSource,
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null) {
             if (amapLocation != null && amapLocation.getErrorCode() == 0) {
+                gpsBean = new GPSBean(amapLocation.getLongitude(), amapLocation.getLatitude());
                 mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-                LatLng mylocation = new LatLng(amapLocation.getLatitude(),
-                        amapLocation.getLongitude());
+                LatLng mylocation = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
                 mAMap.moveCamera(CameraUpdateFactory.changeLatLng(mylocation));
                 record.addpoint(amapLocation);
                 mPolyoptions.add(mylocation);
                 /**
                  * 开始收集信息
                  */
-                
-                dinatesDao.insert(new DinatesBean(amapLocation.getLongitude(), amapLocation.getLatitude(), System.currentTimeMillis() / 1000));
+//                if (Distance.isCompareTwo(this, amapLocation)) {
+//                    dinatesDao.insert(new DinatesBean(amapLocation.getLongitude(), amapLocation.getLatitude(), System.currentTimeMillis() / 1000));
+//                }
+                Log.i("高德地图定位数据", amapLocation.toString());
                 mTracelocationlist.add(Util.parseTraceLocation(amapLocation));
                 redrawline();
                 if (mTracelocationlist.size() > tracesize - 1) {
@@ -245,6 +256,40 @@ public class RecordService extends Service implements LocationSource,
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
                 Log.e("AmapErr", errText);
+            }
+        }
+    }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                /**
+                 * 开始收集信息
+                 */
+                Log.i("aMapLocation", gpsBean.getLongitude() + "===" + gpsBean.getLatitude());
+                dinatesDao.insert(new DinatesBean(gpsBean.getLongitude(), gpsBean.getLatitude(), System.currentTimeMillis() / 1000));
+            }
+        }
+    };
+
+    public class MyThread extends Thread {
+        public void run() {
+            while (isThread) {
+                if (gpsBean != null) {
+                    if (Distance.isCompareTwoLa(RecordService.this, gpsBean)) {
+                        Message msg = mHandler.obtainMessage();
+                        msg.what = 0;
+                        mHandler.sendMessage(msg);
+                    }
+                    SharedUtil.setString(RecordService.this, "ReLongitude", String.valueOf(gpsBean.getLongitude()));
+                    SharedUtil.setString(RecordService.this, "ReLatitude", String.valueOf(gpsBean.getLatitude()));
+                }
+                try {
+                    Thread.sleep(1000 * 3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -380,5 +425,6 @@ public class RecordService extends Service implements LocationSource,
         LBSTraceClient mTraceClient = new LBSTraceClient(getApplicationContext());
         mTraceClient.queryProcessedTrace(2, Util.parseTraceLocationList(record.getPathline()), LBSTraceClient.TYPE_AMAP, this);
         saveRecord(record.getPathline(), record.getDate());
+        isThread = false;
     }
 }

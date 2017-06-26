@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xhdpi-v4\\icon_geo.png",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\mipmap-xhdpi-v4\\icon_geo.png"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xhdpi-v4\\hugh.png",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\mipmap-xhdpi-v4\\hugh.png"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xhdpi-v4\\ex_right.png",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\bundles\\debug\\res\\mipmap-xhdpi-v4\\ex_right.png"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xhdpi-v4\\ex_down.png",
+        "source": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\bundles\\debug\\res\\mipmap-xhdpi-v4\\ex_down.png"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xhdpi-v4\\ic_map.png",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\mipmap-xhdpi-v4\\ic_map.png"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xhdpi-v4\\statistical.png",
+        "source": "D:\\workspaceAS\\ParkGuard\\Library\\build\\intermediates\\bundles\\default\\res\\mipmap-xhdpi-v4\\statistical.png"
+    }
+]

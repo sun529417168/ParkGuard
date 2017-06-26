@@ -55,11 +55,18 @@ public class ChatAcceptViewHolder extends BaseViewHolder<MessageInfo> {
     @Override
     public void setData(final MessageInfo data) {
         chatItemDate.setText(data.getTime() != null ? data.getTime() : "");
-        Glide.with(getContext()).load(data.getHeader()).into(chatItemHeader);
+        //设置头像
+//        Glide.with(getContext()).load(data.getHeader()).into(chatItemHeader);
         chatItemHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onItemClickListener.onHeaderClick(getDataPosition(), data.getType());
+            }
+        });
+        chatItemLayoutContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemTextClick(chatItemContentText,getDataPosition());
             }
         });
         if (data.getContent() != null) {

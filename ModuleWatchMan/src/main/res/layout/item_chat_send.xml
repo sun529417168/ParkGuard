@@ -21,6 +21,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
+            android:background="@mipmap/logo"
             android:scaleType="fitCenter" />
 
         <RelativeLayout
@@ -28,6 +29,78 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/chat_item_header">
+
+            <cn.com.watchman.chatui.widget.BubbleLinearLayout
+                android:id="@+id/chat_item_warning_BubbleLinearLayout"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/chat_item_content_image"
+                android:layout_toRightOf="@+id/chat_item_content_image"
+                app:arrowLocation="right"
+                app:bubbleColor="@color/white_2">
+
+                <RelativeLayout
+                    android:id="@+id/chat_item_warning_layout"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp">
+
+                    <TextView
+                        android:id="@+id/tv_chat_item_warning_EventReport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="事件上报"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tv_chat_item_warning_DateTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/tv_chat_item_warning_EventReport"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="时间"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tv_chat_item_warning_Address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/tv_chat_item_warning_DateTime"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="地点"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tv_chat_item_warning_Id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/tv_chat_item_warning_Address"
+                        android:layout_alignParentBottom="true"
+                        android:visibility="gone"
+                        android:layout_alignStart="@+id/tv_chat_item_warning_Address"
+                        android:text="id"
+                        android:textColor="@color/black" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/img_chat_item_warning_ImageView"
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    app:srcCompat="@mipmap/bg_chk_enable" />
+
+            </cn.com.watchman.chatui.widget.BubbleLinearLayout>
 
             <cn.com.watchman.chatui.widget.BubbleImageView
                 android:id="@+id/chat_item_content_image"
@@ -68,8 +141,8 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:src="@mipmap/icon_voice_right3"
                     android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_voice_right3"
                     android:visibility="gone" />
             </cn.com.watchman.chatui.widget.BubbleLinearLayout>
         </RelativeLayout>
@@ -77,10 +150,10 @@
         <TextView
             android:id="@+id/chat_item_voice_time"
             style="@style/text_body"
-            android:visibility="gone"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/content_vertical_margin"
-            android:layout_toLeftOf="@+id/chat_item_layout" />
+            android:layout_toLeftOf="@+id/chat_item_layout"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/chat_item_fail"
@@ -89,8 +162,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/content_vertical_margin"
             android:layout_toLeftOf="@+id/chat_item_voice_time"
-            android:src="@drawable/msg_state_fail_resend"
             android:focusable="false"
+            android:src="@drawable/msg_state_fail_resend"
             android:visibility="gone" />
 
         <ProgressBar

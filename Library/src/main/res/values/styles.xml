@@ -304,11 +304,11 @@
     <!--添加任务layout的start-->
     <style name="add_task_layout">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">40dp</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:clickable">true</item>
         <item name="android:paddingLeft">20dp</item>
         <item name="android:paddingRight">20dp</item>
-        <item name="android:layout_marginTop">2dp</item>
     </style>
     <!--添加任务layout的end-->
 

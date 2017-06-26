@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_number"
+                    style="@style/chat_warning_details_left_text"
+                    android:text="编号" />
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_number_value"
+                    style="@style/chat_warning_details_right_text"
+
+                    android:text="编号value" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_state"
+                    style="@style/chat_warning_details_left_text"
+                    android:text="状态" />
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_state_value"
+                    style="@style/chat_warning_details_right_text"
+                    android:text="状态value" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_type"
+                    style="@style/chat_warning_details_left_text"
+                    android:text="类型" />
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_type_value"
+                    style="@style/chat_warning_details_right_text"
+                    android:text="类型value" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_region"
+                    style="@style/chat_warning_details_left_text"
+                    android:text="区域" />
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_region_value"
+                    style="@style/chat_warning_details_right_text"
+                    android:text="区域value" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_reprotperson"
+                    style="@style/chat_warning_details_left_text"
+                    android:text="上报人" />
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_reprotperson_value"
+                    style="@style/chat_warning_details_right_text"
+                    android:text="上报人value" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_reprottime"
+                    style="@style/chat_warning_details_left_text"
+                    android:text="上报时间" />
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_reprottime_value"
+                    style="@style/chat_warning_details_right_text"
+                    android:text="上报时间value" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="图片" />
+
+                <GridView
+                    android:id="@+id/problem_detail_gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/chat_war_details_tv_photo"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:horizontalSpacing="10dp"
+                    android:numColumns="3"
+                    android:scrollbars="none" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_describe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="内容描述" />
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_describe_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/chat_war_details_tv_describe"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="内容描述valuea" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_reply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="回复信息" />
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_reply_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/chat_war_details_tv_reply"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="回复信息value" />
+
+                <TextView
+                    android:id="@+id/chat_war_details_tv_reply_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/chat_war_details_tv_reply_value"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="回复时间value" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/title" />
+
+</LinearLayout>

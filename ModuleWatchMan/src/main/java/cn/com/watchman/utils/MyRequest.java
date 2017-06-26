@@ -191,9 +191,9 @@ public class MyRequest {
                 JSONObject jsonObject = JSONObject.parseObject(response);
                 int code = jsonObject.getInteger("d");
                 if (code == 1) {
-                    ToastUtil.show(activity, "上传点位成功");
+//                    ToastUtil.show(activity, "上传点位成功");
                 } else {
-                    ToastUtil.show(activity, "上传点位失败");
+//                    ToastUtil.show(activity, "上传点位失败");
                 }
             }
 

@@ -19,8 +19,7 @@
             style="@style/problem_item"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="4dp"
-            android:layout_toRightOf="@+id/item_task_date" />
+            android:layout_marginLeft="4dp"  />
 
         <TextView
             android:id="@+id/item_problem_state"

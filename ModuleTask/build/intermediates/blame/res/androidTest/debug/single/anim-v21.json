@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim-v21\\design_bottom_sheet_slide_in.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\anim-v21\\design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim-v21\\design_bottom_sheet_slide_out.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\anim-v21\\design_bottom_sheet_slide_out.xml"
+    }
+]

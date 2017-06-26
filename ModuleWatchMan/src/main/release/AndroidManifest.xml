@@ -134,6 +134,11 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <!--gps后台服务-->
+        <service
+            android:name=".service.GPSService"
+            android:exported="false">
+            <intent-filter android:priority="1000"></intent-filter>
+        </service>
         <service android:name=".service.GPSService" />
         <!--高德地图的服务-->
         <service android:name="com.amap.api.location.APSService" />
@@ -145,6 +150,21 @@
         <activity
             android:name=".chatui.ChatMainActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--chat 预警页面-->
+        <activity
+            android:name=".chatui.ChatWarningActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--chat 输入地址页面-->
+        <activity
+            android:name=".chatui.ChatInputAddressActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--chat 告警详情页面-->
+        <activity
+            android:name=".chatui.WarningDetailsActivity"
+            android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.NoActionBar" />
         <!--图片展示页面-->
@@ -153,6 +173,8 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <!--高德地图定位的服务-->
+        <service android:name=".service.LocationGDService" />
     </application>
 
 </manifest>

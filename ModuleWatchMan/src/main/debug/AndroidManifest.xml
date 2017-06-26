@@ -2,8 +2,8 @@
 
     package="cn.com.watchman">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -90,6 +90,21 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.NoActionBar" />
+        <!--chat 预警页面-->
+        <activity
+            android:name=".chatui.ChatWarningActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--chat 输入地址页面-->
+        <activity
+            android:name=".chatui.ChatInputAddressActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--chat 告警详情页面-->
+        <activity
+            android:name=".chatui.WarningDetailsActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <!--图片展示页面-->
         <activity
             android:name=".chatui.FullImageActivity"
@@ -100,6 +115,7 @@
         <service
             android:name=".chatui.service.MyScoketService"
             android:process=":main" />
+        <!--高德地图定位的服务-->
     </application>
 
 </manifest>

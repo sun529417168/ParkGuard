@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_s"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/editor_user_title"
+        layout="@layout/title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editor_user_title">
+
+        <LinearLayout
+            android:id="@+id/editor_user_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--用户名start-->
+            <RelativeLayout style="@style/editor_userInfo_LinearLayout">
+
+                <TextView
+                    android:id="@+id/username"
+                    style="@style/editor_userInfo"
+                    android:text="@string/editor_username" />
+
+                <TextView
+                    android:id="@+id/editor_username"
+                    style="@style/editor_userInfo_EditText"
+                    android:layout_toRightOf="@+id/username" />
+
+            </RelativeLayout>
+            <!--用户名end-->
+
+
+            <!--工号start-->
+            <RelativeLayout style="@style/editor_userInfo_LinearLayout">
+
+                <TextView
+                    android:id="@+id/workNumber"
+                    style="@style/editor_userInfo"
+                    android:text="@string/editor_workNum" />
+
+                <TextView
+                    android:id="@+id/editor_workNumber"
+                    style="@style/editor_userInfo_EditText"
+                    android:layout_toRightOf="@+id/workNumber" />
+
+
+            </RelativeLayout>
+            <!--工号end-->
+
+
+            <!--姓名start-->
+            <RelativeLayout style="@style/editor_userInfo_LinearLayout">
+
+                <TextView
+                    android:id="@+id/xingMing"
+                    style="@style/editor_userInfo"
+                    android:text="@string/editor_name" />
+
+                <EditText
+                    android:id="@+id/editor_name"
+                    style="@style/editor_userInfo_EditText"
+                    android:layout_toRightOf="@+id/xingMing"
+                    android:hint="@string/editor_name_hint" />
+
+
+                <ImageView style="@style/editor_userInfo_littleRed" />
+
+            </RelativeLayout>
+            <!--姓名end-->
+
+            <!--性别start-->
+            <RelativeLayout
+                android:id="@+id/editor_user_sex_layout"
+                style="@style/editor_userInfo_LinearLayout">
+
+                <TextView
+                    android:id="@+id/xingBie"
+                    style="@style/editor_userInfo"
+                    android:text="@string/editor_sex" />
+
+                <TextView
+                    android:id="@+id/editor_sex"
+                    style="@style/editor_userInfo_EditText"
+                    android:layout_toRightOf="@+id/xingBie"
+                    android:hint="@string/editor_sex_hint" />
+
+
+                <ImageView
+                    android:id="@+id/xingBie_littleRed"
+                    style="@style/editor_userInfo_littleRed" />
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@mipmap/right" />
+            </RelativeLayout>
+            <!--性别end-->
+
+            <!--身份证号start-->
+            <RelativeLayout style="@style/editor_userInfo_LinearLayout">
+
+                <TextView
+                    android:id="@+id/shenFenZheng"
+                    style="@style/editor_userInfo"
+                    android:text="@string/editor_userID" />
+
+                <EditText
+                    android:id="@+id/editor_userID"
+                    style="@style/editor_userInfo_EditText"
+                    android:layout_toRightOf="@+id/shenFenZheng"
+                    android:hint="@string/editor_userID_hint" />
+
+
+            </RelativeLayout>
+            <!--身份证号end-->
+
+            <!--手机号start-->
+            <RelativeLayout style="@style/editor_userInfo_LinearLayout">
+
+                <TextView
+                    android:id="@+id/shouJiHao"
+                    style="@style/editor_userInfo"
+                    android:text="@string/editor_phone" />
+
+                <EditText
+                    android:id="@+id/editor_phone"
+                    style="@style/editor_userInfo_EditText"
+                    android:layout_toRightOf="@+id/shouJiHao"
+                    android:hint="@string/editor_phone_hint"
+                    android:inputType="phone" />
+
+
+                <ImageView style="@style/editor_userInfo_littleRed" />
+            </RelativeLayout>
+            <!--手机号end-->
+
+            <!--旧密码start-->
+            <RelativeLayout
+                style="@style/editor_userInfo_LinearLayout"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/jiuMiMa"
+                    style="@style/editor_userInfo"
+                    android:text="@string/editor_oldPassword" />
+
+
+                <ImageView style="@style/editor_userInfo_littleRed" />
+
+                <EditText
+                    android:id="@+id/editor_oldPassword"
+                    style="@style/editor_userInfo_EditText"
+                    android:layout_alignBaseline="@+id/jiuMiMa"
+                    android:layout_alignBottom="@+id/jiuMiMa"
+                    android:layout_toEndOf="@+id/jiuMiMa"
+                    android:layout_toRightOf="@+id/jiuMiMa"
+                    android:hint="@string/editor_oldPassword_hint"
+                    android:inputType="textPassword" />
+            </RelativeLayout>
+            <!--旧密码end-->
+
+            <!--新密码start-->
+            <RelativeLayout style="@style/editor_userInfo_LinearLayout">
+
+                <TextView
+                    android:id="@+id/xinMiMa"
+                    style="@style/editor_userInfo"
+                    android:text="@string/editor_newPassword" />
+
+                <EditText
+                    android:id="@+id/editor_newPassword"
+                    style="@style/editor_userInfo_EditText"
+                    android:layout_toRightOf="@+id/xinMiMa"
+                    android:hint="@string/editor_newPassword_hint"
+                    android:inputType="textPassword" />
+
+
+                <ImageView style="@style/editor_userInfo_littleRed" />
+            </RelativeLayout>
+            <!--新密码end-->
+
+            <!--确认密码start-->
+            <RelativeLayout style="@style/editor_userInfo_LinearLayout">
+
+                <TextView
+                    android:id="@+id/querenMiMa"
+                    style="@style/editor_userInfo"
+                    android:text="@string/editor_again_newPassword" />
+
+                <EditText
+                    android:id="@+id/editor_again_newPassword"
+                    style="@style/editor_userInfo_EditText"
+                    android:layout_toRightOf="@+id/querenMiMa"
+                    android:hint="@string/editor_again_newPassword_hint"
+                    android:inputType="textPassword" />
+
+
+                <ImageView style="@style/editor_userInfo_littleRed" />
+            </RelativeLayout>
+            <!--确认密码end-->
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/sure_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/login_button"
+        android:text="@string/editor_sure"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</RelativeLayout>

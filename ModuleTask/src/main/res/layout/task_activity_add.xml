@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true">
 
     <include
         android:id="@+id/add_task_title"
@@ -12,9 +11,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_above="@+id/add_task_button"
         android:layout_below="@+id/add_task_title">
 
         <LinearLayout
@@ -54,7 +54,10 @@
 
             </RelativeLayout>
             <!--任务名称end-->
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_4" />
             <!--任务类型start-->
             <RelativeLayout
                 android:id="@+id/add_task_typeLayout"
@@ -82,7 +85,10 @@
                     android:background="@mipmap/right" />
             </RelativeLayout>
             <!--任务类型end-->
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_4" />
             <!--任务地点start-->
             <RelativeLayout style="@style/add_task_layout">
 
@@ -102,7 +108,10 @@
 
             </RelativeLayout>
             <!--任务地点end-->
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_4" />
             <!--优先级start-->
             <RelativeLayout
                 android:id="@+id/add_task_priorityLayout"
@@ -129,6 +138,10 @@
                     android:background="@mipmap/right" />
             </RelativeLayout>
             <!--优先级end-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_4" />
             <!--开始时间start-->
             <RelativeLayout
                 android:id="@+id/add_task_startTimeLayout"
@@ -154,6 +167,10 @@
                     android:background="@mipmap/right" />
             </RelativeLayout>
             <!--开始时间end-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_4" />
             <!--结束时间start-->
             <RelativeLayout
                 android:id="@+id/add_task_endTimeLayout"
@@ -179,6 +196,10 @@
                     android:background="@mipmap/right" />
             </RelativeLayout>
             <!--结束时间end-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_4" />
             <!--下发人员start-->
             <RelativeLayout
                 android:id="@+id/add_task_personLayout"
@@ -209,13 +230,16 @@
                     android:background="@mipmap/right" />
             </RelativeLayout>
             <!--下发人员end-->
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_4" />
             <!--图片上传start-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="@color/white"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
@@ -235,7 +259,7 @@
                     android:layout_width="25dp"
                     android:layout_height="20dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:background="@mipmap/camera" />
 
                 <cn.com.task.weight.ReportedGridview
@@ -257,13 +281,14 @@
             <!--图片上传end-->
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.6dp"
+                android:layout_height="1dp"
                 android:background="@color/gray_4" />
             <!--任务描述start-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:orientation="vertical"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
@@ -275,6 +300,7 @@
                     android:text="@string/add_task_describe"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
 
                 <EditText
                     android:id="@+id/add_task_inputInfo"
@@ -301,9 +327,5 @@
         android:layout_marginBottom="35dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/login_button"
-        android:text="@string/add_task_send"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-</RelativeLayout>
+        android:layout_gravity="bottom" />
+</FrameLayout>

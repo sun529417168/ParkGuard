@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_tint_spinner.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\color-v23\\abc_tint_spinner.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_btn_colored_borderless_text_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\color-v23\\abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_tint_seek_thumb.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\color-v23\\abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_tint_switch_track.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\color-v23\\abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_tint_edittext.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\color-v23\\abc_tint_edittext.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_tint_switch_thumb.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\color-v23\\abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_tint_default.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\color-v23\\abc_tint_default.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_btn_colored_text_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\color-v23\\abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_color_highlight_material.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\color-v23\\abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_tint_btn_checkable.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\8497764dafc729ecc94e4072f3e2d90e0def2fe2\\output\\res\\color-v23\\abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "D:\\workspaceAS\\ParkGuard\\ModuleTask\\build\\intermediates\\res\\merged\\debug\\color-v23\\design_tint_password_toggle.xml",
+        "source": "D:\\adt-bundle-windows-x86_64-20140702\\sdk\\.android\\build-cache\\451ecb1f531857bd1855988ec59f3d978d202426\\output\\res\\color-v23\\design_tint_password_toggle.xml"
+    }
+]

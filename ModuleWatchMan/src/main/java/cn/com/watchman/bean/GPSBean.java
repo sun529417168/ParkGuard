@@ -24,6 +24,10 @@ public class GPSBean implements Serializable {
     public GPSBean() {
     }
 
+    public GPSBean(double longitude, double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
 
     public GPSBean(double longitude, double latitude, String address, float accuracy, double altitude, String describe, int satellite, String findSatellite, float speed) {
         this.longitude = longitude;
