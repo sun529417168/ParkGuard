@@ -84,8 +84,8 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
         //定位方法
         locate();
     }
-    
-    public void clearInfo(View view){
+
+    public void clearInfo(View view) {
         dinatesList = dinatesDao.find();
         if (dinatesList.size() > 0) {
             for (DinatesBean bean : dinatesList) {
@@ -124,11 +124,17 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
                 .width(18));
     }
 
+    /**
+     * 取到Sqlite的数据，把点位add到mark上
+     *
+     * @return
+     */
     protected List<LatLng> readLatLngs() {
         List<LatLng> points = new ArrayList<>();
 
         for (DinatesBean bean : dinatesList) {
-            points.add(new LatLng(bean.getLatitude(), bean.getLongitude()));
+            if ((int) bean.getLongitude() != 0 || (int) bean.getLatitude() != 0)
+                points.add(new LatLng(bean.getLatitude(), bean.getLongitude()));
         }
         return points;
     }

@@ -37,7 +37,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:visibility="gone"
         android:onClick="clearInfo"
         android:text="清楚 " />
 </RelativeLayout>

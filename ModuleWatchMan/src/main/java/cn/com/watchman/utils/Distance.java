@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.model.LatLng;
 import com.linked.erfli.library.utils.SharedUtil;
+import com.linked.erfli.library.utils.ToastUtil;
 
 import cn.com.watchman.bean.GPSBean;
 
@@ -65,7 +66,7 @@ public class Distance {
             return false;
         } else {
             Log.i("看看距离", "等于10米");
-            return true;
+            return false;
         }
     }
 

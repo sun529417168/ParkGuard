@@ -26,7 +26,7 @@ import cn.com.watchman.utils.PoiOverlay;
  * 版    本：V1.1.2
  */
 
-public class MarkerActivity extends MoveShowActivity  {
+public class MarkerActivity extends MoveShowActivity {
     private List<DinatesBean> markerList = new ArrayList<>();
     private ViewPoiOverlay poiOverlay;
 
@@ -53,7 +53,7 @@ public class MarkerActivity extends MoveShowActivity  {
         protected BitmapDescriptor getBitmapDescriptor(final int index) {
             View view = null;
             view = View.inflate(MarkerActivity.this, R.layout.custom_view, null);
-            TextView textView = ((TextView) view.findViewById(R.id.title));
+            TextView textView = ((TextView) view.findViewById(R.id.marker_title));
             textView.setText(getTime(index));
 
             return BitmapDescriptorFactory.fromView(view);

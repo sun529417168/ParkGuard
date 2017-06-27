@@ -79,7 +79,7 @@ public class GPSService extends Service {
         // 地址信息
         locationClientOption.setNeedAddress(true);
         // 每10秒定位一次
-//        locationClientOption.setInterval(10 * 1000);
+        locationClientOption.setInterval(8 * 1000);
         locationClientContinue.setLocationOption(locationClientOption);
         locationClientContinue.setLocationListener(locationContinueListener);
         locationClientContinue.startLocation();
@@ -91,22 +91,49 @@ public class GPSService extends Service {
     AMapLocationListener locationContinueListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation location) {
-//            gpsBean = new GPSBean(location.getLongitude(), location.getLatitude());
+            gpsBean = new GPSBean(location.getLongitude(), location.getLatitude());
             Log.i("高德地图定位", location.getLongitude() + "===" + location.getLatitude());
-            gpsBean = new GPSBean(location.getLongitude(), location.getLatitude(), location.getAddress(), location.getAccuracy(), location.getAltitude(), location.getProvider(), location.getSatellites(), location.getGpsAccuracyStatus() + "", location.getSpeed());
-            if (Double.parseDouble(String.valueOf(location.getSpeed())) > 0 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 1) {//行走状态
-                sleepTime = 15 * 1000;
-            } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 1 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 3) {
-                sleepTime = 10 * 1000;
-            } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 3 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 10) {
-                sleepTime = 4 * 1000;
-            } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 10 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 40) {
-                sleepTime = 4 * 1000;
-            } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 40) {
-                sleepTime = 3 * 1000;
-            } else {
-                sleepTime = 10 * 1000;
+            ToastUtil.show(GPSService.this, String.valueOf(location.getAccuracy()));
+            if ((int) location.getLongitude() == 0 || (int) location.getLatitude() == 0) {
+                return;
             }
+            if (location != null && Double.parseDouble(String.valueOf(location.getAccuracy())) > 0 && Double.parseDouble(String.valueOf(location.getAccuracy())) < 20) {
+                if (Distance.isCompare(GPSService.this, gpsBean)) {
+                    MyRequest.gpsRequest(GPSService.this, gpsBean);
+                    currentCount++;
+                    totalCount = SharedUtil.getInteger(getApplicationContext(), "totalCount", 0) + 1;
+                    SharedUtil.setInteger(getApplicationContext(), "totalCount", totalCount);
+                    intent.putExtra("currentCount", currentCount);
+                    intent.putExtra("totalCount", totalCount);
+                    sendBroadcast(intent);
+                    dinatesDao.insert(new DinatesBean(location.getLongitude(), location.getLatitude(), System.currentTimeMillis() / 1000));
+                    SharedUtil.setString(GPSService.this, "longitude", String.valueOf(location.getLongitude()));
+                    SharedUtil.setString(GPSService.this, "latitude", String.valueOf(location.getLatitude()));
+                    ToastUtil.show(GPSService.this, "正确的数据，已经上传了" + location.getLongitude() + "===" + location.getLatitude());
+                } else {
+                    ToastUtil.show(GPSService.this, "监听小于10米");
+                }
+            } else {
+                ToastUtil.show(GPSService.this, "小于0或者大于20了不对");
+            }
+
+            /**
+             * 一下是各种判断目前先不考虑
+             */
+//            gpsBean = new GPSBean(location.getLongitude(), location.getLatitude(), location.getAddress(), location.getAccuracy(), location.getAltitude(), location.getProvider(), location.getSatellites(), location.getGpsAccuracyStatus() + "", location.getSpeed());
+//            if (Double.parseDouble(String.valueOf(location.getSpeed())) > 0 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 1) {//行走状态
+//                sleepTime = 15 * 1000;
+//            } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 1 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 3) {
+//                sleepTime = 10 * 1000;
+//            } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 3 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 10) {
+//                sleepTime = 4 * 1000;
+//            } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 10 && Double.parseDouble(String.valueOf(location.getSpeed())) <= 40) {
+//                sleepTime = 4 * 1000;
+//            } else if (Double.parseDouble(String.valueOf(location.getSpeed())) > 40) {
+//                sleepTime = 3 * 1000;
+//            } else {
+//                sleepTime = 10 * 1000;
+//            }
         }
     };
 
@@ -140,7 +167,7 @@ public class GPSService extends Service {
                 MyRequest.typeRequest(GPSService.this, 1);
                 if (gpsBean != null) {
                     Log.i("gpsInfo", gpsBean.toString());
-                    if (gpsBean != null && Double.parseDouble(String.valueOf(gpsBean.getAccuracy())) < 30) {
+                    if (gpsBean != null && Double.parseDouble(String.valueOf(gpsBean.getAccuracy())) < 20) {
                         if (Distance.isCompare(GPSService.this, gpsBean)) {
                             Message msg = mHandler.obtainMessage();
                             msg.what = 0;
