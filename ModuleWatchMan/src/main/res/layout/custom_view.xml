@@ -6,12 +6,21 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
         android:background="@drawable/custom_info_bubble"
         android:ellipsize="end"
         android:gravity="center"
         android:textColor="#ff7f7f7f"
         android:textSize="12dp" />
+    <!--<TextView-->
+        <!--android:id="@+id/marker_title"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:background="@drawable/custom_info_bubble"-->
+        <!--android:ellipsize="end"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="#ff7f7f7f"-->
+        <!--android:textSize="12dp" />-->
 
 </LinearLayout>

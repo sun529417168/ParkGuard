@@ -122,7 +122,8 @@ public class PoiOverlay {
      * @return
      */
     protected String getTime(int index) {
-        return MyUtils.stampToTime(String.valueOf(mPois.get(index).getTime()));
+//        return MyUtils.stampToTime(String.valueOf(mPois.get(index).getTime()));
+        return mPois.get(index).getLatitude()+"=="+mPois.get(index).getLongitude();
     }
 
     /**
