@@ -72,7 +72,7 @@ public class MyScoketService extends Service {
             .writeTimeout(3000, TimeUnit.SECONDS)//设置写的超时时间
             .connectTimeout(3000, TimeUnit.SECONDS)//设置连接超时时间
             .build();
-    String url = "ws://123.56.96.237:8188";
+    String url = "ws://123.56.96.237:12005";
 
     private void initData() {
         Request request = new Request.Builder().url(url).build();

@@ -5,40 +5,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-
-
-        <TextView
-            android:id="@+id/item_problem_number"
-            style="@style/problem_item"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="4dp"  />
-
-        <TextView
-            android:id="@+id/item_problem_state"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
-            android:layout_toRightOf="@+id/item_problem_date"
-            android:gravity="center"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/item_problem_date"
-            style="@style/problem_item"
-            android:layout_alignParentLeft="true"
-            android:textSize="15sp" />
-
-    </RelativeLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +15,7 @@
         <LinearLayout
             android:id="@+id/item_problem_picture"
             android:layout_width="0dp"
-            android:layout_height="75dp"
+            android:layout_height="100dp"
             android:layout_weight="3"
             android:orientation="vertical"
             android:visibility="visible">
@@ -109,45 +75,94 @@
                 android:textColor="#EA1E13"
                 android:textSize="13sp"
                 android:typeface="serif" />
+
         </RelativeLayout>
         <!--左边日历end-->
         <!--右边的数据start-->
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:layout_height="100dp"
             android:layout_weight="7"
             android:orientation="vertical">
-
 
             <TextView
                 android:id="@+id/item_problem_name"
                 style="@style/problem_item"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/item_problem_number"
                 android:ellipsize="end"
                 android:lines="1"
+                android:text="item_problem_name"
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/item_problem_sender"
                 style="@style/problem_item"
-                android:layout_marginTop="5dp" />
+                android:text="item_problem_sender"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
 
             <TextView
                 android:id="@+id/item_problem_info"
                 style="@style/problem_item"
-                android:layout_marginTop="5dp"
                 android:duplicateParentState="true"
                 android:ellipsize="end"
-                android:lines="1" />
+                android:lines="1"
+                android:text="item_problem_info"
+                android:layout_above="@+id/item_problem_date"
+                android:layout_toRightOf="@+id/item_problem_executor"
+                android:layout_toEndOf="@+id/item_problem_executor" />
 
             <TextView
                 android:id="@+id/item_problem_executor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/item_problem_info"
+                android:text="item_problem_executor"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/item_problem_number"
+                style="@style/problem_item"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="编号编号编号" />
+
+            <TextView
+                android:id="@+id/item_problem_state"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true" />
-        </LinearLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="11dp"
+                android:layout_marginRight="11dp"
+                android:gravity="center"
+                android:text="状态"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/item_problem_date"
+                style="@style/problem_item"
+                android:layout_alignBaseline="@+id/item_problem_state"
+                android:layout_alignBottom="@+id/item_problem_state"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_toLeftOf="@+id/item_problem_state"
+                android:layout_toStartOf="@+id/item_problem_state"
+                android:text="日期"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+
         <!--右边的数据end-->
     </LinearLayout>
 

@@ -12,7 +12,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.linked.erfli.library.utils.SharedUtil;
-import com.linked.erfli.library.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +106,6 @@ public class GPSService extends Service {
                     dinatesDao.insert(new DinatesBean(location.getLongitude(), location.getLatitude(), System.currentTimeMillis() / 1000));
                     SharedUtil.setString(GPSService.this, "longitude", String.valueOf(location.getLongitude()));
                     SharedUtil.setString(GPSService.this, "latitude", String.valueOf(location.getLatitude()));
-                    ToastUtil.show(GPSService.this, "正确数据，可以上传");
                 }
             }
 
