@@ -38,5 +38,6 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:onClick="clearInfo"
-        android:text="清楚 " />
+        android:text="清楚 "
+        android:visibility="gone" />
 </RelativeLayout>

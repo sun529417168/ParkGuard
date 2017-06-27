@@ -51,7 +51,7 @@ public class GPSService extends Service {
         dinatesDao = new DinatesDaoImpl(this);
         startContinueLocation();
         intent = new Intent("cn.com.watchman.count");
-        new MyThread().start();
+//        new MyThread().start();
         //获取比今天早的点位数据，并都删掉
         dinatesList = dinatesDao.rawQuery("select * from t_gps where time < ?", new String[]{WMyUtils.getTimesmorning()});
         if (dinatesList.size() > 0) {
@@ -79,7 +79,7 @@ public class GPSService extends Service {
         // 地址信息
         locationClientOption.setNeedAddress(true);
         // 每10秒定位一次
-        locationClientOption.setInterval(8 * 1000);
+        locationClientOption.setInterval(10 * 1000);
         locationClientContinue.setLocationOption(locationClientOption);
         locationClientContinue.setLocationListener(locationContinueListener);
         locationClientContinue.startLocation();
@@ -92,12 +92,10 @@ public class GPSService extends Service {
         @Override
         public void onLocationChanged(AMapLocation location) {
             gpsBean = new GPSBean(location.getLongitude(), location.getLatitude());
-            Log.i("高德地图定位", location.getLongitude() + "===" + location.getLatitude());
-            ToastUtil.show(GPSService.this, String.valueOf(location.getAccuracy()));
             if ((int) location.getLongitude() == 0 || (int) location.getLatitude() == 0) {
                 return;
             }
-            if (location != null && Double.parseDouble(String.valueOf(location.getAccuracy())) > 0 && Double.parseDouble(String.valueOf(location.getAccuracy())) < 20) {
+            if (location != null && Double.parseDouble(String.valueOf(location.getAccuracy())) > 0 && Double.parseDouble(String.valueOf(location.getAccuracy())) < 25) {
                 if (Distance.isCompare(GPSService.this, gpsBean)) {
                     MyRequest.gpsRequest(GPSService.this, gpsBean);
                     currentCount++;
@@ -109,12 +107,8 @@ public class GPSService extends Service {
                     dinatesDao.insert(new DinatesBean(location.getLongitude(), location.getLatitude(), System.currentTimeMillis() / 1000));
                     SharedUtil.setString(GPSService.this, "longitude", String.valueOf(location.getLongitude()));
                     SharedUtil.setString(GPSService.this, "latitude", String.valueOf(location.getLatitude()));
-                    ToastUtil.show(GPSService.this, "正确的数据，已经上传了" + location.getLongitude() + "===" + location.getLatitude());
-                } else {
-                    ToastUtil.show(GPSService.this, "监听小于10米");
+                    ToastUtil.show(GPSService.this, "正确数据，可以上传");
                 }
-            } else {
-                ToastUtil.show(GPSService.this, "小于0或者大于20了不对");
             }
 
             /**

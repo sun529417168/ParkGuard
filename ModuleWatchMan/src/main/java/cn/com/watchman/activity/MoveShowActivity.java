@@ -25,6 +25,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
 import com.linked.erfli.library.base.BaseActivity;
+import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -34,9 +35,11 @@ import java.util.Random;
 import cn.com.watchman.R;
 import cn.com.watchman.bean.DinatesBean;
 import cn.com.watchman.bean.DinatesDaoImpl;
+import cn.com.watchman.bean.GPSBean;
+import cn.com.watchman.utils.Distance;
+import cn.com.watchman.utils.MyRequest;
 import cn.com.watchman.utils.PointsUtil;
 import cn.com.watchman.utils.SensorEventHelper;
-import cn.com.watchman.utils.SmoothMarker;
 import cn.com.watchman.utils.WMyUtils;
 
 /**
@@ -147,7 +150,6 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
      * 定位方法
      */
     protected void locate() {
-        isSend = true;
         setUpMap();
         mSensorHelper = new SensorEventHelper(this);
         if (mSensorHelper != null) {
@@ -157,29 +159,39 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
     }
 
     public void onTrajectory(View view) {//轨迹点击事件
-        trajectory();
-    }
-
-    protected void trajectory() {//轨迹方法
         mListener = null;
         if (mlocationClient != null) {
             mlocationClient.stopLocation();
             mlocationClient.onDestroy();
         }
         mlocationClient = null;
+        trajectory();
+    }
+
+    /**
+     * 轨迹方法
+     */
+    protected void trajectory() {
         dinatesList = dinatesDao.rawQuery("select * from t_gps where time > ?", new String[]{WMyUtils.getTimesmorning()});
-        addPolylineInPlayGround();
-        List<LatLng> points = readLatLngs();
-        LatLngBounds.Builder b = LatLngBounds.builder();
-        for (int i = 0; i < points.size(); i++) {
-            b.include(points.get(i));
+        if (dinatesList.size() > 0) {
+            addPolylineInPlayGround();
+            List<LatLng> points = readLatLngs();
+            LatLngBounds.Builder b = LatLngBounds.builder();
+            for (int i = 0; i < points.size(); i++) {
+                b.include(points.get(i));
+            }
+            LatLngBounds bounds = b.build();
+            aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+            LatLng drivePoint = points.get(0);
+            Pair<Integer, LatLng> pair = PointsUtil.calShortestDistancePoint(points, drivePoint);
+            points.set(pair.first, drivePoint);
+            if (isSend) {
+                isSend = false;
+                initMarker();
+            }
+        } else {
+            findViewById(R.id.move_trajectory).setVisibility(View.GONE);
         }
-        LatLngBounds bounds = b.build();
-        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
-        LatLng drivePoint = points.get(0);
-        Pair<Integer, LatLng> pair = PointsUtil.calShortestDistancePoint(points, drivePoint);
-        points.set(pair.first, drivePoint);
-        initMarker();
     }
 
     /**
@@ -253,7 +265,6 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
-
                 LatLng location = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
                 if (!mFirstFix) {
                     mFirstFix = true;
@@ -267,23 +278,32 @@ public abstract class MoveShowActivity extends BaseActivity implements LocationS
                     mLocMarker.setPosition(location);
                     aMap.moveCamera(CameraUpdateFactory.changeLatLng(location));
                 }
-                //第一次进来把最后一个点位加入list
                 if (isSend) {
-                    isSend = false;
-                    dinatesDao.insert(new DinatesBean(aMapLocation.getLongitude(), aMapLocation.getLatitude(), System.currentTimeMillis() / 1000));
-                    dinatesList = dinatesDao.rawQuery("select * from t_gps where time > ?", new String[]{WMyUtils.getTimesmorning()});
-                    if (dinatesList.size() < 2) {//如果点位数据小于两个没有轨迹
-                        findViewById(R.id.move_trajectory).setVisibility(View.GONE);
-                    } else {
-                        trajectory();
+                    trajectory();
+                }
+
+                /**
+                 * 下边的逻辑是用来写当在地图界面的时候还在行走状态，路线要实时画出来
+                 */
+                GPSBean gpsBean = new GPSBean(aMapLocation.getLongitude(), aMapLocation.getLatitude());
+                if ((int) aMapLocation.getLongitude() != 0 || (int) aMapLocation.getLatitude() != 0) {
+                    if (Double.parseDouble(String.valueOf(aMapLocation.getAccuracy())) > 0 && Double.parseDouble(String.valueOf(aMapLocation.getAccuracy())) < 25) {
+                        if (Distance.isCompare(this, gpsBean)) {
+                            MyRequest.gpsRequest(this, gpsBean);
+                            dinatesDao.insert(new DinatesBean(aMapLocation.getLongitude(), aMapLocation.getLatitude(), System.currentTimeMillis() / 1000));
+                            SharedUtil.setString(this, "longitude", String.valueOf(aMapLocation.getLongitude()));
+                            SharedUtil.setString(this, "latitude", String.valueOf(aMapLocation.getLatitude()));
+                            trajectory();
+                        } 
                     }
                 }
-            } else {
-                String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
-                Log.e("AmapErr", errText);
             }
+        } else {
+            String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
+            Log.e("AmapErr", errText);
         }
     }
+
 
     /**
      * 激活定位
