@@ -111,6 +111,7 @@
     <string name="mine_userID">"身份证号"</string>
     <string name="mine_updatePassword">"修改密码"</string>
     <string name="mine_clear">"清除缓存"</string>
+    <string name="mine_version">"版本号"</string>
     <!--个人信息end-->
 
     <!--通告详情start-->

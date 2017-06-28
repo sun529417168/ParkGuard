@@ -160,6 +160,28 @@
                     android:background="@mipmap/right" />
             </RelativeLayout>
             <!--清除缓存end-->
+            <!--版本号start-->
+            <RelativeLayout
+                android:id="@+id/mine_version_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    style="@style/mine_userInfo"
+                    android:text="@string/mine_version" />
+
+                <TextView
+                    android:id="@+id/mine_version"
+                    style="@style/mine_userInfo"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="2dp" />
+
+            </RelativeLayout>
+            <!--版本号end-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />

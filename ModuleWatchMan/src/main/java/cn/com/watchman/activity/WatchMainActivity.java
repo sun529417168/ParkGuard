@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -238,7 +239,9 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                 return;
             }
             if (!isStart) {
-                notifyUtils.showButtonNotify(0);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    notifyUtils.showButtonNotify(0);
+                }
                 watchActivityStartService();
                 MyRequest.typeRequest(this, 1);
                 suspendBtn.setBackgroundResource(R.drawable.activity_main_stop);
@@ -253,7 +256,9 @@ public class WatchMainActivity extends BaseActivity implements View.OnClickListe
                 intentFilter1.addAction("cn.com.watchman.count");
                 registerReceiver(countReceiver, intentFilter1);
             } else {
-                notifyUtils.clearAllNotify();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    notifyUtils.clearAllNotify();
+                }
                 watchActivityStopService();
                 isStart = false;
             }

@@ -3,6 +3,7 @@ package cn.com.parkguard.activity;
 import com.linked.erfli.library.base.BaseActivity;
 import com.linked.erfli.library.base.MyTitle;
 import com.linked.erfli.library.utils.DataCleanManager;
+import com.linked.erfli.library.utils.MyUtils;
 import com.linked.erfli.library.utils.SharedUtil;
 
 import android.content.Intent;
@@ -33,7 +34,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private TextView nameText, phoneText, userIDText;
     private TextView userNameText, workNoText;
     private RelativeLayout clearCacheLayout;
-    private TextView cacheSize;
+    private TextView cacheSize, version;
     private Button exitBtn;
 
     @Override
@@ -68,6 +69,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
         exitBtn = (Button) findViewById(R.id.exit_button);
         exitBtn.setOnClickListener(this);
+        version = (TextView) findViewById(R.id.mine_version);
+        version.setText(MyUtils.getAppVersionName(this));
     }
 
     @Override
@@ -81,7 +84,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 DialogUtils.clearData(this, cacheSize);
                 break;
             case R.id.exit_button:
-                DialogUtils.exit(PGApp,this);
+                DialogUtils.exit(PGApp, this);
                 break;
         }
     }

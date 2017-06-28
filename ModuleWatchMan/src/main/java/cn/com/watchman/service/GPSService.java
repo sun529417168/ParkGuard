@@ -12,6 +12,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.linked.erfli.library.utils.SharedUtil;
+import com.linked.erfli.library.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,21 +92,20 @@ public class GPSService extends Service {
         @Override
         public void onLocationChanged(AMapLocation location) {
             gpsBean = new GPSBean(location.getLongitude(), location.getLatitude());
-            if ((int) location.getLongitude() == 0 || (int) location.getLatitude() == 0) {
-                return;
-            }
-            if (location != null && Double.parseDouble(String.valueOf(location.getAccuracy())) > 0 && Double.parseDouble(String.valueOf(location.getAccuracy())) < 25) {
-                if (Distance.isCompare(GPSService.this, gpsBean)) {
-                    MyRequest.gpsRequest(GPSService.this, gpsBean);
-                    currentCount++;
-                    totalCount = SharedUtil.getInteger(getApplicationContext(), "totalCount", 0) + 1;
-                    SharedUtil.setInteger(getApplicationContext(), "totalCount", totalCount);
-                    intent.putExtra("currentCount", currentCount);
-                    intent.putExtra("totalCount", totalCount);
-                    sendBroadcast(intent);
-                    dinatesDao.insert(new DinatesBean(location.getLongitude(), location.getLatitude(), System.currentTimeMillis() / 1000));
-                    SharedUtil.setString(GPSService.this, "longitude", String.valueOf(location.getLongitude()));
-                    SharedUtil.setString(GPSService.this, "latitude", String.valueOf(location.getLatitude()));
+            if ((int) location.getLongitude() != 0 || (int) location.getLatitude() != 0) {
+                if (location != null && Double.parseDouble(String.valueOf(location.getAccuracy())) > 0 && Double.parseDouble(String.valueOf(location.getAccuracy())) < 25) {
+                    if (Distance.isCompareGD(GPSService.this, gpsBean)) {
+                        MyRequest.gpsRequest(GPSService.this, gpsBean);
+                        currentCount++;
+                        totalCount = SharedUtil.getInteger(getApplicationContext(), "totalCount", 0) + 1;
+                        SharedUtil.setInteger(getApplicationContext(), "totalCount", totalCount);
+                        intent.putExtra("currentCount", currentCount);
+                        intent.putExtra("totalCount", totalCount);
+                        sendBroadcast(intent);
+                        dinatesDao.insert(new DinatesBean(location.getLongitude(), location.getLatitude(), System.currentTimeMillis() / 1000));
+                        SharedUtil.setString(GPSService.this, "longitude", String.valueOf(location.getLongitude()));
+                        SharedUtil.setString(GPSService.this, "latitude", String.valueOf(location.getLatitude()));
+                    }
                 }
             }
 

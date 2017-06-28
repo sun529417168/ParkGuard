@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.ToastUtil;
@@ -66,7 +67,30 @@ public class Distance {
             return false;
         } else {
             Log.i("看看距离", "等于10米");
+            return true;
+        }
+
+    }
+
+    /**
+     * 方法名：isCompareGD
+     * 功    能：判断是否大于20米,高德的判断方法
+     * 参    数：Activity activity, GPSBean gpsBean
+     * 返回值：boolean
+     */
+    public static boolean isCompareGD(Context activity, GPSBean gpsBean) {
+        LatLng start = new LatLng(gpsBean.getLatitude(), gpsBean.getLongitude());
+        LatLng end = new LatLng(TextUtils.isEmpty(SharedUtil.getString(activity, "latitude")) ? 0 : Double.parseDouble(SharedUtil.getString(activity, "latitude")), TextUtils.isEmpty(SharedUtil.getString(activity, "longitude")) ? 0 : Double.parseDouble(SharedUtil.getString(activity, "longitude")));
+        float retval = AMapUtils.calculateLineDistance(start, end);
+        if (retval > 20) {
+            Log.i("看看距离", "大于10米");
+            return true;
+        } else if (retval < 20) {
+            Log.i("看看距离", "小于10米");
             return false;
+        } else {
+            Log.i("看看距离", "等于10米");
+            return true;
         }
     }
 
@@ -93,6 +117,7 @@ public class Distance {
             return true;
         }
     }
+
     /**
      * 方法名：isCompare
      * 功    能：判断是否大于20米
@@ -116,7 +141,6 @@ public class Distance {
             return true;
         }
     }
-
 
 
     /**
