@@ -24,6 +24,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="?android:attr/actionBarItemBackground"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -53,9 +55,12 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gary" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="?android:attr/actionBarItemBackground"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -85,6 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gary" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -123,6 +129,8 @@
         android:id="@+id/rl_flow_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="?android:attr/actionBarItemBackground"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -153,10 +161,13 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gary" />
+
     <RelativeLayout
         android:id="@+id/rl_flow_layout1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="?android:attr/actionBarItemBackground"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -187,11 +198,13 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gary" />
+
     <RelativeLayout
         android:id="@+id/rl_cache_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="?actionBarItemBackground"
+        android:background="?android:attr/actionBarItemBackground"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 

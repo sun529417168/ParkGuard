@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_s">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/mine_title"
@@ -55,9 +54,9 @@
             <!--姓名start-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
@@ -71,12 +70,16 @@
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
             <!--姓名end-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gary" />
             <!--手机号start-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
@@ -90,12 +93,16 @@
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
             <!--手机号end-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gary" />
             <!--身份证号start-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
@@ -109,13 +116,17 @@
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
             <!--身份证号end-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gary" />
             <!--修改密码start-->
             <RelativeLayout
                 android:id="@+id/mine_updatePassword"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
@@ -131,13 +142,17 @@
                     android:background="@mipmap/right" />
             </RelativeLayout>
             <!--修改密码end-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gary" />
             <!--清除缓存start-->
             <RelativeLayout
                 android:id="@+id/mine_cache_Layout"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
@@ -160,6 +175,10 @@
                     android:background="@mipmap/right" />
             </RelativeLayout>
             <!--清除缓存end-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gary" />
             <!--版本号start-->
             <RelativeLayout
                 android:id="@+id/mine_version_Layout"
@@ -182,9 +201,10 @@
 
             </RelativeLayout>
             <!--版本号end-->
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp" />
+                android:layout_height="1dp"
+                android:background="@color/gary" />
         </LinearLayout>
     </ScrollView>
 

@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.parkguard.activity.HomeActivity;
+import cn.com.parkguard.bean.MyLoginBean;
 import cn.com.parkguard.bean.PersonBean;
-import cn.com.parkguard.bean.UserBean;
 import cn.com.parkguard.interfaces.LoginInterface;
 import cn.com.parkguard.interfaces.PersonInfoInterface;
 import okhttp3.Call;
@@ -45,30 +45,35 @@ public class MyRequest {
         final LoginInterface login = (LoginInterface) activity;
         Map<String, Object> params = new HashMap<>();
         try {
-            params.put("Name", username);
-            params.put("PassWord", password);
-            params.put("Module", "XBGD");
+            params.put("workId", username);
+            params.put("PWD", password);
+            params.put("appCode", "SPS");
 //            params.put("DeviceID", PushServiceFactory.getCloudPushService().getDeviceId());
-            params.put("DeviceID", "7dd45a6ce4ad4a71bc5ffab35a273e6d");
+//            params.put("DeviceID", "7dd45a6ce4ad4a71bc5ffab35a273e6d");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        OkHttpUtils.post().url(UrlConfig.URL_LOGIN).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
+        OkHttpUtils.post().url(UrlConfig.NEWLOGIN).params(params).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator()) {
             @Override
             public void onResponse(String response, int id) {
                 Log.i("loginInfo", response);
-                if ("0".equals(response.replace("\"", ""))) {
-                    ToastUtil.show(activity, "您输入的密码有误");
-                } else if ("-1".equals(response.replace("\"", ""))) {
-                    ToastUtil.show(activity, "帐号不存在");
-                } else {
-                    UserBean userBean = JSON.parseObject(response, UserBean.class);
-                    SharedUtil.setString(activity, "userName", username);
-                    SharedUtil.setString(activity, "passWord", password);
-                    SharedUtil.setString(activity, "PersonID", userBean.getPersonId() + "");
-                    SharedUtil.setString(activity, "LoginName", userBean.getLoginName());
-                    SharedUtil.setString(activity, "personName", userBean.getPermissions().get(0).getUserName());
-                    login.login(userBean);
+                MyLoginBean loginBean = null;
+                try {
+                    loginBean = JSON.parseObject(response, MyLoginBean.class);
+                    if (loginBean.getResultNum() == 1) {
+                        ToastUtil.show(activity, "登录失败!");
+                    } else if (loginBean.getResultNum() == 2) {
+                        ToastUtil.show(activity, "没有登录权限!");
+                    } else if (loginBean.getResultNum() == 3) {
+                        SharedUtil.setString(activity, "userName", username);
+                        SharedUtil.setString(activity, "passWord", password);
+                        SharedUtil.setString(activity, "PersonID", loginBean.getPersonId() + "");
+                        SharedUtil.setString(activity, "LoginName", loginBean.getLoginName());
+                        SharedUtil.setString(activity, "personName", loginBean.getPersonName());
+                        login.login(loginBean);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 if (progDialog.isShowing()) {
                     progDialog.dismiss();
@@ -77,6 +82,7 @@ public class MyRequest {
 
             @Override
             public void onError(Call call, Exception e, int id) {
+                Log.i("loginresultcode:", "" + e.getMessage());
                 ToastUtil.show(activity, "服务器有错误，请稍候再试");
                 if (progDialog.isShowing()) {
                     progDialog.dismiss();

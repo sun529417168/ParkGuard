@@ -3,7 +3,6 @@ package cn.com.watchman.chatui;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,12 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
 import com.linked.erfli.library.ShowZoomPhotoActivity;
 import com.linked.erfli.library.adapter.TaskDetalPhotoAdapter;
-import com.linked.erfli.library.application.LibApplication;
 import com.linked.erfli.library.function.takephoto.app.TakePhotoActivity;
 import com.linked.erfli.library.function.takephoto.compress.CompressConfig;
 import com.linked.erfli.library.interfaces.GetGPSInterface;
@@ -45,8 +43,6 @@ import java.util.Map;
 
 import cn.com.watchman.R;
 import cn.com.watchman.chatui.enity.ChatProblemTypeLeftEntity;
-import cn.com.watchman.chatui.gpslocation.GPSLocationListener;
-import cn.com.watchman.chatui.gpslocation.GPSProviderStatus;
 import cn.com.watchman.chatui.interfaces.ChatProblemTypeLeftInterface;
 import cn.com.watchman.chatui.interfaces.ChatSendPicTureInterface;
 import cn.com.watchman.chatui.widget.ChatProblemTypePopwindow;
@@ -102,9 +98,8 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
     private LocationService locationService;
 
     //声明AMapLocationClient类对象
-//    public AMapLocationClient mLocationClient = null;
-    //声明AMapLocationClientOption对象
-//    public AMapLocationClientOption mLocationOption = null;
+    private AMapLocationClient locationClientContinue = null;
+
     @Override
     protected void setView() {
         super.setView();
@@ -116,37 +111,20 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
     @Override
     protected void setDate(Bundle savedInstanceState) {
         super.setDate(savedInstanceState);
-        //GPS定位
-//        gpsLocationManager = GPSLocationManager.getInstances(ChatWarningActivity.this);
-//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //百度定位
-        locationService = ((LibApplication) getApplication()).locationService;
-        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
-        locationService.registerListener(mListener);
-        locationService.start();
-        //注册监听
-//        locationService.setLocationOption(locationService.getDefaultLocationClientOption());
 
-        // 高德初始化定位
-//        mLocationClient = new AMapLocationClient(getApplicationContext());
-//        //设置定位回调监听
-//        mLocationClient.setLocationListener(mLocationListener);
-//
-//        //初始化AMapLocationClientOption对象
-//        mLocationOption = new AMapLocationClientOption();
-//        //设置定位模式为AMapLocationMode.Battery_Saving，低功耗模式。
-//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
-//
-//
-//        //给定位客户端对象设置定位参数
-//        mLocationClient.setLocationOption(mLocationOption);
-//        //启动定位
-//        mLocationClient.startLocation();
-//        /**
-//         * 获取一次定位
-//         */
-//        //该方法默认为false，true表示只定位一次
-//        mLocationOption.setOnceLocation(true);
+        if (null == locationClientContinue) {
+            locationClientContinue = new AMapLocationClient(this.getApplicationContext());
+        }
+
+        //使用连续的定位方式  默认连续
+        AMapLocationClientOption locationClientOption = new AMapLocationClientOption();
+        // 地址信息
+        locationClientOption.setNeedAddress(true);
+        // 每10秒定位一次
+        locationClientOption.setInterval(5 * 1000);
+        locationClientContinue.setLocationOption(locationClientOption);
+        locationClientContinue.setLocationListener(mLocationListener);
+        locationClientContinue.startLocation();
     }
 
 
@@ -380,14 +358,18 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        locationService.stop();
+        if (null != locationClientContinue) {
+            locationClientContinue.stopLocation();
+            locationClientContinue.onDestroy();
+            locationClientContinue = null;
+        }
     }
 
     /**
      * 高德定位回调监听器
      */
 
-    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+    AMapLocationListener mLocationListener = new AMapLocationListener() {
 
         @Override
         public void onLocationChanged(AMapLocation amapLocation) {
@@ -395,95 +377,24 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
             if (amapLocation != null) {
                 if (amapLocation.getErrorCode() == 0) {
                     //可在其中解析amapLocation获取相应内容。
-                    getLongitude = String.valueOf(amapLocation.getLongitude());
-                    getLatitude = String.valueOf(amapLocation.getLatitude());
+                    if ("0".equals(String.valueOf(amapLocation.getLongitude()))) {
+                        getLongitude = "-1";
+                    } else {
+                        getLongitude = String.valueOf(amapLocation.getLongitude());
+                    }
+                    if ("0".equals(String.valueOf(amapLocation.getLatitude()))) {
+                        getLatitude = "-1";
+                    } else {
+                        getLatitude = String.valueOf(amapLocation.getLatitude());
+                    }
+                    Log.i("坐标点", "getLongitude:" + getLongitude + ",getLatitude:" + getLatitude);
                 } else {
                     //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                    Log.e("AmapError", "location Error, ErrCode:"
+                    Log.i("AmapError", "location Error, ErrCode:"
                             + amapLocation.getErrorCode() + ", errInfo:"
                             + amapLocation.getErrorInfo());
                 }
             }
         }
     };
-
-    /*****
-     *
-     * 百度定位结果回调
-     *
-     */
-    private BDLocationListener mListener = new BDLocationListener() {
-
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            // TODO Auto-generated method stub
-            if (null != location && location.getLocType() != BDLocation.TypeServerError) {
-                if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
-//                    Toast.makeText(ChatWarningActivity.this, "gps定位成功", Toast.LENGTH_SHORT).show();
-                } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
-
-                }
-                if (!"4.9E-324".equals(String.valueOf(location.getLongitude()))) {
-                    getLongitude = String.valueOf(location.getLongitude());
-                } else {
-                    getLongitude = "-1";
-                }
-                if (!"4.9E-324".equals(String.valueOf(location.getLatitude()))) {
-                    getLatitude = String.valueOf(location.getLatitude());
-                } else {
-                    getLatitude = "-1";
-                }
-            }
-        }
-
-        public void onConnectHotSpotMessage(String s, int i) {
-        }
-    };
-
-    /**
-     * GPS定位
-     */
-    class MyListener implements GPSLocationListener {
-
-        @Override
-        public void UpdateLocation(Location location) {
-            if (location != null) {
-                getLongitude = String.valueOf(location.getLongitude());
-                getLatitude = String.valueOf(location.getLatitude());
-//                Toast.makeText(ChatWarningActivity.this, "定位" + "getLongitude:" + location.getLongitude() + ",getLatitude:" + location.getLatitude(), Toast.LENGTH_SHORT).show();
-//                problemDes = chat_add_problem_inputInfo.getText().toString().trim();
-//                String deviceUuid = new DeviceUuidFactory(ChatWarningActivity.this).getDeviceUuid().toString();
-//                time = getTime();
-//                Log.i("坐标点", "getLongitude:" + getLongitude + ",getLatitude:" + getLatitude);
-//                if (isEmpty()) {
-//                    WatchManRequest.newAddChatProblemPricture(ChatWarningActivity.this, listFile, fileName, problemDes, -1, 11, 10, getLongitude, getLatitude, deviceUuid, time);
-//                }
-            }
-        }
-
-        @Override
-        public void UpdateStatus(String provider, int status, Bundle extras) {
-        }
-
-        @Override
-        public void UpdateGPSProviderStatus(int gpsStatus) {
-            switch (gpsStatus) {
-                case GPSProviderStatus.GPS_ENABLED:
-//                    Toast.makeText(ChatWarningActivity.this, "GPS开启", Toast.LENGTH_SHORT).show();
-                    break;
-                case GPSProviderStatus.GPS_DISABLED:
-//                    Toast.makeText(ChatWarningActivity.this, "GPS关闭", Toast.LENGTH_SHORT).show();
-                    break;
-                case GPSProviderStatus.GPS_OUT_OF_SERVICE:
-//                    Toast.makeText(ChatWarningActivity.this, "GPS不可用", Toast.LENGTH_SHORT).show();
-                    break;
-                case GPSProviderStatus.GPS_TEMPORARILY_UNAVAILABLE:
-//                    Toast.makeText(ChatWarningActivity.this, "GPS暂时不可用", Toast.LENGTH_SHORT).show();
-                    break;
-                case GPSProviderStatus.GPS_AVAILABLE:
-//                    Toast.makeText(ChatWarningActivity.this, "GPS可用啦", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    }
 }

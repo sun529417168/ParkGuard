@@ -1,7 +1,7 @@
 package cn.com.parkguard.interfaces;
 
 
-import cn.com.parkguard.bean.UserBean;
+import cn.com.parkguard.bean.MyLoginBean;
 
 /**
  * 文件名：LoginInterface
@@ -12,5 +12,5 @@ import cn.com.parkguard.bean.UserBean;
  */
 
 public interface LoginInterface {
-    void login(UserBean userBean);
+    void login(MyLoginBean userBean);
 }

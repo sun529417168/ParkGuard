@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +16,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.sdk.android.push.CloudPushService;
-import com.alibaba.sdk.android.push.CommonCallback;
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.linked.erfli.library.utils.DataCleanManager;
 import com.linked.erfli.library.utils.PGActivityUtil;
-
+import com.linked.erfli.library.utils.SharedUtil;
 
 import cn.com.parkguard.R;
 import cn.com.parkguard.activity.LoginActivity;
@@ -210,6 +206,7 @@ public class DialogUtils {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 PGApp.changeTopOne();
+                SharedUtil.setBoolean(activity, "isSuccess", false);
                 Intent in = new Intent(activity, LoginActivity.class);
                 activity.startActivity(in);
                 activity.finish();

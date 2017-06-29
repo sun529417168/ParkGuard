@@ -338,7 +338,7 @@ public class WatchManRequest {
     public static void newAddChatProblemPricture(final Activity mActivity, List<File> listFile, List<String> fileName, String problemDes, int alarmid, int dataType, int subSysType, String longitude, String latitude, String deviceUuid, String time) {
         LoadingDialogUtil.show(mActivity);
         final ChatSendPicTureInterface chatSendPicTureInterface = (ChatSendPicTureInterface) mActivity;
-        Log.i("photofilelog","图片:"+listFile.size()+","+fileName.size());
+        Log.i("photofilelog", "图片:" + listFile.size() + "," + fileName.size());
 
         List<Map<String, Object>> list = new ArrayList<>();
         //图片流  文件名保存到map里
@@ -388,11 +388,14 @@ public class WatchManRequest {
             @Override
             public void onResponse(String response, int id) {
                 Log.i("success", "成功:" + response);
-                Toast.makeText(mActivity, "上传成功", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int d = jsonObject.getInt("d");
-                    chatSendPicTureInterface.getChatSenPictureResponce(d);
+                    if (d > 0) {
+                        chatSendPicTureInterface.getChatSenPictureResponce(d);
+                    } else {
+                        Toast.makeText(mActivity, "上传失败", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -454,7 +457,7 @@ public class WatchManRequest {
      * @param device_code
      */
     public static void ChatSendPhoto(Activity mActivity, String device_code, File file, String fileName, String fileTxt, String time, int user_id) {
-        final ChatSendPhotoInterface chatSendPhotoInterface= (ChatSendPhotoInterface) mActivity;
+        final ChatSendPhotoInterface chatSendPhotoInterface = (ChatSendPhotoInterface) mActivity;
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("device_code", device_code);//唯一设备编号
         dataMap.put("message_type", 6);//6:即时通讯图片消息
@@ -487,9 +490,9 @@ public class WatchManRequest {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int d = jsonObject.getInt("d");
-                    if(d>0){
+                    if (d > 0) {
                         chatSendPhotoInterface.getChatSendPhotoSuccess();
-                    }else{
+                    } else {
                         chatSendPhotoInterface.getChatSendPhotoError();
                     }
                 } catch (JSONException e) {
@@ -499,6 +502,7 @@ public class WatchManRequest {
             }
         });
     }
+
     /*
      * 检查设备在线信息
      * @param dataType:上传方式(4:检查设备状态)
@@ -506,23 +510,22 @@ public class WatchManRequest {
      * @param userId：用户ID
      * @param status：状态
      */
-    public static void sendStatus(int dataType,String DeviceGUID,int userId,int status)
-    {
-        Map<String,Object> params=new HashMap<>();
-        params.put("dataType",dataType);
-        params.put("DeviceGUID",DeviceGUID);
-        params.put("userId",userId);
-        params.put("status",status);
-        String json=JSON.toJSONString(params);
+    public static void sendStatus(int dataType, String DeviceGUID, int userId, int status) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("dataType", dataType);
+        params.put("DeviceGUID", DeviceGUID);
+        params.put("userId", userId);
+        params.put("status", status);
+        String json = JSON.toJSONString(params);
         OkHttpUtils.postString().url(WMUrlConfig.URL).mediaType(MediaType.parse("application/json; charset=utf-8")).content(json).build().execute(new GenericsCallback(new JsonGenericsSerializator()) {
             @Override
             public void onError(Call call, Exception e, int id) {
-                Log.i("status","fail");
+                Log.i("status", "fail");
             }
 
             @Override
             public void onResponse(Object response, int id) {
-                Log.i("status","success");
+                Log.i("status", "success");
             }
         });
     }

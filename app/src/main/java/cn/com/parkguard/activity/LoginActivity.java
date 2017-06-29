@@ -24,7 +24,7 @@ import com.linked.erfli.library.utils.ToastUtil;
 
 import cn.com.parkguard.R;
 import cn.com.parkguard.Utils.MyRequest;
-import cn.com.parkguard.bean.UserBean;
+import cn.com.parkguard.bean.MyLoginBean;
 import cn.com.parkguard.interfaces.LoginInterface;
 
 
@@ -166,7 +166,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         pwdIsVisible=true;
     }
     @Override
-    public void login(final UserBean userBean) {
+    public void login(final MyLoginBean userBean) {
+        if (userBean.getPersonId() == 0) {
+            ToastUtil.show(this, "用户名或者密码不对，请重新输入");
+            return;
+        }
+
         SharedUtil.setString(this, "PersonID", userBean.getPersonId() + "");
         SharedUtil.setBoolean(this, "isSuccess", true);
 //        CloudPushService pushService = PushServiceFactory.getCloudPushService();
@@ -182,10 +187,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 //                initPersonIdAli();
 //            }
 //        });
-        if (userBean.getPersonId() == 0) {
-            ToastUtil.show(this, "用户名或者密码不对，请重新输入");
-            return;
-        }
+
         if (0 == userBean.getUserType()) {
             Intent intent = new Intent(this, EditorUserActivity.class);
             intent.putExtra("username", username);

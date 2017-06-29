@@ -28,6 +28,7 @@ public class WelcomeActivity extends BaseActivity {
     private ImageView splash;//欢迎图片,这里固定设置,可动态设置
     private Context mContext;
     private String userName;
+    private Boolean islogin = false;
 
     @Override
     protected void setView() {
@@ -42,6 +43,7 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void setDate(Bundle savedInstanceState) {
         userName = SharedUtil.getString(mContext, "userName");//获取用户名
+        islogin = SharedUtil.getBoolean(mContext, "isSuccess", true);
         Log.i("", "userName=" + userName);
 
     }
@@ -74,7 +76,7 @@ public class WelcomeActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (userName == null || "".equals(userName)) {
+                if (userName == null || "".equals(userName) || islogin == false) {
                     //userName为null 跳转到登录页面
                     startActivity(new Intent(mContext, LoginActivity.class));
 //                    startActivity(new Intent(mContext, HomeActivity.class));
