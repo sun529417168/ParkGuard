@@ -35,7 +35,7 @@ import cn.com.watchman.networkrequest.WatchManRequest;
 
 /**
  * 时间:2017年6月12日10:11:13
- *
+ * <p>
  * 输入框管理类
  */
 public class EmotionInputDetector {
@@ -213,7 +213,7 @@ public class EmotionInputDetector {
                 EventBus.getDefault().post(messageInfo);
                 String deviceguid = new DeviceUuidFactory(mActivity).getDeviceUuid().toString();
                 int userId = Integer.parseInt(SharedUtil.getString(mActivity, "PersonID"));
-                WatchManRequest.sendChatMsg(mActivity, 10, 8, "patrolphone", deviceguid, 1, mEditText.getText().toString(), getTime(), "-1", "-1", userId);
+                WatchManRequest.sendChatMsg(mActivity, 10, 8, "patrolphone", deviceguid, 1, mEditText.getText().toString(), getTime(), SharedUtil.getString(mActivity, "mylon"), SharedUtil.getString(mActivity, "mylat"), userId);
                 mEditText.setText("");
             }
         });
@@ -442,6 +442,7 @@ public class EmotionInputDetector {
         } else {
             return 0;
         }
+
     }
 
 }

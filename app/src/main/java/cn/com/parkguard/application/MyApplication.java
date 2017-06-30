@@ -34,7 +34,7 @@ import cn.com.parkguard.R;
  * 时    间：2016.12.30
  * 版    本：V1.0.0
  */
-@Modules({"app", "moduleTask","moduleNotice","moduleProblem","moduleWatchMan","moduleMonitor"})
+@Modules({"app", "moduleTask", "moduleNotice", "moduleProblem", "moduleWatchMan", "moduleMonitor"})
 public class MyApplication extends Application {
     private static final String TAG = "Init";
     private static Context context;
@@ -42,7 +42,7 @@ public class MyApplication extends Application {
     public LocationService locationService;
     public Vibrator mVibrator;
     private static MyApplication mInstance;
-
+    private String latitude, longitude;
     /**
      * 屏幕宽度
      */
@@ -88,9 +88,11 @@ public class MyApplication extends Application {
         imageLoader.init(config2);
 
     }
+
     public static Context getInstance() {
         return mInstance;
     }
+
     /**
      * 初始化云推送通道
      *
@@ -113,6 +115,7 @@ public class MyApplication extends Application {
             }
         });
     }
+
     /**
      * 初始化当前设备屏幕宽高
      */
@@ -122,8 +125,25 @@ public class MyApplication extends Application {
         screenHeight = curMetrics.heightPixels;
         screenDensity = curMetrics.density;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void logActivityCreate(EventPool.ActivityNotify activityNotify) {
         Log.d("ActivityCreate", activityNotify.activityName);
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }

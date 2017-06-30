@@ -245,7 +245,7 @@ public class ChatFunctionFragment extends TakePhotoFragment implements View.OnCl
         String deviceUuid = new DeviceUuidFactory(getActivity()).getDeviceUuid().toString();
         String[] s = file.getName().split("\\.");
         int userId = Integer.parseInt(SharedUtil.getString(getActivity(), "PersonID"));
-        WatchManRequest.ChatSendPhoto(getActivity(), deviceUuid, file, s[0], s[1], GetTimeStamp.getTime(), userId);
+        WatchManRequest.ChatSendPhoto(getActivity(), deviceUuid, file, s[0], s[1], GetTimeStamp.getTime(), userId, SharedUtil.getString(getActivity(), "mylon"), SharedUtil.getString(getActivity(), "mylat"));
     }
 
     @Override

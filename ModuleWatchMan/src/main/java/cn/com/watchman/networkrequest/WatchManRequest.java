@@ -261,19 +261,20 @@ public class WatchManRequest {
      * @param message_type
      * @param message
      * @param send_time
-     * @param Longitude
-     * @param Latitude
+     * @param longitude
+     * @param latitude
      * @param user_id
      */
-    public static void sendChatMsg(final Activity mActivity, int subSysType, int dataType, String mark, String DeviceGUID, int message_type, String message, String send_time, String Longitude, String Latitude, int user_id) {
+    public static void sendChatMsg(final Activity mActivity, int subSysType, int dataType, String mark, String DeviceGUID, int message_type, String message, String send_time, String longitude, String latitude, int user_id) {
+        Log.i("经纬度:", "发送文字从application获取的全局变量,lat:" + latitude + ",lon:" + longitude);
         final ChatMsgInterface chatMsgInterface = (ChatMsgInterface) mActivity;
         Map<String, Object> params = new HashMap<>();
         params.put("DeviceGUID", DeviceGUID);
         params.put("message_type", message_type);
         params.put("message", message);
         params.put("send_time", send_time);
-        params.put("Longitude", Longitude);
-        params.put("Latitude", Latitude);
+        params.put("Longitude", longitude);
+        params.put("Latitude", latitude);
         params.put("user_id", user_id);
         Map<String, Object> map = new HashMap<>();
         map.put("subSysType", subSysType);
@@ -387,7 +388,7 @@ public class WatchManRequest {
 
             @Override
             public void onResponse(String response, int id) {
-                Log.i("success", "成功:" + response);
+                Log.i("发送图片返回json:", "成功:" + response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int d = jsonObject.getInt("d");
@@ -456,7 +457,8 @@ public class WatchManRequest {
      * @param
      * @param device_code
      */
-    public static void ChatSendPhoto(Activity mActivity, String device_code, File file, String fileName, String fileTxt, String time, int user_id) {
+    public static void ChatSendPhoto(Activity mActivity, String device_code, File file, String fileName, String fileTxt, String time, int user_id, String lon, String lat) {
+        Log.i("经纬度:", "发送图片从application获取的全局变量,lat:" + lat + ",lon:" + lon);
         final ChatSendPhotoInterface chatSendPhotoInterface = (ChatSendPhotoInterface) mActivity;
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("device_code", device_code);//唯一设备编号
@@ -465,8 +467,8 @@ public class WatchManRequest {
         dataMap.put("file_ext", fileTxt);//
         dataMap.put("file", FileToByteUtils.getBytesFromFile(file));//图片流
         dataMap.put("send_time", time);//时间戳
-        dataMap.put("Longitude", "-1");//
-        dataMap.put("Latitude", "-1");//
+        dataMap.put("Longitude", lon);//
+        dataMap.put("Latitude", lat);//
         dataMap.put("user_id", user_id);//
 
         Map<String, Object> map = new HashMap<>();

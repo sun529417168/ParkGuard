@@ -19,16 +19,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.linked.erfli.library.ShowZoomPhotoActivity;
 import com.linked.erfli.library.adapter.TaskDetalPhotoAdapter;
 import com.linked.erfli.library.function.takephoto.app.TakePhotoActivity;
 import com.linked.erfli.library.function.takephoto.compress.CompressConfig;
 import com.linked.erfli.library.interfaces.GetGPSInterface;
-import com.linked.erfli.library.service.LocationService;
 import com.linked.erfli.library.utils.DateTimePickDialogUtil;
 import com.linked.erfli.library.utils.DeviceUuidFactory;
 import com.linked.erfli.library.utils.SharedUtil;
@@ -42,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.watchman.R;
+import cn.com.watchman.application.WMApplication;
 import cn.com.watchman.chatui.enity.ChatProblemTypeLeftEntity;
 import cn.com.watchman.chatui.interfaces.ChatProblemTypeLeftInterface;
 import cn.com.watchman.chatui.interfaces.ChatSendPicTureInterface;
@@ -93,12 +89,7 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
     private String getLatitude = "-1";//纬度
     private String time;//时间
     private String problemDes;//描述
-    //    private GPSLocationManager gpsLocationManager;
-    //百度定位
-    private LocationService locationService;
-
     //声明AMapLocationClient类对象
-    private AMapLocationClient locationClientContinue = null;
 
     @Override
     protected void setView() {
@@ -112,19 +103,19 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
     protected void setDate(Bundle savedInstanceState) {
         super.setDate(savedInstanceState);
 
-        if (null == locationClientContinue) {
-            locationClientContinue = new AMapLocationClient(this.getApplicationContext());
-        }
-
-        //使用连续的定位方式  默认连续
-        AMapLocationClientOption locationClientOption = new AMapLocationClientOption();
-        // 地址信息
-        locationClientOption.setNeedAddress(true);
-        // 每10秒定位一次
-        locationClientOption.setInterval(5 * 1000);
-        locationClientContinue.setLocationOption(locationClientOption);
-        locationClientContinue.setLocationListener(mLocationListener);
-        locationClientContinue.startLocation();
+//        if (null == locationClientContinue) {
+//            locationClientContinue = new AMapLocationClient(this.getApplicationContext());
+//        }
+//
+//        //使用连续的定位方式  默认连续
+//        AMapLocationClientOption locationClientOption = new AMapLocationClientOption();
+//        // 地址信息
+//        locationClientOption.setNeedAddress(true);
+//        // 每10秒定位一次
+//        locationClientOption.setInterval(5 * 1000);
+//        locationClientContinue.setLocationOption(locationClientOption);
+//        locationClientContinue.setLocationListener(mLocationListener);
+//        locationClientContinue.startLocation();
     }
 
 
@@ -199,7 +190,10 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
             problemDes = chat_add_problem_inputInfo.getText().toString().trim();
             String deviceUuid = new DeviceUuidFactory(ChatWarningActivity.this).getDeviceUuid().toString();
             time = getTime();
-            Log.i("坐标点", "getLongitude:" + getLongitude + ",getLatitude:" + getLatitude);
+            WMApplication wmApplication = (WMApplication) getApplication();
+            getLatitude = SharedUtil.getString(ChatWarningActivity.this, "mylat");
+            getLongitude = SharedUtil.getString(ChatWarningActivity.this, "mylon");
+            Log.i("经纬度:", "告警页面,getLongitude:" + getLongitude + ",getLatitude:" + getLatitude);
             if (isEmpty()) {
                 if (!"-1".equals(getLatitude) || !"-1".equals(getLongitude)) {
                     WatchManRequest.newAddChatProblemPricture(this, listFile, fileName, problemDes, -1, 11, 10, getLongitude, getLatitude, deviceUuid, time);
@@ -358,43 +352,38 @@ public class ChatWarningActivity extends TakePhotoActivity implements View.OnCli
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null != locationClientContinue) {
-            locationClientContinue.stopLocation();
-            locationClientContinue.onDestroy();
-            locationClientContinue = null;
-        }
     }
 
     /**
      * 高德定位回调监听器
      */
 
-    AMapLocationListener mLocationListener = new AMapLocationListener() {
-
-        @Override
-        public void onLocationChanged(AMapLocation amapLocation) {
-            // TODO Auto-generated method stub
-            if (amapLocation != null) {
-                if (amapLocation.getErrorCode() == 0) {
-                    //可在其中解析amapLocation获取相应内容。
-                    if ("0".equals(String.valueOf(amapLocation.getLongitude()))) {
-                        getLongitude = "-1";
-                    } else {
-                        getLongitude = String.valueOf(amapLocation.getLongitude());
-                    }
-                    if ("0".equals(String.valueOf(amapLocation.getLatitude()))) {
-                        getLatitude = "-1";
-                    } else {
-                        getLatitude = String.valueOf(amapLocation.getLatitude());
-                    }
-                    Log.i("坐标点", "getLongitude:" + getLongitude + ",getLatitude:" + getLatitude);
-                } else {
-                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                    Log.i("AmapError", "location Error, ErrCode:"
-                            + amapLocation.getErrorCode() + ", errInfo:"
-                            + amapLocation.getErrorInfo());
-                }
-            }
-        }
-    };
+//    AMapLocationListener mLocationListener = new AMapLocationListener() {
+//
+//        @Override
+//        public void onLocationChanged(AMapLocation amapLocation) {
+//            // TODO Auto-generated method stub
+//            if (amapLocation != null) {
+//                if (amapLocation.getErrorCode() == 0) {
+//                    //可在其中解析amapLocation获取相应内容。
+//                    if ("0".equals(String.valueOf(amapLocation.getLongitude()))) {
+//                        getLongitude = "-1";
+//                    } else {
+//                        getLongitude = String.valueOf(amapLocation.getLongitude());
+//                    }
+//                    if ("0".equals(String.valueOf(amapLocation.getLatitude()))) {
+//                        getLatitude = "-1";
+//                    } else {
+//                        getLatitude = String.valueOf(amapLocation.getLatitude());
+//                    }
+//                    Log.i("坐标点", "getLongitude:" + getLongitude + ",getLatitude:" + getLatitude);
+//                } else {
+//                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+//                    Log.i("AmapError", "location Error, ErrCode:"
+//                            + amapLocation.getErrorCode() + ", errInfo:"
+//                            + amapLocation.getErrorInfo());
+//                }
+//            }
+//        }
+//    };
 }

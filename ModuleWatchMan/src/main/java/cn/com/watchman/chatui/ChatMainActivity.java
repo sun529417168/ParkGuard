@@ -27,6 +27,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.linked.erfli.library.utils.SharedUtil;
 import com.linked.erfli.library.utils.StatusBarUtils;
@@ -67,7 +71,7 @@ import cn.com.watchman.chatui.widget.StateButton;
  * 时    间：2017年6月8日
  * 版    本：V1.0.0
  */
-public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnDismissListener, ChatMsgInterface,ChatSendPhotoInterface {
+public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnDismissListener, ChatMsgInterface, ChatSendPhotoInterface {
 
     EasyRecyclerView chatList;//聊天页面布局
     ImageView emotionVoice;//语音按钮
@@ -100,8 +104,9 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
     MyChatBroadcasReceiver myChatBroadcasReceiver;
     private String girlUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497010388545&di=da66ed1f9e340aa4022d3b357c847cc0&imgtype=0&src=http%3A%2F%2Fv1.qzone.cc%2Favatar%2F201303%2F18%2F17%2F14%2F5146daf314dfa660.jpg%2521180x180.jpg";
     private String boyUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497010481703&di=1c26989083c94c4937eb3365ff2cc8c3&imgtype=0&src=http%3A%2F%2Fimg.meimi.cc%2Ftouxiang%2F20170522%2Fswxy0j0iijy335.png";
-
     private TextView chat_tv_myName;
+    //声明AMapLocationClient类对象
+    private AMapLocationClient locationClientContinue = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,6 +115,7 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         setContentView(R.layout.activity_chat_main);
         StatusBarUtils.ff(ChatMainActivity.this);
         init();
+        initLocation();
         EventBus.getDefault().register(this);
         // 动态注册广播
         IntentFilter filter = new IntentFilter();
@@ -131,6 +137,22 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         emotionLayout = (RelativeLayout) findViewById(R.id.emotion_layout);
         chat_tv_myName = (TextView) findViewById(R.id.chat_tv_myName);
         chat_tv_myName.setText(SharedUtil.getString(this, "personName"));
+    }
+
+    private void initLocation() {
+        if (null == locationClientContinue) {
+            locationClientContinue = new AMapLocationClient(this.getApplicationContext());
+        }
+
+        //使用连续的定位方式  默认连续
+        AMapLocationClientOption locationClientOption = new AMapLocationClientOption();
+        // 地址信息
+        locationClientOption.setNeedAddress(true);
+        // 每10秒定位一次
+        locationClientOption.setInterval(5 * 1000);
+        locationClientContinue.setLocationOption(locationClientOption);
+        locationClientContinue.setLocationListener(mLocationListener);
+        locationClientContinue.startLocation();
     }
 
     private void initWidget() {
@@ -354,7 +376,7 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final MessageInfo messageInfo) {
-        Log.i("MessageEventBus:","messageInfo"+ messageInfo.getImageUrl());
+        Log.i("MessageEventBus:", "messageInfo" + messageInfo.getImageUrl());
         mMessageInfo = messageInfo;
         mMessageInfo.setHeader(boyUrl);
         mMessageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
@@ -395,6 +417,12 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         EventBus.getDefault().unregister(this);
         // 注销广播
         unregisterReceiver(myChatBroadcasReceiver);
+//        wmApplication.
+        if (null != locationClientContinue) {
+            locationClientContinue.stopLocation();
+            locationClientContinue.onDestroy();
+            locationClientContinue = null;
+        }
     }
 
     @Override
@@ -549,4 +577,39 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
                 break;
         }
     }
+
+    /**
+     * 高德定位回调监听器
+     */
+
+    AMapLocationListener mLocationListener = new AMapLocationListener() {
+
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            // TODO Auto-generated method stub
+            Log.i("经纬度:", "执行mLocationListener监听方法");
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+                    //可在其中解析amapLocation获取相应内容。
+                    if ("0".equals(String.valueOf(amapLocation.getLongitude()))) {
+                        SharedUtil.setString(ChatMainActivity.this, "mylon", "-1");
+
+                    } else {
+                        SharedUtil.setString(ChatMainActivity.this, "mylon", String.valueOf(amapLocation.getLongitude()));
+                    }
+                    if ("0".equals(String.valueOf(amapLocation.getLatitude()))) {
+                        SharedUtil.setString(ChatMainActivity.this, "mylat", "-1");
+                    } else {
+                        SharedUtil.setString(ChatMainActivity.this, "mylat", String.valueOf(amapLocation.getLatitude()));
+                    }
+                    Log.i("坐标点", "getLongitude:" + SharedUtil.getString(ChatMainActivity.this, "mylon") + ",getLatitude:" + SharedUtil.getString(ChatMainActivity.this, "mylat"));
+                } else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.i("AmapError", "location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
 }

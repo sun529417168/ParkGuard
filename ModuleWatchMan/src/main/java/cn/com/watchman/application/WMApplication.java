@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Vibrator;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.linked.erfli.library.service.LocationService;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -13,7 +14,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import cn.com.watchman.R;
-import com.linked.erfli.library.service.LocationService;
 
 
 /**
@@ -29,6 +29,7 @@ public class WMApplication extends Application {
     public LocationService locationService;
     public Vibrator mVibrator;
     public static Context context;
+
 
     @Override
     public void onCreate() {
@@ -57,7 +58,7 @@ public class WMApplication extends Application {
                 .build();
         imageLoader.init(config2);
 
-
     }
+
 
 }
