@@ -82,10 +82,10 @@ public class Distance {
         LatLng start = new LatLng(gpsBean.getLatitude(), gpsBean.getLongitude());
         LatLng end = new LatLng(TextUtils.isEmpty(SharedUtil.getString(activity, "latitude")) ? 0 : Double.parseDouble(SharedUtil.getString(activity, "latitude")), TextUtils.isEmpty(SharedUtil.getString(activity, "longitude")) ? 0 : Double.parseDouble(SharedUtil.getString(activity, "longitude")));
         float retval = AMapUtils.calculateLineDistance(start, end);
-        if (retval > 20) {
+        if (retval > 10) {
             Log.i("看看距离", "大于10米");
             return true;
-        } else if (retval < 20) {
+        } else if (retval < 10) {
             Log.i("看看距离", "小于10米");
             return false;
         } else {
