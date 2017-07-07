@@ -112,6 +112,7 @@
     <string name="mine_updatePassword">"修改密码"</string>
     <string name="mine_clear">"清除缓存"</string>
     <string name="mine_version">"版本号"</string>
+    <string name="mine_permission">"系统信任"</string>
     <!--个人信息end-->
 
     <!--通告详情start-->

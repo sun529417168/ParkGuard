@@ -528,6 +528,7 @@ public class ChatMainActivity extends AppCompatActivity implements PopupMenu.OnD
         }
     }
 
+
     @Override
     protected void onRestart() {
         super.onRestart();

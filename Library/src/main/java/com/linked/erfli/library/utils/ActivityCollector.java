@@ -42,11 +42,16 @@ public class ActivityCollector {
         if (activity == null) {
             res = false;
         } else {
-            if (activity.isFinishing() || activity.isDestroyed()) {
-                res = false;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if (activity.isFinishing() || activity.isDestroyed()) {
+                    res = false;
+                } else {
+                    res = true;
+                }
             } else {
                 res = true;
             }
+
         }
 
         return res;
