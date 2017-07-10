@@ -61,7 +61,6 @@ public class DialogUtils {
     /**
      * 点击设置系统信任
      *
-     * @param activity
      */
     public static void intentPermission(final Activity activity) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
